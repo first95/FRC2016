@@ -1,0 +1,14 @@
+<grip:Pipeline>
+  <sources>
+    <grip:Camera>
+      <property name="deviceNumber" value="0"/>
+    </grip:Camera>
+  </sources>
+  <steps/>
+  <connections/>
+  <settings>
+    <teamNumber>0</teamNumber>
+    <publishAddress></publishAddress>
+    <deployAddress></deployAddress>
+  </settings>
+</grip:Pipeline>
