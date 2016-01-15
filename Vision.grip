@@ -5,29 +5,71 @@
     </grip:Camera>
   </sources>
   <steps>
-    <grip:Step name="Publish ContoursReport">
+    <grip:Step name="HSL Threshold">
       <grip:Input step="0" socket="0"/>
       <grip:Input step="0" socket="1">
-        <value>myContoursReport</value>
+        <value>
+          <double>61.510791366906474</double>
+          <double>133.92491467576792</double>
+        </value>
       </grip:Input>
       <grip:Input step="0" socket="2">
-        <value>true</value>
+        <value>
+          <double>126.12410071942446</double>
+          <double>255.0</double>
+        </value>
       </grip:Input>
       <grip:Input step="0" socket="3">
+        <value>
+          <double>153.64208633093526</double>
+          <double>255.0</double>
+        </value>
+      </grip:Input>
+      <grip:Output step="0" socket="0" previewed="false"/>
+    </grip:Step>
+    <grip:Step name="Find Contours">
+      <grip:Input step="1" socket="0"/>
+      <grip:Input step="1" socket="1">
+        <value>false</value>
+      </grip:Input>
+      <grip:Output step="1" socket="0" previewed="false"/>
+    </grip:Step>
+    <grip:Step name="Publish ContoursReport">
+      <grip:Input step="2" socket="0"/>
+      <grip:Input step="2" socket="1">
+        <value>myContoursReport</value>
+      </grip:Input>
+      <grip:Input step="2" socket="2">
         <value>true</value>
       </grip:Input>
-      <grip:Input step="0" socket="4">
+      <grip:Input step="2" socket="3">
         <value>true</value>
       </grip:Input>
-      <grip:Input step="0" socket="5">
+      <grip:Input step="2" socket="4">
         <value>true</value>
       </grip:Input>
-      <grip:Input step="0" socket="6">
+      <grip:Input step="2" socket="5">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="2" socket="6">
         <value>true</value>
       </grip:Input>
     </grip:Step>
   </steps>
-  <connections/>
+  <connections>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Input step="0" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="false"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="0" socket="0" previewed="false"/>
+      <grip:Input step="1" socket="0"/>
+    </grip:Connection>
+  </connections>
   <settings>
     <teamNumber>0</teamNumber>
     <publishAddress></publishAddress>
