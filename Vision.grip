@@ -4,7 +4,29 @@
       <property name="deviceNumber" value="0"/>
     </grip:Camera>
   </sources>
-  <steps/>
+  <steps>
+    <grip:Step name="Publish ContoursReport">
+      <grip:Input step="0" socket="0"/>
+      <grip:Input step="0" socket="1">
+        <value>myContoursReport</value>
+      </grip:Input>
+      <grip:Input step="0" socket="2">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="0" socket="3">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="0" socket="4">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="0" socket="5">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="0" socket="6">
+        <value>true</value>
+      </grip:Input>
+    </grip:Step>
+  </steps>
   <connections/>
   <settings>
     <teamNumber>0</teamNumber>
