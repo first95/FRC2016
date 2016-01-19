@@ -35,11 +35,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	// This WPIlib method uses the following simple drive equations:
-    	// 		left wheel speed  = joystick Y - joystick X 
-    	// 		right wheel speed = joystick Y + joystick X 
-        RobotMap.frontDrive.arcadeDrive(RobotMap.driveStick);
-        RobotMap.rearDrive.arcadeDrive(RobotMap.driveStick);
+        RobotMap.robotDrive.arcadeDrive(RobotMap.driveStick);
     }
     
     /**
