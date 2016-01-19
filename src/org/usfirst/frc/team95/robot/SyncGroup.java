@@ -32,16 +32,12 @@ public class SyncGroup implements SpeedController, PIDOutput {
 		mReversed = Reversed;
 	}
 
-	public void set(double d) {
-		jamesBond(d);
-	}
-
-	public void pidWrite(double bob) {
+	public void pidWrite(double speed) {
 		// System.out.println("Get the scoundrel!");
-		jamesBond(bob);
+		set(speed);
 	}
 
-	public void jamesBond(double speed) {
+	public void set(double speed) {
 		if (speed > maxSpeed) {
 			speed = maxSpeed;
 		} else if (speed < minSpeed) {
@@ -82,13 +78,14 @@ public class SyncGroup implements SpeedController, PIDOutput {
 
 	@Override
 	public double get() {
-		// TODO Auto-generated method stub
-		return 0;
+		// Since all of the controllers are synchronized, 
+		// this should work
+		return mSpeedControllers[0].get();
 	}
 
 	@Override
 	public void set(double speed, byte syncGroup) {
-		// TODO Auto-generated method stub
+		set(speed);
 
 	}
 
@@ -96,6 +93,18 @@ public class SyncGroup implements SpeedController, PIDOutput {
 	public void disable() {
 		set(0);
 
+	}
+
+	@Override
+	public void setInverted(boolean isInverted) {
+		// This is not meaningful to call for a SyncGroup.
+		
+	}
+
+	@Override
+	public boolean getInverted() {
+		// This is also not meaningful.
+		return false;
 	}
 
 }
