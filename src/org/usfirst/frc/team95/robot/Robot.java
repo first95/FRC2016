@@ -16,27 +16,13 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	CANTalon backLeftMotor, backRightMotor, frontLeftMotor, frontRightMotor;
-	RobotDrive rearDrive, frontDrive;
-	Joystick driveStick;
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	// Not actually mapped to the real locations on the robot
-    	backLeftMotor   = new CANTalon(0);
-    	backRightMotor  = new CANTalon(1);
-    	frontLeftMotor  = new CANTalon(2);
-    	frontRightMotor = new CANTalon(3);
-    	
-    	// Ideally we'd use some smarter class (likely a SyncGroup or something like that),
-    	// but to make this simple I'm gonna just instantiate a drive controller for
-    	// the front and for the back
-    	rearDrive = new RobotDrive(backLeftMotor, backRightMotor);
-    	frontDrive = new RobotDrive(backLeftMotor, backRightMotor);
-    	
-    	driveStick = new Joystick(0);
+    	RobotMap.init();
     }
 
     /**
@@ -52,8 +38,8 @@ public class Robot extends IterativeRobot {
     	// This WPIlib method uses the following simple drive equations:
     	// 		left wheel speed  = joystick Y - joystick X 
     	// 		right wheel speed = joystick Y + joystick X 
-        frontDrive.arcadeDrive(driveStick);
-        rearDrive.arcadeDrive(driveStick);
+        RobotMap.frontDrive.arcadeDrive(RobotMap.driveStick);
+        RobotMap.rearDrive.arcadeDrive(RobotMap.driveStick);
     }
     
     /**
