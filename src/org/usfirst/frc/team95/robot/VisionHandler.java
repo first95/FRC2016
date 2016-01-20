@@ -1,9 +1,11 @@
 package org.usfirst.frc.team95.robot;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -11,53 +13,78 @@ import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
 public class VisionHandler {
-	double x, y;
+	double x, y; // These represent the x and y, in pixels, of the
+		// center of the goal.
 	
-	static VisionHandler instance;
+	public double getX() { // Getters!
+		return x;
+	}
 	
-	NetworkTable GRIPTable;
-	Comparator<Line> sort = new Comparator<Line>() {
-		public int compare(Line l1, Line l2) {
+	public double getY() {
+		return y;
+	}
+	
+	static VisionHandler instance; // This is the only instance of VisionHandler that should be used
+	
+	NetworkTable GRIPTable; // This represents GRIPs published reports
+	Comparator<Line> sort = new Comparator<Line>() { // This sorts Line objects based on length
+		public int compare(Line l1, Line l2) { // Hooray for anonymous classes.
 			if (l1.length == l2.length)
 				return 0;
 			return l1.length > l2.length ? 1 : -1;
 		}
 	};
 	
-	ITableListener updater = new ITableListener() {
+	ITableListener updater = new ITableListener() { // This updates the x and y whenever the table updates.
 		@Override
 		public void valueChanged(ITable table, String key, Object value, boolean newP) {
-			VisionHandler.getInstance().update(table);
+			if (key.equals("x")) // So that we don't get spammed by updates.
+				VisionHandler.getInstance().update(table);
 		}
 	};
 	
-	public void init() {
+	public void init() { // This sets everything up to listen!
 		GRIPTable = NetworkTable.getTable("GRIP/myLinesReport");
 		GRIPTable.addTableListener(updater);
 	}
 	
-	public static VisionHandler getInstance() {
+	public static VisionHandler getInstance() { // Yay. Boilerplate.
 		if (instance != null)
 			return instance;
 		instance = new VisionHandler();
 		return getInstance();
 	}
 
-	public boolean horizontalP(double degrees) {
+	public boolean horizontalP(double degrees) { // This determines if an angle is vertical or horizontal
 		degrees = Math.abs((degrees - 45) % 180);
 		return degrees > 90;
 	}
 	
-	public void update(ITable table) {
+	public double average(List<Line> list, Field field) {
+		double x = 0;
+		for (Line l : list) {
+			try {
+				x += field.getDouble(l);
+			} catch (IllegalArgumentException e) {
+				System.out.println("Tell Daroc that the VisionHandler is misbehaving. (A)");
+			} catch (IllegalAccessException e) {
+				System.out.println("Tell Daroc that the VisionHandler is misbehaving. (B)");
+			}
+		}
+		x /= list.size();
+		return x;
+	}
+	
+	public void update(ITable table) { // This does the workhorsing of the updates
 		Line[] lineTable = getLines(table);
 		
-		ArrayList<Line> lines = new ArrayList<Line>();
+		ArrayList<Line> lines = new ArrayList<Line>(); // This would be a Set, if I could get sets working.
 		lines.addAll(Arrays.asList(lineTable));
 		lines.sort(sort);
-		ArrayList<Line> horizontal = new ArrayList<Line>();
+		ArrayList<Line> horizontal = new ArrayList<Line>(); // Again, sets.
 		ArrayList<Line> vertical = new ArrayList<Line>();
 		
-		for (Line line : lines) {
+		for (Line line : lines) { // This splits them up.
 			if (horizontalP(line.angle)) {
 				horizontal.add(line);
 			} else {
@@ -65,25 +92,26 @@ public class VisionHandler {
 			}
 		}
 		
+		// This section finds the average of the endpoints of the likely goal lines.
 		vertical.sort(sort);
-		double x = 0;
-		for (Line l : vertical.subList(0, 4)) {
-			x += l.x1;
-			x += l.x2;
-		}
-		x /= 8; this.x = x;
-		
 		horizontal.sort(sort);
-		double y = 0;
-		for (Line l : horizontal.subList(0, 2)) {
-			y += l.y1;
-			y += l.y2;
+		try {
+			double n = average(vertical.subList(0, 4), Line.class.getField("x1"));
+			this.x = n + average(vertical.subList(0,  4), Line.class.getField("x2"));
+			this.x /= 2;
+			this.y = n; // Note: If this mis-aims vertically, this is the culpret.
+						// It assumes that x1 should be the endpoint closer to the top-left corner.
+						// If that's wrong, then this should be changed.
+		} catch (NoSuchFieldException | SecurityException e) {
+			System.out.println("Tell Daroc that the VisionHandler is misbehaving. (C)");
 		}
-		y /= 8; this.y = y;
+		
+		
 		
 	}
 	
-	public Line[] getLines(ITable lineReport) {
+	public Line[] getLines(ITable lineReport) { // This marshals stuff from the NetworkTable to
+												// a bunch of line objects.
 		double[] x1s = lineReport.getNumberArray("x1", Constants.emptydoubleTable);
 		double[] x2s = lineReport.getNumberArray("x2", Constants.emptydoubleTable);
 		double[] y1s = lineReport.getNumberArray("y1", Constants.emptydoubleTable);
@@ -112,7 +140,7 @@ public class VisionHandler {
 		return lineTable;
 	}
 	
-	private class Line {
+	private class Line { // This would be a struct, if java weren't stupid.
 		public double x1, x2, y1, y2, length, angle;
 	}
 
