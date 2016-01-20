@@ -23,6 +23,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	RobotMap.init();
+    	VisionHandler.getInstance().init();
     }
 
     /**
