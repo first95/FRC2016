@@ -43,6 +43,7 @@ public class RobotMap {
     		}
     	}
     	
+    	// SyncGroups for each side
     	left = new SyncGroup(leftTable);
     	right = new SyncGroup(rightTable);
     	
