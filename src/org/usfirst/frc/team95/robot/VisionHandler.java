@@ -76,6 +76,7 @@ public class VisionHandler {
 	}
 	
 	public void update(ITable table) { // This does the workhorsing of the updates
+		System.out.println(table.getKeys());
 		Line[] lineTable = getLines(table);
 		
 		ArrayList<Line> lines = new ArrayList<Line>(); // This would be a Set, if I could get sets working.

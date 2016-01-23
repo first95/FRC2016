@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	RobotMap.init();
+    	//RobotMap.init();
     	VisionHandler.getInstance().init();
     }
 
@@ -44,6 +44,10 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
     
+    }
+    
+    public void disabledInit() {
+    	
     }
     
 }
