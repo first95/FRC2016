@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class RobotMap {
 	static CANTalon left1, left2, left3, right1, right2, right3;
 	static Joystick driveStick;
-	static RobotDrive robotDrive;
+	static Drive robotDrive;
 	static SyncGroup left, right;
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
-    	left1  = new CANTalon(0);
+    	left1  = new CANTalon(4);
     	left2  = new CANTalon(3);
     	//left3  = new CANTalon(2);
     	right1 = new CANTalon(1);
@@ -49,7 +49,7 @@ public class RobotMap {
     	
     	
     	// The main drive train for the robot
-    	robotDrive = new RobotDrive(left, right);
+    	robotDrive = new Drive(left, right);
     	
     	driveStick = new Joystick(0);
 	}

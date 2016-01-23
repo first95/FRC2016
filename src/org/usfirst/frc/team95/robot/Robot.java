@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	//RobotMap.init();
+    	RobotMap.init();
     	VisionHandler.getInstance().init();
     	//SerialPort sp = new SerialPort(115200, edu.wpi.first.wpilibj.SerialPort.Port.kUSB);
     	DataInputStream dis = null;
@@ -90,7 +90,6 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         commonPeriodic();
         RobotMap.robotDrive.arcadeDrive(RobotMap.driveStick);
-    	System.out.println(RobotMap.left1.get());
         //System.out.println(mesg.messageType);
     }
     
