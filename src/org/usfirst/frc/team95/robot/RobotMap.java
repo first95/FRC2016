@@ -13,18 +13,18 @@ public class RobotMap {
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
-    	left1  = new CANTalon(0);
+    	left1  = new CANTalon(2);
     	left2  = new CANTalon(1);
-    	left3  = new CANTalon(2);
-    	right1 = new CANTalon(3);
-    	right2 = new CANTalon(4);
-    	right3 = new CANTalon(5);
+    	//left3  = new CANTalon(2);
+    	right1 = new CANTalon(0);
+    	right2 = new CANTalon(3);
+    	//right3 = new CANTalon(5);
     	
     	// SyncGroups for each side.
-    	SpeedController[] leftTable = {left1, left2, left3};
-    	SpeedController[] rightTable = {right1, right2, right3};
+    	SpeedController[] leftTable = {left1, left2, };//left3};
+    	SpeedController[] rightTable = {right1, right2, };//right3};
     	left = new SyncGroup(leftTable);
-    	left = new SyncGroup(rightTable);
+    	right = new SyncGroup(rightTable);
     	
     	
     	// The main drive train for the robot
