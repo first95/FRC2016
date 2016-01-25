@@ -47,13 +47,41 @@ public class Robot extends IterativeRobot {
 				e.printStackTrace();
 			}
 			arduConnect = true;
+			new Thread(//made MAVLink stuff a thread to avoid slow downs
+				new Runnable() {
+					public void run() {
+						MAVLinkMessage mesg = null;
+						try {
+							System.out.println("Bad CRC count: " + rd.getBadCRC());
+							System.out.println("Bad seq count: " + rd.getBadSequence());
+							mesg = rd.getNextMessage();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						if (mesg == null) {
+							System.out.println("Null");
+						} else {
+							System.out.println(mesg.messageType);
+						}
+						try {
+							Thread.sleep(20);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						run();
+					}
+				}
+			).start();
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}
 		 rd = new MAVLinkReader(dis);
-}
+    }
 
     /**
      * This function is called periodically during autonomous
@@ -62,22 +90,7 @@ public class Robot extends IterativeRobot {
     }
    
     public void commonPeriodic(){
-    	if (arduConnect){
-			MAVLinkMessage mesg = null;
-			try {
-				System.out.println("Bad CRC count: " + rd.getBadCRC());
-				System.out.println("Bad seq count: " + rd.getBadSequence());
-				mesg = rd.getNextMessage();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (mesg == null) {
-				System.out.println("Null");
-			} else {
-				System.out.println(mesg.messageType);
-			}
-    	}
+    	
     }
     
     /**
