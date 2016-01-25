@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 import org.mavlink.*;
+import org.mavlink.io.LittleEndianDataInputStream;
 import org.mavlink.messages.MAVLinkMessage;
 
 
@@ -36,9 +37,9 @@ public class Robot extends IterativeRobot {
     	RobotMap.init();
     	VisionHandler.getInstance().init();
     	//SerialPort sp = new SerialPort(115200, edu.wpi.first.wpilibj.SerialPort.Port.kUSB);
-    	DataInputStream dis = null;
+    	LittleEndianDataInputStream dis = null;
 		try {
-			dis = new DataInputStream(new FileInputStream("/dev/ttyACM0"));
+			dis = new LittleEndianDataInputStream(new FileInputStream("/dev/ttyACM0"));
 			try {
 				System.out.println(dis.read());
 			} catch (IOException e) {
