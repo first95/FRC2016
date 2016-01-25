@@ -37,9 +37,9 @@ public class Robot extends IterativeRobot {
     	RobotMap.init();
     	VisionHandler.getInstance().init();
     	//SerialPort sp = new SerialPort(115200, edu.wpi.first.wpilibj.SerialPort.Port.kUSB);
-    	LittleEndianDataInputStream dis = null;
+    	DataInputStream dis = null;
 		try {
-			dis = new LittleEndianDataInputStream(new FileInputStream("/dev/ttyACM0"));
+			dis = new DataInputStream(new FileInputStream("/dev/ttyACM0"));
 			try {
 				System.out.println(dis.read());
 			} catch (IOException e) {
