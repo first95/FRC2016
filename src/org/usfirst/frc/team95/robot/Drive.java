@@ -23,8 +23,8 @@ public class Drive {
 		tankDrive(z+y, z-y);
 	}
 	
-	//gets the joystick values for stuff
+	//gets the joystick values for stuff and adds throttle sensitivity (redundant negatives on y are nessacary for some reason
 	public void arcadeDrive(Joystick stick) {
-		arcadeDrive(stick.getY()*-1,stick.getZ());
+		arcadeDrive(stick.getY()*(((stick.getThrottle()*-1)+1)/-2),stick.getZ()*(((stick.getThrottle()*-1)+1)/2));
 	}
 }
