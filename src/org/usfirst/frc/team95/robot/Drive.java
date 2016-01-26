@@ -19,12 +19,12 @@ public class Drive {
 	}
 	
 	//squared arcade style drive
-	public void arcadeDrive(double y, double x) {
-		tankDrive(x+y, x-y);
+	public void arcadeDrive(double y, double z) {
+		tankDrive(z+y, z-y);
 	}
 	
 	//gets the joystick values for stuff
 	public void arcadeDrive(Joystick stick) {
-		arcadeDrive(stick.getY()*-1,stick.getX());
+		arcadeDrive(stick.getY()*-1,stick.getZ());
 	}
 }
