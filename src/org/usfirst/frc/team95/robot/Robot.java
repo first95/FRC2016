@@ -103,7 +103,7 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         commonPeriodic();
-        RobotMap.robotDrive.arcadeDrive(RobotMap.driveStick);
+        RobotMap.left1.set(RobotMap.driveStick.getY());
         //System.out.println(mesg.messageType);
     }
     
