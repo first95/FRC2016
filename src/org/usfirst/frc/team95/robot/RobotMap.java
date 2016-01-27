@@ -19,12 +19,12 @@ public class RobotMap {
     	right1 = new CANTalon(1);
     	right2 = new CANTalon(2);
     	//right3 = new CANTalon(5);
-    	
     	// SyncGroups for each side.
     	CANTalon[] leftTable = {left1, left2, };//left3};
     	for (CANTalon t : leftTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
+        	t.setPID(0.1, 0, 0);
     		if (Constants.useVoltageRamp) {
     			t.setVoltageRampRate(Constants.voltageRampRate);
     		} else {
@@ -52,6 +52,8 @@ public class RobotMap {
     	robotDrive = new Drive(left, right);
     	
     	driveStick = new Joystick(0);
+    	
+    	
 	}
 
 }
