@@ -28,6 +28,7 @@ import org.mavlink.messages.MAVLinkMessage;
  */
 public class Robot extends IterativeRobot {
 	MAVLinkReader rd;
+	double P = .1;
 	boolean arduConnect = false;//checks to see if the ardupilot is connected
     /**
      * This function is run when the robot is first started up and should be
@@ -90,7 +91,7 @@ public class Robot extends IterativeRobot {
     }
    
     public void commonPeriodic(){
-    	
+    	System.out.println(P);
     }
     
     /**
@@ -103,7 +104,20 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         commonPeriodic();
-        RobotMap.left1.set(RobotMap.driveStick.getY());
+        RobotMap.left1.setSetpoint(RobotMap.driveStick.getRawAxis(1));
+        if (RobotMap.driveStick.getRawButton(3)) {
+        	P = P - .01;
+        	RobotMap.left1.setPID(P, 0, 0);
+        	RobotMap.left2.setPID(P, 0, 0);
+        	RobotMap.right1.setPID(P, 0, 0);
+        	RobotMap.right2.setPID(P, 0, 0);
+        }else if (RobotMap.driveStick.getRawButton(2)) {
+        	P = P + .01;
+        	RobotMap.left1.setPID(P, 0, 0);
+        	RobotMap.left2.setPID(P, 0, 0);
+        	RobotMap.right1.setPID(P, 0, 0);
+        	RobotMap.right2.setPID(P, 0, 0);
+        }
         //System.out.println(mesg.messageType);
     }
     
