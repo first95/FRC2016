@@ -4,9 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -142,6 +140,7 @@ public class VisionHandler {
 	}
 	
 	private class Line { // This would be a struct, if java weren't stupid.
+		@SuppressWarnings("unused")
 		public double x1, x2, y1, y2, length, angle;
 	}
 
