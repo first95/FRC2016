@@ -104,7 +104,8 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         commonPeriodic();
-        RobotMap.left1.setSetpoint(RobotMap.driveStick.getRawAxis(1));
+        RobotMap.left1.setSetpoint(RobotMap.driveStick.getRawAxis(1)*-10000);
+        RobotMap.right1.setSetpoint(RobotMap.driveStick.getRawAxis(1)*10000);
         if (RobotMap.driveStick.getRawButton(3)) {
         	P = P - .01;
         	RobotMap.left1.setPID(P, 0, 0);
