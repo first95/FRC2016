@@ -6,17 +6,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.TalonSRX;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
-
-import org.mavlink.*;
-import org.mavlink.io.LittleEndianDataInputStream;
+import org.mavlink.MAVLinkReader;
 import org.mavlink.messages.MAVLinkMessage;
+
+import edu.wpi.first.wpilibj.IterativeRobot;
 
 
 /**
