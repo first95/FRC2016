@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 public class RobotMap {
 	static CANTalon left1, left2, right1, right2;
 	static Joystick driveStick;
+	public static Drive drive;
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
@@ -19,7 +20,6 @@ public class RobotMap {
     	for (CANTalon t : leftTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
-    		t.setPID(.1, 0, 0);
     		if (Constants.useVoltageRamp) {
     			t.setVoltageRampRate(Constants.voltageRampRate);
     		} else {
@@ -31,24 +31,28 @@ public class RobotMap {
     	for (CANTalon t : rightTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
-    		t.setPID(.1, 0, 0);
     		if (Constants.useVoltageRamp) {
     			t.setVoltageRampRate(Constants.voltageRampRate);
     		} else {
     			t.setVoltageRampRate(0.0);
     		}
     	}
+    	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
+    	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
     	left1.changeControlMode(CANTalon.TalonControlMode.Speed);
     	left1.enableControl();
     	left2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	left2.set(4);
     	left2.enableControl();
     	right1.changeControlMode(CANTalon.TalonControlMode.Speed);
+    	right1.reverseSensor(true);
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	right2.set(2);
     	right2.enableControl();
     	driveStick = new Joystick(0);
+    	
+    	drive = new Drive(left1, right1);
 	}
 
 }

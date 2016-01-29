@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class Robot extends IterativeRobot {
 	MAVLinkReader rd;
-	double P = .1;
 	boolean arduConnect = false;//checks to see if the ardupilot is connected
     /**
      * This function is run when the robot is first started up and should be
@@ -84,7 +83,7 @@ public class Robot extends IterativeRobot {
     }
    
     public void commonPeriodic(){
-    	System.out.println(P);
+    	System.out.println(Constants.I);
     }
     
     /**
@@ -97,22 +96,8 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         commonPeriodic();
-        RobotMap.left1.setSetpoint(RobotMap.driveStick.getRawAxis(1)*-10000);
-        RobotMap.right1.setSetpoint(RobotMap.driveStick.getRawAxis(1)*10000);
-        if (RobotMap.driveStick.getRawButton(3)) {
-        	P = P - .01;
-        	RobotMap.left1.setPID(P, 0, 0);
-        	RobotMap.left2.setPID(P, 0, 0);
-        	RobotMap.right1.setPID(P, 0, 0);
-        	RobotMap.right2.setPID(P, 0, 0);
-        }else if (RobotMap.driveStick.getRawButton(2)) {
-        	P = P + .01;
-        	RobotMap.left1.setPID(P, 0, 0);
-        	RobotMap.left2.setPID(P, 0, 0);
-        	RobotMap.right1.setPID(P, 0, 0);
-        	RobotMap.right2.setPID(P, 0, 0);
-        }
-        //System.out.println(mesg.messageType);
+        RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+        PIDTuner();
     }
     
     /**
@@ -120,6 +105,42 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
     
+    }
+    
+    public void PIDTuner() {
+    	if (RobotMap.driveStick.getRawButton(3)) {
+    		Constants.magnitude = Constants.magnitude - 1;
+    	}else if (RobotMap.driveStick.getRawButton(4)) {
+    		Constants.magnitude = Constants.magnitude + 1;
+    	}
+    	if (RobotMap.driveStick.getRawButton(5)) {
+        	Constants.P = Constants.P - (.1 * Math.pow(10, Constants.magnitude));
+        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
+        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
+        } else if (RobotMap.driveStick.getRawButton(10)) {
+        	Constants.P = Constants.P + (.1 * Math.pow(10, Constants.magnitude));
+        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
+        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D );
+        }
+        if (RobotMap.driveStick.getRawButton(6)) {
+        	Constants.I = Constants.I - (.00001 * Math.pow(10, Constants.magnitude));
+        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
+        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
+        } else if (RobotMap.driveStick.getRawButton(9)) {
+        	Constants.I = Constants.I + (.00001 * Math.pow(10, Constants.magnitude));
+        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
+        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D );
+        }
+        RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+        if (RobotMap.driveStick.getRawButton(7)) {
+        	Constants.D = Constants.D - (.1 * Math.pow(10, Constants.magnitude));
+        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
+        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
+        } else if (RobotMap.driveStick.getRawButton(8)) {
+        	Constants.I = Constants.I + (.1 * Math.pow(10, Constants.magnitude));
+        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
+        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D );
+        }
     }
     
     public void disabledInit() {
