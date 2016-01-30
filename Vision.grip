@@ -1,9 +1,6 @@
 <grip:Pipeline>
   <sources>
     <grip:Camera>
-      <property name="address" value="http://10.0.95.21"/>
-    </grip:Camera>
-    <grip:Camera>
       <property name="deviceNumber" value="0"/>
     </grip:Camera>
   </sources>
@@ -62,20 +59,32 @@
       </grip:Input>
       <grip:Output step="4" socket="0" previewed="false"/>
     </grip:Step>
+    <grip:Step name="Publish LinesReport">
+      <grip:Input step="5" socket="0"/>
+      <grip:Input step="5" socket="1">
+        <value>myLinesReport</value>
+      </grip:Input>
+      <grip:Input step="5" socket="2">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="5" socket="3">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="5" socket="4">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="5" socket="5">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="5" socket="6">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="5" socket="7">
+        <value>true</value>
+      </grip:Input>
+    </grip:Step>
   </steps>
   <connections>
-    <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="false"/>
-      <grip:Input step="0" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="false"/>
-      <grip:Input step="1" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="false"/>
-      <grip:Input step="2" socket="0"/>
-    </grip:Connection>
     <grip:Connection>
       <grip:Output step="3" socket="0" previewed="false"/>
       <grip:Input step="4" socket="0"/>
@@ -85,6 +94,22 @@
       <grip:Input step="3" socket="0"/>
     </grip:Connection>
     <grip:Connection>
+      <grip:Output step="4" socket="0" previewed="false"/>
+      <grip:Input step="5" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="false"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Input step="0" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Input step="1" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
       <grip:Output step="0" socket="0" previewed="false"/>
       <grip:Input step="1" socket="1"/>
     </grip:Connection>
@@ -92,6 +117,9 @@
   <settings>
     <teamNumber>0</teamNumber>
     <publishAddress></publishAddress>
-    <deployAddress></deployAddress>
+    <deployAddress>roborio-95-frc.local</deployAddress>
+    <deployDir>/home/lvuser</deployDir>
+    <deployUser>admin</deployUser>
+    <deployJavaHome>/usr/local/frc/JRE/</deployJavaHome>
   </settings>
 </grip:Pipeline>
