@@ -9,6 +9,7 @@ import java.io.IOException;
 import org.mavlink.MAVLinkReader;
 import org.mavlink.messages.MAVLinkMessage;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,11 +24,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	MAVLinkReader rd;
 	boolean arduConnect = false;//checks to see if the ardupilot is connected
+	CameraServer cameraServer;
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	
+    	cameraServer = CameraServer.getInstance();
+    	cameraServer.startAutomaticCapture("cam1");
+    	
     	RobotMap.init();
     	VisionHandler.getInstance().init();
     	//SerialPort sp = new SerialPort(115200, edu.wpi.first.wpilibj.SerialPort.Port.kUSB);
