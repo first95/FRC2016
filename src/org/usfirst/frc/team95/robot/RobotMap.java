@@ -3,6 +3,7 @@ package org.usfirst.frc.team95.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
 	static CANTalon left1, left2, right1, right2;
@@ -64,9 +65,12 @@ public class RobotMap {
 	}
 
 	public static void testDrive() {
+		int setpoint = (int)((1.0-driveStick.getThrottle()) * 1000);
+		SmartDashboard.putNumber("Throttle setpoint", setpoint);
+				
 		// on/off step function
 		if(driveStick.getRawButton(1)) {
-			left1.set(1000);
+			left1.set(setpoint);
 		} else {
 			left1.set(0);
 		}

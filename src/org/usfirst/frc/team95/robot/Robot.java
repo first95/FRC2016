@@ -123,26 +123,28 @@ public class Robot extends IterativeRobot {
 //    	}else if (RobotMap.driveStick.getRawButton(4)) {
 //    		Constants.magnitude = Constants.magnitude + 1;
 //    	}
+    	
+    	double d = Math.pow(10, Constants.magnitude);
     	boolean changed = false;
     	if (RobotMap.decP.justPressedp()) {
-        	Constants.P = Constants.P - (.1 * Math.pow(10, Constants.magnitude));
+        	Constants.P = Constants.P - (.1 * d);
         	changed = true;
         } else if (RobotMap.incP.justPressedp()) {
-        	Constants.P = Constants.P + (.1 * Math.pow(10, Constants.magnitude));
+        	Constants.P = Constants.P + (.1 * d);
         	changed = true;
         }
         if (RobotMap.decI.justPressedp()) {
-        	Constants.I = Constants.I - (.00001 * Math.pow(10, Constants.magnitude));
+        	Constants.I = Constants.I - (.0000001 * d);
         	changed = true;
         } else if (RobotMap.incI.justPressedp()) {
-        	Constants.I = Constants.I + (.00001 * Math.pow(10, Constants.magnitude));
+        	Constants.I = Constants.I + (.0000001 * d);
         	changed = true;
         }
         if (RobotMap.decD.justPressedp()) {
-        	Constants.D = Constants.D - (.1 * Math.pow(10, Constants.magnitude));
+        	Constants.D = Constants.D - (.1 * d);
         	changed = true;
         } else if (RobotMap.incD.justPressedp()) {
-        	Constants.D = Constants.D + (.1 * Math.pow(10, Constants.magnitude));
+        	Constants.D = Constants.D + (.1 * d);
         	changed = true;
         }
         if(changed) {
@@ -155,9 +157,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("D", Constants.D);
         
         SmartDashboard.putNumber("Left Setpoint", RobotMap.left1.getSetpoint());
-        SmartDashboard.putNumber("Left Speed", RobotMap.left1.getSpeed());
-        SmartDashboard.putNumber("Right Setpoint", RobotMap.right1.getSetpoint());
-        SmartDashboard.putNumber("Right Speed", RobotMap.right1.getSpeed());
+        SmartDashboard.putNumber("Left Speed", -1 * RobotMap.left1.getSpeed());
+//        SmartDashboard.putNumber("Right Setpoint", RobotMap.right1.getSetpoint());
+//        SmartDashboard.putNumber("Right Speed", RobotMap.right1.getSpeed());
     }
     
     public void disabledInit() {
