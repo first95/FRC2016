@@ -10,6 +10,7 @@ import org.mavlink.MAVLinkReader;
 import org.mavlink.messages.MAVLinkMessage;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -141,6 +142,15 @@ public class Robot extends IterativeRobot {
         	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
         	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D );
         }
+        
+        SmartDashboard.putNumber("P", Constants.P);
+        SmartDashboard.putNumber("I", Constants.I);
+        SmartDashboard.putNumber("D", Constants.D);
+        
+        SmartDashboard.putNumber("Left Setpoint", RobotMap.left1.getSetpoint());
+        SmartDashboard.putNumber("Left Speed", RobotMap.left1.getSpeed());
+        SmartDashboard.putNumber("Right Setpoint", RobotMap.right1.getSetpoint());
+        SmartDashboard.putNumber("Right Speed", RobotMap.right1.getSpeed());
     }
     
     public void disabledInit() {
