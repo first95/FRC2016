@@ -8,6 +8,7 @@ public class RobotMap {
 	static CANTalon left1, left2, right1, right2;
 	static Joystick driveStick;
 	public static Drive drive;
+	static ButtonTracker incP, decP, incI, decI, incD, decD;
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
@@ -52,7 +53,23 @@ public class RobotMap {
     	right2.enableControl();
     	driveStick = new Joystick(0);
     	
+    	incP = new ButtonTracker(driveStick, 5);
+    	decP = new ButtonTracker(driveStick, 10);
+    	incI = new ButtonTracker(driveStick, 6);
+    	decI = new ButtonTracker(driveStick, 9);
+    	incD = new ButtonTracker(driveStick, 7);
+    	decD = new ButtonTracker(driveStick, 8);
+
     	drive = new Drive(left1, right1);
+	}
+
+	public static void testDrive() {
+		// on/off step function
+		if(driveStick.getRawButton(1)) {
+			left1.set(1000);
+		} else {
+			left1.set(0);
+		}
 	}
 
 }

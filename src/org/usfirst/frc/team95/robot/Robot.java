@@ -30,10 +30,12 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	RobotMap.init();
     	VisionHandler.getInstance().init();
+    	
     	//SerialPort sp = new SerialPort(115200, edu.wpi.first.wpilibj.SerialPort.Port.kUSB);
     	DataInputStream dis = null;
 		try {
 			dis = new DataInputStream(new FileInputStream("/dev/ttyACM0"));
+			rd = new MAVLinkReader(dis);
 			try {
 				System.out.println(dis.read());
 			} catch (IOException e) {
@@ -41,33 +43,33 @@ public class Robot extends IterativeRobot {
 				e.printStackTrace();
 			}
 			arduConnect = true;
-			new Thread(//made MAVLink stuff a thread to avoid slow downs
-				new Runnable() {
-					public void run() {
-						MAVLinkMessage mesg = null;
-						try {
-							System.out.println("Bad CRC count: " + rd.getBadCRC());
-							System.out.println("Bad seq count: " + rd.getBadSequence());
-							mesg = rd.getNextMessage();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						if (mesg == null) {
-							System.out.println("Null");
-						} else {
-							System.out.println(mesg.messageType);
-						}
-						try {
-							Thread.sleep(20);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						run();
-					}
-				}
-			).start();
+//			new Thread(//made MAVLink stuff a thread to avoid slow downs
+//				new Runnable() {
+//					public void run() {
+//						MAVLinkMessage mesg = null;
+//						try {
+//							System.out.println("Bad CRC count: " + rd.getBadCRC());
+//							System.out.println("Bad seq count: " + rd.getBadSequence());
+//							mesg = rd.getNextMessage();
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//						if (mesg == null) {
+//							System.out.println("Null");
+//						} else {
+//							System.out.println(mesg.messageType);
+//						}
+//						try {
+//							Thread.sleep(20);
+//						} catch (InterruptedException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//						run();
+//					}
+//				}
+//			).start();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -84,7 +86,13 @@ public class Robot extends IterativeRobot {
     }
    
     public void commonPeriodic(){
-    	System.out.println(Constants.I);
+    	SmartDashboard.putNumber("Test", 5);
+    	RobotMap.incP.update();
+    	RobotMap.decP.update();
+    	RobotMap.incI.update();
+    	RobotMap.decI.update();
+    	RobotMap.incD.update();
+    	RobotMap.decD.update();
     }
     
     /**
@@ -97,7 +105,8 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         commonPeriodic();
-        RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+//        RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+        RobotMap.testDrive();
         PIDTuner();
     }
     
@@ -109,42 +118,40 @@ public class Robot extends IterativeRobot {
     }
     
     public void PIDTuner() {
-    	if (RobotMap.driveStick.getRawButton(3)) {
-    		Constants.magnitude = Constants.magnitude - 1;
-    	}else if (RobotMap.driveStick.getRawButton(4)) {
-    		Constants.magnitude = Constants.magnitude + 1;
-    	}
-    	if (RobotMap.driveStick.getRawButton(5)) {
+//    	if (RobotMap.driveStick.getRawButton(3)) {
+//    		Constants.magnitude = Constants.magnitude - 1;
+//    	}else if (RobotMap.driveStick.getRawButton(4)) {
+//    		Constants.magnitude = Constants.magnitude + 1;
+//    	}
+    	boolean changed = false;
+    	if (RobotMap.decP.justPressedp()) {
         	Constants.P = Constants.P - (.1 * Math.pow(10, Constants.magnitude));
-        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
-        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
-        } else if (RobotMap.driveStick.getRawButton(10)) {
+        	changed = true;
+        } else if (RobotMap.incP.justPressedp()) {
         	Constants.P = Constants.P + (.1 * Math.pow(10, Constants.magnitude));
-        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
-        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D );
+        	changed = true;
         }
-        if (RobotMap.driveStick.getRawButton(6)) {
+        if (RobotMap.decI.justPressedp()) {
         	Constants.I = Constants.I - (.00001 * Math.pow(10, Constants.magnitude));
-        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
-        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
-        } else if (RobotMap.driveStick.getRawButton(9)) {
+        	changed = true;
+        } else if (RobotMap.incI.justPressedp()) {
         	Constants.I = Constants.I + (.00001 * Math.pow(10, Constants.magnitude));
-        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
-        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D );
+        	changed = true;
         }
-        RobotMap.drive.arcadeDrive(RobotMap.driveStick);
-        if (RobotMap.driveStick.getRawButton(7)) {
+        if (RobotMap.decD.justPressedp()) {
         	Constants.D = Constants.D - (.1 * Math.pow(10, Constants.magnitude));
-        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
-        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
-        } else if (RobotMap.driveStick.getRawButton(8)) {
-        	Constants.I = Constants.I + (.1 * Math.pow(10, Constants.magnitude));
-        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
-        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D );
+        	changed = true;
+        } else if (RobotMap.incD.justPressedp()) {
+        	Constants.D = Constants.D + (.1 * Math.pow(10, Constants.magnitude));
+        	changed = true;
         }
-        
+        if(changed) {
+        	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
+        	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D );        	
+        }
+                
         SmartDashboard.putNumber("P", Constants.P);
-        SmartDashboard.putNumber("I", Constants.I);
+        SmartDashboard.putNumber("10^6*I", Constants.I * (1e6));
         SmartDashboard.putNumber("D", Constants.D);
         
         SmartDashboard.putNumber("Left Setpoint", RobotMap.left1.getSetpoint());
