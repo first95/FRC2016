@@ -9,7 +9,7 @@ public class RobotMap {
 	static CANTalon left1, left2, right1, right2;
 	static Joystick driveStick;
 	public static Drive drive;
-	static ButtonTracker incP, decP, incI, decI, incD, decD;
+	static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec;
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
@@ -27,6 +27,8 @@ public class RobotMap {
     		} else {
     			t.setVoltageRampRate(0.0);
     		}
+    		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    		t.configEncoderCodesPerRev(1024);
     	}
     	
     	CANTalon[] rightTable = {right1, right2, };//left3};
@@ -38,10 +40,13 @@ public class RobotMap {
     		} else {
     			t.setVoltageRampRate(0.0);
     		}
+    		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    		t.configEncoderCodesPerRev(1024);
     	}
     	RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
     	RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
     	left1.changeControlMode(CANTalon.TalonControlMode.Speed);
+    	
     	left1.enableControl();
     	left2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	left2.set(4);
@@ -60,6 +65,8 @@ public class RobotMap {
     	decI = new ButtonTracker(driveStick, 9);
     	incD = new ButtonTracker(driveStick, 7);
     	decD = new ButtonTracker(driveStick, 8);
+    	magInc = new ButtonTracker(driveStick, 3);
+    	magDec = new ButtonTracker(driveStick, 4);
 
     	drive = new Drive(left1, right1);
 	}
