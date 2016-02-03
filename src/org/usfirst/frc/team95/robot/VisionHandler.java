@@ -1,14 +1,17 @@
 package org.usfirst.frc.team95.robot;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import org.opencv.core.Mat;
+import org.opencv.core.Size;
+import org.opencv.highgui.VideoCapture;
+import org.opencv.imgproc.Imgproc;
+
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.tables.ITable;
-import edu.wpi.first.wpilibj.tables.ITableListener;
 
 public class VisionHandler {
 	double x, y; // These represent the x and y, in pixels, of the
@@ -24,7 +27,6 @@ public class VisionHandler {
 	
 	static VisionHandler instance; // This is the only instance of VisionHandler that should be used
 	
-	NetworkTable GRIPTable; // This represents GRIPs published reports
 	Comparator<Line> sort = new Comparator<Line>() { // This sorts Line objects based on length
 		public int compare(Line l1, Line l2) { // Hooray for anonymous classes.
 			if (l1.length == l2.length)
@@ -33,17 +35,42 @@ public class VisionHandler {
 		}
 	};
 	
-	ITableListener updater = new ITableListener() { // This updates the x and y whenever the table updates.
+	Runnable visionPoller = new Runnable() {
 		@Override
-		public void valueChanged(ITable table, String key, Object value, boolean newP) {
-			if (key.equals("x")) // So that we don't get spammed by updates.
-				VisionHandler.getInstance().update(table);
+		public void run() {
+			while (true) {
+				VisionHandler.getInstance().update();
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	};
 	
+	VideoCapture cap;
+	Mat edges;
+	
 	public void init() { // This sets everything up to listen!
-		GRIPTable = NetworkTable.getTable("GRIP/myLinesReport");
-		GRIPTable.addTableListener(updater);
+		System.setProperty("java.library.path", System.getProperty("java.library.path")+
+				":/usr/local/lib/lib_OpenCV/");
+		
+		System.out.println(System.getProperty("java.library.path"));
+		
+		cap = new VideoCapture(0);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		edges = new Mat();
+		if (!cap.isOpened()) {
+			System.err.println("Problems opening camera.");
+		}
+		new Thread(visionPoller).start();
 	}
 	
 	public static VisionHandler getInstance() { // Yay. Boilerplate.
@@ -73,15 +100,22 @@ public class VisionHandler {
 		return x;
 	}
 	
-	public void update(ITable table) { // This does the workhorsing of the updates
-		System.out.println(table.getKeys());
-		Line[] lineTable = getLines(table);
-		
-		ArrayList<Line> lines = new ArrayList<Line>(); // This would be a Set, if I could get sets working.
-		lines.addAll(Arrays.asList(lineTable));
-		lines.sort(sort);
+	public void update() { // This does the workhorsing of the updates
+		ArrayList<Line> lines; // This would be a Set, if I could get sets working.
 		ArrayList<Line> horizontal = new ArrayList<Line>(); // Again, sets.
 		ArrayList<Line> vertical = new ArrayList<Line>();
+		
+		Mat frame = new Mat();
+		cap.grab();
+		cap.retrieve(frame);
+		
+		Imgproc.cvtColor(frame, edges, Imgproc.COLOR_BGR2GRAY);
+		Imgproc.GaussianBlur(edges, edges, new Size(7,7), 1.5, 1.5);
+		Imgproc.Canny(edges, edges, 0, 30);
+		Mat lineMat = new Mat();
+		Imgproc.HoughLinesP(edges, lineMat, 1, Math.PI/180, 100);
+		
+		lines = getLines(lineMat);
 		
 		for (Line line : lines) { // This splits them up.
 			if (horizontalP(line.angle)) {
@@ -109,38 +143,25 @@ public class VisionHandler {
 		
 	}
 	
-	public Line[] getLines(ITable lineReport) { // This marshals stuff from the NetworkTable to
+	public ArrayList<Line> getLines(Mat lineMat) { // This marshals stuff from the Mat to
 												// a bunch of line objects.
-		double[] x1s = lineReport.getNumberArray("x1", Constants.emptydoubleTable);
-		double[] x2s = lineReport.getNumberArray("x2", Constants.emptydoubleTable);
-		double[] y1s = lineReport.getNumberArray("y1", Constants.emptydoubleTable);
-		double[] y2s = lineReport.getNumberArray("y2", Constants.emptydoubleTable);
-		double[] lengths = lineReport.getNumberArray("length", Constants.emptydoubleTable);
-		double[] areas = lineReport.getNumberArray("area", Constants.emptydoubleTable);
-		Line[] lineTable = new Line[x1s.length];
-		for (int i=0; i<x1s.length; i++) {
-			lineTable[i].x1 = x1s[i];
+		ArrayList<Line> lines = new ArrayList<Line>();
+		
+		for (int i = 0; i < lineMat.size().height; i++) {
+			Line l = new Line();
+			l.x1 = lineMat.get(i, 0)[0];
+			l.y1 = lineMat.get(i, 1)[0];
+			l.x2 = lineMat.get(i, 2)[0];
+			l.y2 = lineMat.get(i, 3)[0];
+			l.length = Math.sqrt(Math.pow(l.x2-l.x1, 2) + Math.pow(l.y2-l.y1, 2));
+			l.angle = Math.atan((l.y2-l.y1)/(l.x2-l.x1));
+			lines.add(l);
 		}
-		for (int i=0; i<x1s.length; i++) {
-			lineTable[i].x2 = x2s[i];
-		}
-		for (int i=0; i<x1s.length; i++) {
-			lineTable[i].y1 = y1s[i];
-		}
-		for (int i=0; i<x1s.length; i++) {
-			lineTable[i].y2 = y2s[i];
-		}
-		for (int i=0; i<x1s.length; i++) {
-			lineTable[i].length = lengths[i];
-		}
-		for (int i=0; i<x1s.length; i++) {
-			lineTable[i].angle = areas[i];
-		}
-		return lineTable;
+		
+		return lines;
 	}
 	
 	private class Line { // This would be a struct, if java weren't stupid.
-		@SuppressWarnings("unused")
 		public double x1, x2, y1, y2, length, angle;
 	}
 
