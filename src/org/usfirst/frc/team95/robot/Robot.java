@@ -104,6 +104,9 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("Left Setpoint", RobotMap.left1.getSetpoint());
 		SmartDashboard.putNumber("Left Speed", -1 * RobotMap.left1.getSpeed());
+		
+		SmartDashboard.putNumber("Target X", VisionHandler.getInstance().x);
+		SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().y);
 		//SmartDashboard.putNumber("Right Setpoint", RobotMap.right1.getSetpoint());
 		//SmartDashboard.putNumber("Right Speed", RobotMap.right1.getSpeed());
     }

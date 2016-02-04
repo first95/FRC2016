@@ -1,5 +1,6 @@
 package org.usfirst.frc.team95.robot;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,9 @@ public class VisionHandler {
 		return y;
 	}
 	
+	private final static String GRIP_CMD =
+	        "/usr/local/frc/JRE/bin/java -jar /home/lvuser/grip.jar /home/lvuser/project.grip";
+	
 	static VisionHandler instance; // This is the only instance of VisionHandler that should be used
 	
 	NetworkTable GRIPTable; // This represents GRIPs published reports
@@ -42,6 +46,11 @@ public class VisionHandler {
 	};
 	
 	public void init() { // This sets everything up to listen!
+		try {
+			new ProcessBuilder(GRIP_CMD).inheritIO().start();
+		} catch (IOException e) {
+			System.out.println("GRIP IO is failing.");
+		}
 		GRIPTable = NetworkTable.getTable("GRIP/myLinesReport");
 		GRIPTable.addTableListener(updater);
 	}
