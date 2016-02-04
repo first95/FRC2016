@@ -16,7 +16,7 @@ public class Constants {
 	static double deadBand = 0.007;
 	
 	// Drive PID
-	static double P = 0, I = 0, D = 0;
+	static double P = 0, I = 0, D = 0, F = 0;
 	
 	//PID tuning speed
 	static int magnitude = 0;

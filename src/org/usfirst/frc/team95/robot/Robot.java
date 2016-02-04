@@ -95,10 +95,13 @@ public class Robot extends IterativeRobot {
     	RobotMap.decD.update();
     	RobotMap.magInc.update();
     	RobotMap.magDec.update();
+    	RobotMap.incF.update();
+    	RobotMap.decF.update();
     	
 		SmartDashboard.putNumber("P", Constants.P);
 		SmartDashboard.putNumber("10^6*I", Constants.I * (1e6));
 		SmartDashboard.putNumber("D", Constants.D);
+		SmartDashboard.putNumber("F", Constants.F);
 		
 		SmartDashboard.putNumber("encoder position", RobotMap.left1.getEncPosition());
 		
@@ -166,6 +169,13 @@ public class Robot extends IterativeRobot {
         	changed = true;
         } else if (RobotMap.incD.justPressedp()) {
         	Constants.D = Constants.D + (.1 * d);
+        	changed = true;
+        }
+        if (RobotMap.incF.justPressedp()) {
+        	Constants.F = Constants.F + (.1 * d);
+        	changed = true;
+        }else if (RobotMap.decF.justPressedp()) {
+        	Constants.F = Constants.F - (.1 * d);
         	changed = true;
         }
         if(changed) {
