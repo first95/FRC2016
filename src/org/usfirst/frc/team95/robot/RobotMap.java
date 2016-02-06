@@ -30,6 +30,9 @@ public class RobotMap {
     		}
     		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     		t.configEncoderCodesPerRev(1024);
+    		
+    		t.setIZone(100);
+    		
     	}
     	
     	CANTalon[] rightTable = {right1, right2, };//left3};
