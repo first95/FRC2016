@@ -6,10 +6,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	static CANTalon left1, left2, right1, right2, light;
-	static Joystick driveStick;
+	public static CANTalon left1, left2, right1, right2, light;
+	public static Joystick driveStick;
 	public static Drive drive;
-	static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF;
+	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF;
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
@@ -31,7 +31,7 @@ public class RobotMap {
     		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     		t.configEncoderCodesPerRev(1024);
     		
-    		t.setIZone(100);
+    		t.setIZone(10);
     		
     	}
     	
@@ -50,12 +50,12 @@ public class RobotMap {
     	left1.setF(Constants.F);
     	left1.setPID(Constants.P, Constants.I, Constants.D);
     	right1.setPID(Constants.P, Constants.I, Constants.D);
-    	left1.changeControlMode(CANTalon.TalonControlMode.Speed);
+    	left1.changeControlMode(CANTalon.TalonControlMode.PercentVbus); // Speed
     	left1.enableControl();
     	left2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	left2.set(4);
     	left2.enableControl();
-    	right1.changeControlMode(CANTalon.TalonControlMode.Speed);
+    	right1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	right1.reverseSensor(true);
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -78,9 +78,10 @@ public class RobotMap {
 	}
 
 	public static void testDrive() {
-		int setpoint = (int)((1.0-driveStick.getThrottle()) * 1000);
+		double setpoint = ((1.0-driveStick.getThrottle()) * 1);
 		SmartDashboard.putNumber("Throttle setpoint", setpoint);
-				
+		SmartDashboard.putNumber("OutputVoltage", left1.getOutputVoltage());
+		
 		// on/off step function
 		if(driveStick.getRawButton(1)) {
 			left1.set(setpoint);
