@@ -6,8 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.mavlink.MAVLinkReader;
-import org.mavlink.messages.MAVLinkMessage;
+import org.mavlink.*;
+import org.mavlink.messages.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
