@@ -37,4 +37,8 @@ public class ArduPilotAttitudeMonitor {
 			e.printStackTrace();
 		}
 	}
+	
+	public double getPitch() { return pitch; }
+	public double getRoll()  { return roll; }
+	public double getYaw()   { return yaw; }
 }

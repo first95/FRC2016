@@ -22,10 +22,8 @@ import edu.wpi.first.wpilibj.CameraServer;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	MAVLinkReader rd;
 	CameraServer cameraServer;
-	boolean arduConnect = false;//checks to see if the ardupilot is connected
-	
+	ArduPilotAttitudeMonitor am = null;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -36,53 +34,7 @@ public class Robot extends IterativeRobot {
     	
     	//cameraServer = CameraServer.getInstance();
     	//cameraServer.startAutomaticCapture("/dev/video0");
-    	
-    	//SerialPort sp = new SerialPort(115200, edu.wpi.first.wpilibj.SerialPort.Port.kUSB);
-    	DataInputStream dis = null;
-		try {
-			dis = new DataInputStream(new FileInputStream("/dev/ttyACM0"));
-			rd = new MAVLinkReader(dis);
-			try {
-				System.out.println(dis.read());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			arduConnect = true;
-//			new Thread(//made MAVLink stuff a thread to avoid slow downs
-//				new Runnable() {
-//					public void run() {
-//						MAVLinkMessage mesg = null;
-//						try {
-//							System.out.println("Bad CRC count: " + rd.getBadCRC());
-//							System.out.println("Bad seq count: " + rd.getBadSequence());
-//							mesg = rd.getNextMessage();
-//						} catch (IOException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//						if (mesg == null) {
-//							System.out.println("Null");
-//						} else {
-//							System.out.println(mesg.messageType);
-//						}
-//						try {
-//							Thread.sleep(20);
-//						} catch (InterruptedException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//						run();
-//					}
-//				}
-//			).start();
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
-		 rd = new MAVLinkReader(dis);
+    	am = new ArduPilotAttitudeMonitor();
     }
 
     /**
@@ -103,6 +55,11 @@ public class Robot extends IterativeRobot {
     	RobotMap.magDec.update();
     	RobotMap.incF.update();
     	RobotMap.decF.update();
+    	
+    	am.CheckForAndProcessNewData();
+    	SmartDashboard.putNumber("Pitch", am.getPitch());
+    	SmartDashboard.putNumber("Roll", am.getRoll());
+    	SmartDashboard.putNumber("Yaw", am.getYaw());
     	
 		SmartDashboard.putNumber("P", Constants.P);
 		SmartDashboard.putNumber("10^6*I", Constants.I * (1e6));
