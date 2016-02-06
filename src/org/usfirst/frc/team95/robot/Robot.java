@@ -11,6 +11,7 @@ import org.mavlink.messages.MAVLinkMessage;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.CameraServer;
 
 
 /**
@@ -22,7 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	MAVLinkReader rd;
+	CameraServer cameraServer;
 	boolean arduConnect = false;//checks to see if the ardupilot is connected
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -30,6 +33,9 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	RobotMap.init();
     	VisionHandler.getInstance().init();
+    	
+    	//cameraServer = CameraServer.getInstance();
+    	//cameraServer.startAutomaticCapture("/dev/video0");
     	
     	//SerialPort sp = new SerialPort(115200, edu.wpi.first.wpilibj.SerialPort.Port.kUSB);
     	DataInputStream dis = null;
@@ -109,7 +115,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Speed", -1 * RobotMap.left1.getSpeed());
 		
 		SmartDashboard.putNumber("Target X", VisionHandler.getInstance().x);
+		//System.out.println(VisionHandler.getInstance().x);
 		SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().y);
+		//System.out.println(VisionHandler.getInstance().y);
+		//System.out.println("----");
 		//SmartDashboard.putNumber("Right Setpoint", RobotMap.right1.getSetpoint());
 		//SmartDashboard.putNumber("Right Speed", RobotMap.right1.getSpeed());
     }
@@ -121,6 +130,10 @@ public class Robot extends IterativeRobot {
         commonPeriodic();
     }
     
+    @Override
+    public void teleopInit() {
+    	RobotMap.light.set(0.5);
+    }
     
     public void teleopPeriodic() {
         commonPeriodic();

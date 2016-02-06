@@ -23,8 +23,12 @@ public class VisionHandler {
 		return y;
 	}
 	
-	private final static String GRIP_CMD =
-	        "/usr/local/frc/JRE/bin/java -jar /home/lvuser/grip.jar /home/lvuser/project.grip";
+	private final static String[] CLEAR_TMP_CMD =
+		{"/bin/rm", "-rf", "/tmp/*"};
+	
+	private final static String[] GRIP_CMD =
+		{"/usr/local/frc/JRE/bin/java", "-jar", "/home/lvuser/grip.jar", 
+				"/home/lvuser/project.grip"};
 	
 	static VisionHandler instance; // This is the only instance of VisionHandler that should be used
 	
@@ -45,14 +49,33 @@ public class VisionHandler {
 		}
 	};
 	
+	Runnable poller = new Runnable() {
+		@Override
+		public void run() {
+			while (true) {
+				VisionHandler.getInstance().update(NetworkTable.getTable("GRIP/myLinesReport"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	};
+	
 	public void init() { // This sets everything up to listen!
 		try {
+			new ProcessBuilder(CLEAR_TMP_CMD).inheritIO().start();
 			new ProcessBuilder(GRIP_CMD).inheritIO().start();
+			//new ProcessBuilder("echo").inheritIO().start();
 		} catch (IOException e) {
-			System.out.println("GRIP IO is failing.");
+			System.out.println(e);
 		}
 		GRIPTable = NetworkTable.getTable("GRIP/myLinesReport");
-		GRIPTable.addTableListener(updater);
+		//GRIPTable.addTableListener(updater);
+		
+		new Thread(poller).start();
 	}
 	
 	public static VisionHandler getInstance() { // Yay. Boilerplate.
@@ -83,8 +106,9 @@ public class VisionHandler {
 	}
 	
 	public void update(ITable table) { // This does the workhorsing of the updates
-		System.out.println(table.getKeys());
+		//System.out.println(table.getKeys());
 		Line[] lineTable = getLines(table);
+		System.out.println(lineTable.length);
 		
 		ArrayList<Line> lines = new ArrayList<Line>(); // This would be a Set, if I could get sets working.
 		lines.addAll(Arrays.asList(lineTable));
@@ -98,6 +122,10 @@ public class VisionHandler {
 			} else {
 				vertical.add(line);
 			}
+		}
+		
+		if (vertical.size() < 4 || horizontal.size() < 2) {
+			return;
 		}
 		
 		// This section finds the average of the endpoints of the likely goal lines.
@@ -125,8 +153,11 @@ public class VisionHandler {
 		double[] y1s = lineReport.getNumberArray("y1", Constants.emptydoubleTable);
 		double[] y2s = lineReport.getNumberArray("y2", Constants.emptydoubleTable);
 		double[] lengths = lineReport.getNumberArray("length", Constants.emptydoubleTable);
-		double[] areas = lineReport.getNumberArray("area", Constants.emptydoubleTable);
+		double[] angles = lineReport.getNumberArray("angle", Constants.emptydoubleTable);
 		Line[] lineTable = new Line[x1s.length];
+		for (int i=0; i<x1s.length; i++) {
+			lineTable[i] = new Line();
+		}
 		for (int i=0; i<x1s.length; i++) {
 			lineTable[i].x1 = x1s[i];
 		}
@@ -143,7 +174,7 @@ public class VisionHandler {
 			lineTable[i].length = lengths[i];
 		}
 		for (int i=0; i<x1s.length; i++) {
-			lineTable[i].angle = areas[i];
+			lineTable[i].angle = angles[i];
 		}
 		return lineTable;
 	}

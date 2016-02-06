@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	static CANTalon left1, left2, right1, right2;
+	static CANTalon left1, left2, right1, right2, light;
 	static Joystick driveStick;
 	public static Drive drive;
 	static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF;
@@ -17,6 +17,7 @@ public class RobotMap {
     	left2  = new CANTalon(3);
     	right1  = new CANTalon(2);
     	right2  = new CANTalon(1);
+    	light = new CANTalon(5);
     	
     	CANTalon[] leftTable = {left1, left2, };//left3};
     	for (CANTalon t : leftTable) {
