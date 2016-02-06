@@ -23,14 +23,18 @@ public class ArduPilotAttitudeMonitor {
 
 	public void CheckForAndProcessNewData(){
 		try {
+			System.out.println("About to check for message");
 			MAVLinkMessage msg = rd.getNextMessageWithoutBlocking();
 			if (msg != null) {
-				if (msg instanceof msg_attitude ) {
+				System.out.println("Got a message of ID " + msg.messageType);
+				if (msg instanceof msg_attitude) {
 					msg_attitude attitude = (msg_attitude)msg;
 					pitch = attitude.pitch;
 					roll  = attitude.roll;
 					yaw   = attitude.yaw;
 				}
+			} else {
+				System.out.println("Did not get a message.");
 			}
 		} catch (Exception e) {
 			System.out.println("Got error reading message:");
