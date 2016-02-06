@@ -68,8 +68,7 @@ public class VisionHandler {
 	public void init() { // This sets everything up to listen!
 		try {
 			new ProcessBuilder(CLEAR_TMP_CMD).inheritIO().start();
-			new ProcessBuilder(GRIP_CMD).inheritIO().start();
-			//new ProcessBuilder("echo").inheritIO().start();
+			//new ProcessBuilder(GRIP_CMD).inheritIO().start();
 		} catch (IOException e) {
 			System.out.println(e);
 		}
@@ -84,6 +83,10 @@ public class VisionHandler {
 			return instance;
 		instance = new VisionHandler();
 		return getInstance();
+	}
+	
+	public boolean horizontalP(Line line) {
+		return horizontalP(line.angle);
 	}
 
 	public boolean horizontalP(double degrees) { // This determines if an angle is vertical or horizontal
@@ -106,86 +109,52 @@ public class VisionHandler {
 		return x;
 	}
 	
+	public double lineDistance(Line a, Line b) {
+		double w = Math.sqrt(Math.pow(a.x1-b.x1, 2) + Math.pow(a.y1-b.y1, 2));
+		double x = Math.sqrt(Math.pow(a.x1-b.x2, 2) + Math.pow(a.y1-b.y2, 2));
+		double y = Math.sqrt(Math.pow(a.x2-b.x1, 2) + Math.pow(a.y2-b.y1, 2));
+		double z = Math.sqrt(Math.pow(a.x2-b.x2, 2) + Math.pow(a.y2-b.y2, 2));
+		return Math.min(Math.min(w, x), Math.min(y, z));
+	}
+	
 	public void update(ITable table) { // This does the workhorsing of the updates
 		//System.out.println(table.getKeys());
 		Line[] lineTable = getLines(table);
-		System.out.println(lineTable.length);
+		//System.out.println(lineTable.length);
 		
 		ArrayList<Line> lines = new ArrayList<Line>(); // This would be a Set, if I could get sets working.
 		lines.addAll(Arrays.asList(lineTable));
 		lines.sort(sort);
 		
-		ArrayList<Pair<Line>> pairs = new ArrayList<Pair<Line>>();
-		while (lines.size() > 0) {
-			Line x = lines.remove(0); // Performance
-			Pair<Line> p = new Pair<Line>();
-			p.a = x;
-			for (Line l: lines) {
-				if (Math.abs(x.angle - l.angle) < Constants.parallelTolerance) {
-					lines.remove(l);
-					p.b = l;
-					break;
-				}
-			}
-			pairs.add(p);
+		ArrayList<Triple<Line>> targets = new ArrayList<Triple<Line>>();
+		
+		for (int a = 0; a < lines.size(); a++) {
+			Line p = lines.get(a);
+		    for (int b = a + 1; b < lines.size(); b++) {
+		    	Line q = lines.get(b);
+		        for (int c = b + 1; c < lines.size(); c++) {
+		        	Line r = lines.get(c);
+		        	if (lineDistance(p, q) 
+		        			< p.length/5 &&
+		        			lineDistance(q, r)
+		        			< q.length/5 &&
+		        			!horizontalP(p) && horizontalP(q) && !horizontalP(r)) {
+		        		targets.add(new Triple<Line>(lines.get(a), lines.get(b), lines.get(c)));
+		        	}
+		        }
+		    }
 		}
 		
-		ArrayList<TargetCandidate> targets = new ArrayList<TargetCandidate>();
-		for (Pair<Line> p : pairs) {
-			for (Pair<Line> q : pairs) {
-				for (Pair<Line> r : pairs) {
-					if (distance(p, q) < Constants.lineDistanceTolerance &&
-							distance(q,r) < Constants.lineDistanceTolerance) {
-						TargetCandidate t = new TargetCandidate();
-						targets.add(t);
-					}
-				}
-			}
+		System.out.println("Targets found: " + targets.size());
+		if (targets.size() > 0) {
+			Triple<Line> target = targets.get(0);
+			this.x = (target.a.x1+target.a.x2+target.c.x1+target.c.x2)/4;
+			// Note: When the bot aims at the bottom of the goal, this is the culprit:
+			this.y = (target.a.x1+target.b.x1)/2;
+			System.out.println(this.x + " - " + this.y);
 		}
 		
-		System.out.println("Found this many vision targets: ");
-		System.out.println(targets.size());
 		
-		TargetCandidate target = targets.get(0);
-		this.x = (target.bottom.a.x1+target.bottom.a.x2+target.bottom.b.x1+target.bottom.b.x2)/4;
-		// Note: When the bot aims at the bottom of the goal, this is the culprit:
-		this.y = (target.left.a.y1+target.left.b.y1+target.right.a.y1+target.right.b.y1)/4;
-		
-		
-	}
-	
-	double distance(Pair<Line> a, Pair<Line> b) {
-		// As an aside: Doing all this in Haskell would be something like this:
-		// let euclid = sqrt $ (x1-x2 ** 2)+(y1-y2 ** 2),
-		//	   xs = [f a | f <- [(.x1), (.y1)], a <- [a.a, a.b, b.a, b.b] in
-		//		fold min MAX_INT $ [euclid x1 x2 y1 y2 | x1 <- xs, x2 <- xs, y1 <- ys, y2 <- ys]
-		// Which is not only more readable, but much shorter, and more efficient.
-		Pair<Double> aEndpoint1 = new Pair<Double>(new Double((a.a.x1+a.b.x1)/2),
-													new Double((a.a.y1+a.b.y1)/2));
-		Pair<Double> aEndpoint2 = new Pair<Double>(new Double((a.a.x2+a.b.x2)/2),
-				new Double((a.a.y2+a.b.y2)/2));
-		Pair<Double> bEndpoint1 = new Pair<Double>(new Double((b.a.x1+b.b.x1)/2),
-				new Double((b.a.y1+b.b.y1)/2));
-		Pair<Double> bEndpoint2 = new Pair<Double>(new Double((b.a.x2+b.b.x2)/2),
-				new Double((b.a.y2+b.b.y2)/2));
-		double[] close = new double[4];
-		close[0] = Math.sqrt(Math.pow(aEndpoint1.a + bEndpoint1.a, 2) 
-							+ Math.pow(aEndpoint1.b + bEndpoint1.b, 2));
-		close[1] = Math.sqrt(Math.pow(aEndpoint1.a + bEndpoint2.a, 2) 
-				+ Math.pow(aEndpoint1.b + bEndpoint2.b, 2));
-		close[2] = Math.sqrt(Math.pow(aEndpoint2.a + bEndpoint1.a, 2) 
-				+ Math.pow(aEndpoint2.b + bEndpoint1.b, 2));
-		close[3] = Math.sqrt(Math.pow(aEndpoint2.a + bEndpoint2.a, 2) 
-				+ Math.pow(aEndpoint2.b + bEndpoint2.b, 2));
-		return findMin(Double.MAX_VALUE, close);
-	}
-	
-	double findMin(double init, double[] list) {
-		double acc = init;
-		for (int i=0; i<list.length; i++) {
-			acc = Math.min(acc,list[i]);
-		}
-		return acc;
 	}
 	
 	public Line[] getLines(ITable lineReport) { // This marshals stuff from the NetworkTable to
@@ -203,37 +172,37 @@ public class VisionHandler {
 		for (int i=0; i<x1s.length; i++) {
 			lineTable[i].x1 = x1s[i];
 		}
-		for (int i=0; i<x1s.length; i++) {
+		for (int i=0; i<x2s.length; i++) {
 			lineTable[i].x2 = x2s[i];
 		}
-		for (int i=0; i<x1s.length; i++) {
+		for (int i=0; i<y1s.length; i++) {
 			lineTable[i].y1 = y1s[i];
 		}
-		for (int i=0; i<x1s.length; i++) {
+		for (int i=0; i<y2s.length; i++) {
 			lineTable[i].y2 = y2s[i];
 		}
-		for (int i=0; i<x1s.length; i++) {
+		for (int i=0; i<lengths.length; i++) {
 			lineTable[i].length = lengths[i];
 		}
-		for (int i=0; i<x1s.length; i++) {
+		for (int i=0; i<angles.length; i++) {
 			lineTable[i].angle = angles[i];
 		}
 		return lineTable;
 	}
 	
 	private class TargetCandidate {
-		public Pair<Line> left, bottom, right;
+		public Triple<Line> t;
 	}
 	
-	private class Pair<T> {
-		public Pair(){
+	private class Triple<T> {
+		public Triple(){
 			;
 		}
-		public Pair(T arg1, T arg2) {
-			a = arg1; b = arg2;
+		public Triple(T arg1, T arg2, T arg3) {
+			a = arg1; b = arg2; c = arg3;
 		}
 
-		public T a, b;
+		public T a, b, c;
 	}
 	
 	private class Line { // This would be a struct, if java weren't stupid.

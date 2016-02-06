@@ -26,5 +26,5 @@ public class Constants {
 	static final double parallelTolerance = 10;
 	
 	// Vision Tracking Line Closeness (pixels)
-	static final double lineDistanceTolerance=10;
+	static final double lineDistanceTolerance=50;
 }
