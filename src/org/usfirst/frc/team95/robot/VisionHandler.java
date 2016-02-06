@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -113,37 +114,78 @@ public class VisionHandler {
 		ArrayList<Line> lines = new ArrayList<Line>(); // This would be a Set, if I could get sets working.
 		lines.addAll(Arrays.asList(lineTable));
 		lines.sort(sort);
-		ArrayList<Line> horizontal = new ArrayList<Line>(); // Again, sets.
-		ArrayList<Line> vertical = new ArrayList<Line>();
 		
-		for (Line line : lines) { // This splits them up.
-			if (horizontalP(line.angle)) {
-				horizontal.add(line);
-			} else {
-				vertical.add(line);
+		ArrayList<Pair<Line>> pairs = new ArrayList<Pair<Line>>();
+		while (lines.size() > 0) {
+			Line x = lines.remove(0); // Performance
+			Pair<Line> p = new Pair<Line>();
+			p.a = x;
+			for (Line l: lines) {
+				if (Math.abs(x.angle - l.angle) < Constants.parallelTolerance) {
+					lines.remove(l);
+					p.b = l;
+					break;
+				}
+			}
+			pairs.add(p);
+		}
+		
+		ArrayList<TargetCandidate> targets = new ArrayList<TargetCandidate>();
+		for (Pair<Line> p : pairs) {
+			for (Pair<Line> q : pairs) {
+				for (Pair<Line> r : pairs) {
+					if (distance(p, q) < Constants.lineDistanceTolerance &&
+							distance(q,r) < Constants.lineDistanceTolerance) {
+						TargetCandidate t = new TargetCandidate();
+						targets.add(t);
+					}
+				}
 			}
 		}
 		
-		if (vertical.size() < 4 || horizontal.size() < 2) {
-			return;
+		System.out.println("Found this many vision targets: ");
+		System.out.println(targets.size());
+		
+		TargetCandidate target = targets.get(0);
+		this.x = (target.bottom.a.x1+target.bottom.a.x2+target.bottom.b.x1+target.bottom.b.x2)/4;
+		// Note: When the bot aims at the bottom of the goal, this is the culprit:
+		this.y = (target.left.a.y1+target.left.b.y1+target.right.a.y1+target.right.b.y1)/4;
+		
+		
+	}
+	
+	double distance(Pair<Line> a, Pair<Line> b) {
+		// As an aside: Doing all this in Haskell would be something like this:
+		// let euclid = sqrt $ (x1-x2 ** 2)+(y1-y2 ** 2),
+		//	   xs = [f a | f <- [(.x1), (.y1)], a <- [a.a, a.b, b.a, b.b] in
+		//		fold min MAX_INT $ [euclid x1 x2 y1 y2 | x1 <- xs, x2 <- xs, y1 <- ys, y2 <- ys]
+		// Which is not only more readable, but much shorter, and more efficient.
+		Pair<Double> aEndpoint1 = new Pair<Double>(new Double((a.a.x1+a.b.x1)/2),
+													new Double((a.a.y1+a.b.y1)/2));
+		Pair<Double> aEndpoint2 = new Pair<Double>(new Double((a.a.x2+a.b.x2)/2),
+				new Double((a.a.y2+a.b.y2)/2));
+		Pair<Double> bEndpoint1 = new Pair<Double>(new Double((b.a.x1+b.b.x1)/2),
+				new Double((b.a.y1+b.b.y1)/2));
+		Pair<Double> bEndpoint2 = new Pair<Double>(new Double((b.a.x2+b.b.x2)/2),
+				new Double((b.a.y2+b.b.y2)/2));
+		double[] close = new double[4];
+		close[0] = Math.sqrt(Math.pow(aEndpoint1.a + bEndpoint1.a, 2) 
+							+ Math.pow(aEndpoint1.b + bEndpoint1.b, 2));
+		close[1] = Math.sqrt(Math.pow(aEndpoint1.a + bEndpoint2.a, 2) 
+				+ Math.pow(aEndpoint1.b + bEndpoint2.b, 2));
+		close[2] = Math.sqrt(Math.pow(aEndpoint2.a + bEndpoint1.a, 2) 
+				+ Math.pow(aEndpoint2.b + bEndpoint1.b, 2));
+		close[3] = Math.sqrt(Math.pow(aEndpoint2.a + bEndpoint2.a, 2) 
+				+ Math.pow(aEndpoint2.b + bEndpoint2.b, 2));
+		return findMin(Double.MAX_VALUE, close);
+	}
+	
+	double findMin(double init, double[] list) {
+		double acc = init;
+		for (int i=0; i<list.length; i++) {
+			acc = Math.min(acc,list[i]);
 		}
-		
-		// This section finds the average of the endpoints of the likely goal lines.
-		vertical.sort(sort);
-		horizontal.sort(sort);
-		try {
-			double n = average(vertical.subList(0, 4), Line.class.getField("x1"));
-			this.x = n + average(vertical.subList(0,  4), Line.class.getField("x2"));
-			this.x /= 2;
-			this.y = n; // Note: If this mis-aims vertically, this is the culpret.
-						// It assumes that x1 should be the endpoint closer to the top-left corner.
-						// If that's wrong, then this should be changed.
-		} catch (NoSuchFieldException | SecurityException e) {
-			System.out.println("Tell Daroc that the VisionHandler is misbehaving. (C)");
-		}
-		
-		
-		
+		return acc;
 	}
 	
 	public Line[] getLines(ITable lineReport) { // This marshals stuff from the NetworkTable to
@@ -177,6 +219,21 @@ public class VisionHandler {
 			lineTable[i].angle = angles[i];
 		}
 		return lineTable;
+	}
+	
+	private class TargetCandidate {
+		public Pair<Line> left, bottom, right;
+	}
+	
+	private class Pair<T> {
+		public Pair(){
+			;
+		}
+		public Pair(T arg1, T arg2) {
+			a = arg1; b = arg2;
+		}
+
+		public T a, b;
 	}
 	
 	private class Line { // This would be a struct, if java weren't stupid.
