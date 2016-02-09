@@ -13,10 +13,15 @@ public class ArduPilotAthenaInputStream extends InputStream {
 	}
 
 	@Override
-	public int read() throws IOException {
-		System.out.println("Called read");
+	public int read(){
 		byte[] data = sp.read(1);
-		System.out.println("Got " + data.length + " bytes, first byte=" + data[0]);
-		return data[0];
+		int num = data[0] & 0xff;
+		return num;
 	}
+	
+	@Override
+	public int available()
+	{
+		return sp.getBytesReceived();
+	}	
 }

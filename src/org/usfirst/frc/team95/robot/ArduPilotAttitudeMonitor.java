@@ -29,7 +29,6 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 		try {
 			MAVLinkMessage msg = rd.getNextMessageWithoutBlocking();
 			if (msg != null) {
-				System.out.println("Got a message of ID " + msg.messageType);
 				if (msg instanceof msg_attitude) {
 					msg_attitude attitude = (msg_attitude)msg;
 					pitch = attitude.pitch;
@@ -38,7 +37,7 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Got error reading message:");
+			System.out.println("Got error reading Ardupilot message:");
 			e.printStackTrace();
 		}
 	}
