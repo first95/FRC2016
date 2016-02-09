@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, right1, right2, light, arm;
+	public static CANTalon left1, left2, right1, right2, light, arm, shoot;
 	public static Joystick driveStick;
 	public static Drive drive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF;
@@ -19,6 +19,8 @@ public class RobotMap {
     	right2  = new CANTalon(1);
     	light = new CANTalon(5);
     	arm = new CANTalon(6);
+    	// Shooter motor
+    	shoot = new CANTalon(7);
     	
     	CANTalon[] leftTable = {left1, left2, };//left3};
     	for (CANTalon t : leftTable) {
@@ -63,6 +65,23 @@ public class RobotMap {
     	arm.setPID(Constants.armP, Constants.armI, Constants.armD);
     	arm.changeControlMode(CANTalon.TalonControlMode.Position);
     	arm.enableControl();
+    	
+    	//Do we need this? Copied the arm stuff but changed the Constants
+    	shoot.setPosition(0);
+    	shoot.enableBrakeMode(Constants.brakeMode);
+    	if (Constants.useVoltageRamp) {
+    		shoot.setVoltageRampRate(Constants.voltageRampRate);
+    	} else {
+    		shoot.setVoltageRampRate(0);
+    	}
+    	shoot.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    	shoot.configEncoderCodesPerRev(1024);
+    	
+    	shoot.setF(Constants.shootF);
+    	shoot.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
+    	shoot.changeControlMode(CANTalon.TalonControlMode.Position);
+    	shoot.enableControl();
+    	////////////////////
     	
     	left1.setF(Constants.F);
     	left1.setPID(Constants.P, Constants.I, Constants.D);
