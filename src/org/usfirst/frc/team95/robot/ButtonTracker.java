@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * 
  * @author daroc
  */
-public class ButtonTracker {
+public class ButtonTracker implements PollableSubsystem {
 	int mChannel;
 	Joystick mJoystick;
 	boolean mNow, mLast;
@@ -33,5 +33,9 @@ public class ButtonTracker {
 	public void update() {
 		mLast = mNow;
 		mNow = mJoystick.getRawButton(mChannel);
+	}
+	
+	public void init() {
+		;
 	}
 }

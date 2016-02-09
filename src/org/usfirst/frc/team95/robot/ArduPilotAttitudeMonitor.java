@@ -6,7 +6,7 @@ import org.mavlink.*;
 import org.mavlink.messages.*;
 import org.mavlink.messages.ardupilotmega.*;
 
-public class ArduPilotAttitudeMonitor {
+public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 	ArduPilotAthenaInputStream is = null;
 	MAVLinkReader rd = null;
 	
@@ -20,8 +20,12 @@ public class ArduPilotAttitudeMonitor {
 		DataInputStream dis = new DataInputStream(is);
 		rd = new MAVLinkReader(dis, IMAVLinkMessage.MAVPROT_PACKET_START_V10);
 	}
+	
+	public void init() {
+		;
+	}
 
-	public void CheckForAndProcessNewData(){
+	public void update() { // Check for and Process New Data
 		try {
 			MAVLinkMessage msg = rd.getNextMessageWithoutBlocking();
 			if (msg != null) {

@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.mavlink.*;
 import org.mavlink.messages.*;
@@ -24,6 +25,8 @@ import edu.wpi.first.wpilibj.CameraServer;
 public class Robot extends IterativeRobot {
 	CameraServer cameraServer;
 	ArduPilotAttitudeMonitor am = null;
+	ArrayList<PollableSubsystem> updates;
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -35,6 +38,18 @@ public class Robot extends IterativeRobot {
     	//cameraServer = CameraServer.getInstance();
     	//cameraServer.startAutomaticCapture("/dev/video0");
     	am = new ArduPilotAttitudeMonitor();
+    	
+    	updates.add(RobotMap.incP);
+    	updates.add(RobotMap.decP);
+    	updates.add(RobotMap.incI);
+    	updates.add(RobotMap.decI);
+    	updates.add(RobotMap.incD);
+    	updates.add(RobotMap.decD);
+    	updates.add(RobotMap.magInc);
+    	updates.add(RobotMap.magDec);
+    	updates.add(RobotMap.incF);
+    	updates.add(RobotMap.decF);
+    	updates.add(am);
     }
 
     /**
@@ -45,18 +60,11 @@ public class Robot extends IterativeRobot {
    
     public void commonPeriodic(){
     	SmartDashboard.putNumber("Test", 5);
-    	RobotMap.incP.update();
-    	RobotMap.decP.update();
-    	RobotMap.incI.update();
-    	RobotMap.decI.update();
-    	RobotMap.incD.update();
-    	RobotMap.decD.update();
-    	RobotMap.magInc.update();
-    	RobotMap.magDec.update();
-    	RobotMap.incF.update();
-    	RobotMap.decF.update();
     	
-    	am.CheckForAndProcessNewData();
+    	for (PollableSubsystem p : updates) {
+    		p.update();
+    	}
+    	
     	SmartDashboard.putNumber("Pitch", am.getPitch());
     	SmartDashboard.putNumber("Roll", am.getRoll());
     	SmartDashboard.putNumber("Yaw", am.getYaw());

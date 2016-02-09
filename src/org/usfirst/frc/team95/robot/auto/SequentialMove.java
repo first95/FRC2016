@@ -31,7 +31,7 @@ public class SequentialMove extends Auto {
 	
 	@Override
 	public boolean done() {
-		return false;
+		return table[table.length - 1].done();
 	}
 
 }

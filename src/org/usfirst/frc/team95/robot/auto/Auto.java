@@ -1,6 +1,8 @@
 package org.usfirst.frc.team95.robot.auto;
 
-public abstract class Auto {
+import org.usfirst.frc.team95.robot.PollableSubsystem;
+
+public abstract class Auto implements PollableSubsystem {
 	
 	public abstract void init();
 	
