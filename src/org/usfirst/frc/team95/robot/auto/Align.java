@@ -21,8 +21,8 @@ public class Align extends Auto {
 		y *= Constants.verticalPixelsToDegrees;
 		verticalRotation = y;
 		
-		Auto[] autoMoves = {new RotateBy(horizontalRotation),};
-				//new RaiseCannon(verticalRotation)};
+		Auto[] autoMoves = {new RotateBy(horizontalRotation),
+				new RaiseCannon(verticalRotation)};
 		
 		combined = new SimultaneousMove(autoMoves);
 		combined.init();

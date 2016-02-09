@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, right1, right2, light;
+	public static CANTalon left1, left2, right1, right2, light, arm;
 	public static Joystick driveStick;
 	public static Drive drive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF;
@@ -18,6 +18,7 @@ public class RobotMap {
     	right1  = new CANTalon(2);
     	right2  = new CANTalon(1);
     	light = new CANTalon(5);
+    	arm = new CANTalon(6);
     	
     	CANTalon[] leftTable = {left1, left2, };//left3};
     	for (CANTalon t : leftTable) {
@@ -47,6 +48,22 @@ public class RobotMap {
     		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     		t.configEncoderCodesPerRev(1024);
     	}
+    	
+    	arm.setPosition(0);
+    	arm.enableBrakeMode(Constants.brakeMode);
+    	if (Constants.useVoltageRamp) {
+    		arm.setVoltageRampRate(Constants.voltageRampRate);
+    	} else {
+    		arm.setVoltageRampRate(0);
+    	}
+    	arm.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    	arm.configEncoderCodesPerRev(1024);
+    	
+    	arm.setF(Constants.armF);
+    	arm.setPID(Constants.armP, Constants.armI, Constants.armD);
+    	arm.changeControlMode(CANTalon.TalonControlMode.Position);
+    	arm.enableControl();
+    	
     	left1.setF(Constants.F);
     	left1.setPID(Constants.P, Constants.I, Constants.D);
     	right1.setPID(Constants.P, Constants.I, Constants.D);
@@ -61,6 +78,9 @@ public class RobotMap {
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	right2.set(2);
     	right2.enableControl();
+    	
+    	
+    	
     	driveStick = new Joystick(0);
     	
     	incP = new ButtonTracker(driveStick, 5);

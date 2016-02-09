@@ -22,6 +22,7 @@ public class Constants {
 	// Drive PID
 	static public double P = 0, I = 0, D = 0, F = 0; // These aren't final because they are changed
 												// during PID Tuning
+	static public double armP = 0, armI = 0, armD = 0, armF = 0;
 	
 	//PID tuning speed
 	static public int magnitude = 0; // See previous note
