@@ -24,6 +24,10 @@ public class Constants {
 												// during PID Tuning
 	static public double armP = 0, armI = 0, armD = 0, armF = 0;
 	
+	// Shoot PID do we need this? Set initial PID values for the shooter motor
+	static public double shootP = 0, shootI = 0, shootD = 0, shootF = 0;
+	/////////////////////////////
+	
 	//PID tuning speed
 	static public int magnitude = 0; // See previous note
 	

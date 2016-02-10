@@ -98,6 +98,11 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopInit() {
     	RobotMap.light.set(0.5);
+    	
+    	// Added so when you press button 4 it activates the shooter class
+    	if(RobotMap.driveStick.getRawButton(4)){
+    		new Shooter();
+    	}
     }
     
     public void teleopPeriodic() {
@@ -105,6 +110,7 @@ public class Robot extends IterativeRobot {
 //        RobotMap.drive.arcadeDrive(RobotMap.driveStick);
         RobotMap.testDrive();
         PIDTuner();
+        
     }
     
     /**

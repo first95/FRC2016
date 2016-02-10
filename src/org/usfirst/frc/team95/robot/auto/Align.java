@@ -7,7 +7,9 @@ public class Align extends Auto {
 	
 	double horizontalRotation, verticalRotation;
 	Auto combined;
-	boolean done = false;
+	
+	// Changed to static for AutoShoot
+	static boolean done = false;
 
 	@Override
 	public void init() {
