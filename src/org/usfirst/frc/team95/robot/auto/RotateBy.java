@@ -19,6 +19,7 @@ public class RotateBy extends Auto {
 
 	@Override
 	public void init() {
+		timer.reset();
 		timer.start();
 		RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed/Constants.timeserRPM, 0);
 	}

@@ -99,7 +99,6 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
     	RobotMap.light.set(0.5);
     	
-    	
     }
     
     public void teleopPeriodic() {
