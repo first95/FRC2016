@@ -40,7 +40,7 @@ public class MAVLinkDecoder {
 				switch (message[3])
 						{
 				case 0x1E: 
-					parseAttitudeMessage();
+					parseAttitudeMessage(message);
 						}
 			}
 		}
