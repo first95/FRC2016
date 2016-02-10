@@ -8,8 +8,10 @@ public class Align extends Auto {
 	double horizontalRotation, verticalRotation;
 	Auto combined;
 	
-	// Changed to static for AutoShoot
-	static boolean done = false;
+	// Please, for the love of god, don't make this static.
+	// If you think you need to, you are doing it completely wrong.
+	// You should create a new SequentialMove containing a new Align instead.
+	boolean done = false;
 
 	@Override
 	public void init() {
