@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
 	public static CANTalon left1, left2, right1, right2, light, arm, shoot;
-	public static Joystick driveStick;
+	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
-	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, preserveHeading;
+	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, preserveHeading, fire;
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
@@ -20,7 +20,7 @@ public class RobotMap {
     	light = new CANTalon(5);
     	arm = new CANTalon(6);
     	// Shooter motor
-    	shoot = new CANTalon(7);
+    	shoot = new CANTalon(9);
     	
     	CANTalon[] leftTable = {left1, left2, };//left3};
     	for (CANTalon t : leftTable) {
@@ -81,7 +81,6 @@ public class RobotMap {
     	shoot.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
     	shoot.changeControlMode(CANTalon.TalonControlMode.Position);
     	shoot.enableControl();
-    	////////////////////
     	
     	left1.setF(Constants.F);
     	left1.setPID(Constants.P, Constants.I, Constants.D);
@@ -101,6 +100,7 @@ public class RobotMap {
     	
     	
     	driveStick = new Joystick(0);
+    	weaponStick = new Joystick(2);
     	
     	incP = new ButtonTracker(driveStick, 5);
     	decP = new ButtonTracker(driveStick, 10);
@@ -113,6 +113,7 @@ public class RobotMap {
     	incF = new ButtonTracker(driveStick, 13);
     	decF = new ButtonTracker(driveStick, 14);
     	preserveHeading = new ButtonTracker(driveStick, 2);
+    	fire = new ButtonTracker(weaponStick, 1);
     	
     	drive = new Drive(left1, right1);
 	}
