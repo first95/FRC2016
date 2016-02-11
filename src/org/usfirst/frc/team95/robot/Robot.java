@@ -6,9 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.mavlink.*;
 import org.mavlink.messages.*;
+import org.usfirst.frc.team95.robot.auto.Auto;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,7 +28,8 @@ import edu.wpi.first.wpilibj.CameraServer;
 public class Robot extends IterativeRobot {
 	CameraServer cameraServer;
 	ArduPilotAttitudeMonitor am = null;
-	ArrayList<PollableSubsystem> updates;
+	ArrayList<PollableSubsystem> updates = new ArrayList<PollableSubsystem>();
+	ArrayList<Auto> runningAutonomousMoves = new ArrayList<Auto>();
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -38,17 +42,10 @@ public class Robot extends IterativeRobot {
     	//cameraServer = CameraServer.getInstance();
     	//cameraServer.startAutomaticCapture("/dev/video0");
     	am = new ArduPilotAttitudeMonitor();
-    	
-    	updates.add(RobotMap.incP);
-    	updates.add(RobotMap.decP);
-    	updates.add(RobotMap.incI);
-    	updates.add(RobotMap.decI);
-    	updates.add(RobotMap.incD);
-    	updates.add(RobotMap.decD);
-    	updates.add(RobotMap.magInc);
-    	updates.add(RobotMap.magDec);
-    	updates.add(RobotMap.incF);
-    	updates.add(RobotMap.decF);
+
+    	for (ButtonTracker b : ButtonTracker.usedNumbers.get(RobotMap.driveStick)) {
+    		updates.add(b);
+    	}
     	updates.add(am);
     }
 
@@ -56,6 +53,13 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	for (Auto x : runningAutonomousMoves) {
+    		x.update();
+    		if (x.done()) {
+    			x.stop();
+    			runningAutonomousMoves.remove(x);
+    		}
+    	}
     }
    
     public void commonPeriodic(){
@@ -104,6 +108,17 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         commonPeriodic();
 //        RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+        
+        // Run all automoves
+        for (Auto x : runningAutonomousMoves) {
+    		x.update();
+    		if (x.done()) {
+    			x.stop();
+    			runningAutonomousMoves.remove(x);
+    		}
+    	}
+        
+        
         RobotMap.testDrive();
         PIDTuner();
         
