@@ -9,7 +9,7 @@ public class RobotMap {
 	public static CANTalon left1, left2, right1, right2, light, arm, shoot;
 	public static Joystick driveStick;
 	public static Drive drive;
-	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF;
+	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, preserveHeading;
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
@@ -112,7 +112,8 @@ public class RobotMap {
     	magDec = new ButtonTracker(driveStick, 4);
     	incF = new ButtonTracker(driveStick, 13);
     	decF = new ButtonTracker(driveStick, 14);
-
+    	preserveHeading = new ButtonTracker(driveStick, 2);
+    	
     	drive = new Drive(left1, right1);
 	}
 

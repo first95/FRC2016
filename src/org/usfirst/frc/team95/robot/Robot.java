@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.CameraServer;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	double headingToPreserve;
 	CameraServer cameraServer;
 	ArduPilotAttitudeMonitor am = null;
 	ArrayList<PollableSubsystem> updates;
@@ -38,7 +39,7 @@ public class Robot extends IterativeRobot {
     	//cameraServer = CameraServer.getInstance();
     	//cameraServer.startAutomaticCapture("/dev/video0");
     	am = new ArduPilotAttitudeMonitor();
-    	
+    	updates = new ArrayList<>();
     	updates.add(RobotMap.incP);
     	updates.add(RobotMap.decP);
     	updates.add(RobotMap.incI);
@@ -50,6 +51,8 @@ public class Robot extends IterativeRobot {
     	updates.add(RobotMap.incF);
     	updates.add(RobotMap.decF);
     	updates.add(am);
+    	updates.add(RobotMap.preserveHeading);
+    	
     }
 
     /**
@@ -82,10 +85,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Target X", VisionHandler.getInstance().x);
 		//System.out.println(VisionHandler.getInstance().x);
 		SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().y);
+		SmartDashboard.putNumber("Current Heading", am.getYaw());
+		SmartDashboard.putNumber("Heading To Preserve", headingToPreserve);
 		//System.out.println(VisionHandler.getInstance().y);
 		//System.out.println("----");
 		//SmartDashboard.putNumber("Right Setpoint", RobotMap.right1.getSetpoint());
 		//SmartDashboard.putNumber("Right Speed", RobotMap.right1.getSpeed());
+		if (RobotMap.preserveHeading.justPressedp()){
+			headingToPreserve = am.getYaw();
+		}
     }
     
     /**
@@ -99,7 +107,10 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
     	RobotMap.light.set(0.5);
     	
-    	
+    	// Added so when you press button 4 it activates the shooter class
+    	if(RobotMap.driveStick.getRawButton(4)){
+    		//new Shooter();
+    	}
     }
     
     public void teleopPeriodic() {
