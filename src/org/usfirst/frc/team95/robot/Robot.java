@@ -43,24 +43,12 @@ public class Robot extends IterativeRobot {
     	//cameraServer = CameraServer.getInstance();
     	//cameraServer.startAutomaticCapture("/dev/video0");
     	am = new ArduPilotAttitudeMonitor();
-<<<<<<< HEAD
-    	updates = new ArrayList<>();
-    	updates.add(RobotMap.incP);
-    	updates.add(RobotMap.decP);
-    	updates.add(RobotMap.incI);
-    	updates.add(RobotMap.decI);
-    	updates.add(RobotMap.incD);
-    	updates.add(RobotMap.decD);
-    	updates.add(RobotMap.magInc);
-    	updates.add(RobotMap.magDec);
-    	updates.add(RobotMap.incF);
-    	updates.add(RobotMap.decF);
-=======
+
 
     	for (ButtonTracker b : ButtonTracker.usedNumbers.get(RobotMap.driveStick)) {
     		updates.add(b);
     	}
->>>>>>> 99c65fc3684035c815b289ea3fbe86c936a7ef11
+
     	updates.add(am);
     	updates.add(RobotMap.preserveHeading);
     	
@@ -124,14 +112,12 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopInit() {
     	RobotMap.light.set(0.5);
-    	
-<<<<<<< HEAD
+
     	// Added so when you press button 4 it activates the shooter class
     	if(RobotMap.driveStick.getRawButton(4)){
     		//new Shooter();
     	}
-=======
->>>>>>> 99c65fc3684035c815b289ea3fbe86c936a7ef11
+
     }
     
     public void teleopPeriodic() {
