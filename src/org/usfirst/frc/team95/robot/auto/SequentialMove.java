@@ -17,6 +17,10 @@ public class SequentialMove extends Auto {
 		table = a.iterator();
 		move = table.next();
 	}
+	
+	public SequentialMove(Iterator<Auto> moves) {
+		this.table = moves;
+	}
 
 	@Override
 	public void init() {
