@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.function.Function;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
 public class VisionHandler {
-	double x, y; // These represent the x and y, in pixels, of the
+	double x, y, aimX, aimY, distance, power; // These represent the x and y, in pixels, of the
 		// center of the goal.
 	
 	public double getX() { // Getters!
@@ -22,6 +23,18 @@ public class VisionHandler {
 	
 	public double getY() {
 		return y;
+	}
+	
+	public double getAimX() {
+		return aimX;
+	}
+	
+	public double getAimY() {
+		return aimY;
+	}
+	
+	public double getPower() {
+		return power;
 	}
 	
 	private final static String[] CLEAR_TMP_CMD =
@@ -152,7 +165,31 @@ public class VisionHandler {
 			// Note: When the bot aims at the bottom of the goal, this is the culprit:
 			this.y = (target.a.x1+target.b.x1)/2;
 			System.out.println(this.x + " - " + this.y);
+			SmartDashboard.putBoolean("Ready to Autoaim", true);
+		} else {
+			SmartDashboard.putBoolean("Ready to Autoaim", false);
 		}
+		
+		
+		double tX = Constants.horizontalWidth/2 - x;
+		tX *= Constants.horizontalPixelsToDegrees;
+		
+		double tY = Constants.verticalHeight/2 - y;
+		tY *= Constants.verticalPixelsToDegrees;
+		
+		distance = 1/Math.tan(aimY)*(Constants.goalHeight-Math.sin(RobotMap.arm.getPosition())*
+				Constants.cameraDistanceToPivot);
+		
+		double V0y = Math.sqrt(2*Constants.gravity*Math.sin(RobotMap.arm.getPosition())*
+				Constants.shooterLength);
+		double t = V0y / Constants.gravity;
+		double V0x = distance / t;
+		double theta = Math.atan(V0y/V0x);
+		double m = Math.sqrt(Math.pow(V0y, 2) + Math.pow(V0x, 2));
+		
+		aimX = tX;
+		aimY = theta;
+		power = m * Constants.shootVelocityToRPM;
 		
 		
 	}

@@ -5,6 +5,11 @@ public class Constants {
 	// The distance from one wheel to the other.
 	static final public double robotWidth = 25;
 	static final public double wheelDiameter = 6;
+	static final public double cameraDistanceToPivot = 36; // inches
+	static final public double shooterLength = 40;
+	static final public double goalHeight = 96;
+	static final public double gravity = 386.1; // Inches per s^2
+	static final public double shootVelocityToRPM = 1;
 	
 	static final public double[] emptydoubleTable = new double[0];
 	

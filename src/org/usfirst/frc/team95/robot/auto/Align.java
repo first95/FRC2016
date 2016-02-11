@@ -15,15 +15,9 @@ public class Align extends Auto {
 
 	@Override
 	public void init() {
-		double x = VisionHandler.getInstance().getX();
-		x = Constants.horizontalWidth/2 - x;
-		x *= Constants.horizontalPixelsToDegrees;
-		horizontalRotation = x;
+		horizontalRotation = VisionHandler.getInstance().getAimX();
 		
-		double y = VisionHandler.getInstance().getY();
-		y = Constants.verticalHeight/2 - y;
-		y *= Constants.verticalPixelsToDegrees;
-		verticalRotation = y;
+		verticalRotation = VisionHandler.getInstance().getAimY();
 		
 		Auto[] autoMoves = {new RotateBy(horizontalRotation),
 				new RaiseCannon(verticalRotation)};
