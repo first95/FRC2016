@@ -6,9 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.mavlink.*;
 import org.mavlink.messages.*;
+import org.usfirst.frc.team95.robot.auto.Auto;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,7 +29,8 @@ public class Robot extends IterativeRobot {
 	double headingToPreserve;
 	CameraServer cameraServer;
 	ArduPilotAttitudeMonitor am = null;
-	ArrayList<PollableSubsystem> updates;
+	ArrayList<PollableSubsystem> updates = new ArrayList<PollableSubsystem>();
+	ArrayList<Auto> runningAutonomousMoves = new ArrayList<Auto>();
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -39,6 +43,7 @@ public class Robot extends IterativeRobot {
     	//cameraServer = CameraServer.getInstance();
     	//cameraServer.startAutomaticCapture("/dev/video0");
     	am = new ArduPilotAttitudeMonitor();
+<<<<<<< HEAD
     	updates = new ArrayList<>();
     	updates.add(RobotMap.incP);
     	updates.add(RobotMap.decP);
@@ -50,6 +55,12 @@ public class Robot extends IterativeRobot {
     	updates.add(RobotMap.magDec);
     	updates.add(RobotMap.incF);
     	updates.add(RobotMap.decF);
+=======
+
+    	for (ButtonTracker b : ButtonTracker.usedNumbers.get(RobotMap.driveStick)) {
+    		updates.add(b);
+    	}
+>>>>>>> 99c65fc3684035c815b289ea3fbe86c936a7ef11
     	updates.add(am);
     	updates.add(RobotMap.preserveHeading);
     	
@@ -59,6 +70,13 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	for (Auto x : runningAutonomousMoves) {
+    		x.update();
+    		if (x.done()) {
+    			x.stop();
+    			runningAutonomousMoves.remove(x);
+    		}
+    	}
     }
    
     public void commonPeriodic(){
@@ -107,15 +125,29 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
     	RobotMap.light.set(0.5);
     	
+<<<<<<< HEAD
     	// Added so when you press button 4 it activates the shooter class
     	if(RobotMap.driveStick.getRawButton(4)){
     		//new Shooter();
     	}
+=======
+>>>>>>> 99c65fc3684035c815b289ea3fbe86c936a7ef11
     }
     
     public void teleopPeriodic() {
         commonPeriodic();
 //        RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+        
+        // Run all automoves
+        for (Auto x : runningAutonomousMoves) {
+    		x.update();
+    		if (x.done()) {
+    			x.stop();
+    			runningAutonomousMoves.remove(x);
+    		}
+    	}
+        
+        
         RobotMap.testDrive();
         PIDTuner();
         
