@@ -1,6 +1,8 @@
 package org.usfirst.frc.team95.robot;
 
 
+import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -140,7 +142,7 @@ public class RobotMap {
     	incF = new ButtonTracker(driveStick, 13);
     	decF = new ButtonTracker(driveStick, 14);
     	preserveHeading = new ButtonTracker(driveStick, 2);
-    	fire = new ButtonTracker(weaponStick, 1);
+    	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
     	
     	drive = new Drive(left1, right1);
 	}

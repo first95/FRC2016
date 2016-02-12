@@ -114,9 +114,9 @@ public class Robot extends IterativeRobot {
     	RobotMap.light.set(0.5);
 
     	// Added so when you press button 4 it activates the shooter class
-    	if(RobotMap.driveStick.getRawButton(4)){
+    	//if(RobotMap.driveStick.getRawButton(4)){
     		//new Shooter();
-    	}
+    	//}
 
     }
     
