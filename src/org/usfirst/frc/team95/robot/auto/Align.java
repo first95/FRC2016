@@ -20,7 +20,8 @@ public class Align extends Auto {
 		verticalRotation = VisionHandler.getInstance().getAimY();
 		
 		Auto[] autoMoves = {new RotateBy(horizontalRotation),
-				new RaiseCannon(verticalRotation)};
+				new RaiseCannon(verticalRotation),
+				new Charge()};
 		
 		combined = new SimultaneousMove(autoMoves);
 		combined.init();
