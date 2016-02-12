@@ -6,32 +6,28 @@ import org.usfirst.frc.team95.robot.VisionHandler;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class Shoot extends Auto { // Assumes Cannon is Charged
-	Timer timer = new Timer();
+public class Charge extends Auto{
+	
+	double shootTolerance = VisionHandler.getInstance().getPower() * Constants.shootPowTol;
 	boolean done = false;
 	
 	@Override
 	public void init() {
-		timer.reset();
-		timer.start();
-		RobotMap.shoot1L.set(1);
+		RobotMap.shoot2L.setSetpoint(VisionHandler.getInstance().getPower());
 	}
 
 	@Override
 	public void update() {
-		if (timer.get() >= 1){
+		if(RobotMap.shoot2L.getSpeed() > VisionHandler.getInstance().getPower() - shootTolerance && 
+				RobotMap.shoot2L.getSpeed() < VisionHandler.getInstance().getPower() + shootTolerance ){
 			done = true;
-			RobotMap.shoot1L.setSetpoint(0);
-			RobotMap.shoot2L.setSetpoint(0);
 		}
 		
 	}
 
 	@Override
 	public void stop() {
-		RobotMap.shoot1L.setSetpoint(0);
-		RobotMap.shoot2L.setSetpoint(0);
-		
+		;
 	}
 
 	@Override
