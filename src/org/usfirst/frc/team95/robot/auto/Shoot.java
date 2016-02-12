@@ -28,6 +28,8 @@ public class Shoot extends Auto{
 		
 		if (timer.get() >= 1){
 			done = true;
+			RobotMap.shoot1L.setSetpoint(0);
+			RobotMap.shoot2L.setSetpoint(0);
 		}
 		
 	}
