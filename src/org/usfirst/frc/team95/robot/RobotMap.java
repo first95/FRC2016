@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, right1, right2, light, arm, shoot;
+	public static CANTalon left1, left2, right1, right2, light, arm, shoot1L, shoot1R, shoot2L, shoot2R;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, preserveHeading, fire;
@@ -19,8 +19,11 @@ public class RobotMap {
     	right2  = new CANTalon(1);
     	light = new CANTalon(5);
     	arm = new CANTalon(6);
-    	// Shooter motor
-    	shoot = new CANTalon(9);
+    	// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
+    	shoot1L = new CANTalon(9);
+    	shoot1R = new CANTalon(10);
+    	shoot2L = new CANTalon(11);
+    	shoot2R = new CANTalon(12);
     	
     	CANTalon[] leftTable = {left1, left2, };//left3};
     	for (CANTalon t : leftTable) {
@@ -67,20 +70,44 @@ public class RobotMap {
     	arm.enableControl();
     	
     	//Do we need this? Copied the arm stuff but changed the Constants
-    	shoot.setPosition(0);
-    	shoot.enableBrakeMode(Constants.brakeMode);
+    	shoot1L.setPosition(0);
+    	shoot1L.enableBrakeMode(Constants.brakeMode);
     	if (Constants.useVoltageRamp) {
-    		shoot.setVoltageRampRate(Constants.voltageRampRate);
+    		shoot1L.setVoltageRampRate(Constants.voltageRampRate);
     	} else {
-    		shoot.setVoltageRampRate(0);
+    		shoot1L.setVoltageRampRate(0);
     	}
-    	shoot.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	shoot.configEncoderCodesPerRev(1024);
+    	shoot1L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    	shoot1L.configEncoderCodesPerRev(1024);
     	
-    	shoot.setF(Constants.shootF);
-    	shoot.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
-    	shoot.changeControlMode(CANTalon.TalonControlMode.Position);
-    	shoot.enableControl();
+    	shoot1L.setF(Constants.shootF);
+    	shoot1L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
+    	shoot1L.changeControlMode(CANTalon.TalonControlMode.Position);
+    	shoot1L.enableControl();
+    	
+    	shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	shoot1R.set(9);
+    	shoot1R.enableControl();
+    	
+    	shoot2L.setPosition(0);
+    	shoot2L.enableBrakeMode(Constants.brakeMode);
+    	if (Constants.useVoltageRamp) {
+    		shoot2L.setVoltageRampRate(Constants.voltageRampRate);
+    	} else {
+    		shoot2L.setVoltageRampRate(0);
+    	}
+    	shoot2L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    	shoot2L.configEncoderCodesPerRev(1024);
+    	
+    	shoot2L.setF(Constants.shootF);
+    	shoot2L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
+    	shoot2L.changeControlMode(CANTalon.TalonControlMode.Position);
+    	shoot2L.enableControl();
+    	
+    	shoot2R.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	shoot2R.set(11);
+    	shoot2R.enableControl();
+    	
     	
     	left1.setF(Constants.F);
     	left1.setPID(Constants.P, Constants.I, Constants.D);
