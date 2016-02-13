@@ -46,10 +46,10 @@ public class PreserveHeading extends HybridAutoDrive
 	public void drive(Joystick driveStick)
 	{
 		double leftSpeed = driveStick.getY();
-		double rightSpeed = driveStick.getY();
+		double rightSpeed = -driveStick.getY();
 
-		RobotMap.left1.setSetpoint(Constants.timeserRPM * leftSpeed);
-		RobotMap.right1.setSetpoint(Constants.timeserRPM * rightSpeed);
+		RobotMap.left1.setSetpoint(Constants.timeserRPM * leftSpeed * 0.001);
+		RobotMap.right1.setSetpoint(Constants.timeserRPM * rightSpeed * 0.001);
 
 	}
 
