@@ -20,6 +20,12 @@ public class Drive {
 	
 	//squared arcade style drive
 	public void arcadeDrive(double y, double z) {
+		if (Math.abs(y) <= Constants.deadBand) {
+			y = 0;
+		}
+		if (Math.abs(z) <= Constants.deadBand) {
+			z = 0;
+		}
 		tankDrive(z+y, z-y);
 	}
 	
@@ -27,12 +33,6 @@ public class Drive {
 	public void arcadeDrive(Joystick stick) {
 		double y = stick.getY()*(((stick.getThrottle()*-1)+1)/-2);
 		double z = stick.getZ()*(((stick.getThrottle()*-1)+1)/2);
-		if (Math.abs(y) <= Constants.deadBand) {
-			y = 0;
-		}
-		if (Math.abs(z) <= Constants.deadBand) {
-			z = 0;
-		}
-		arcadeDrive(y,z);
+		arcadeDrive(y, z);
 	}
 }
