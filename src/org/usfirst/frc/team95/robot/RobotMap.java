@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, right1, right2, light, arm1, arm2, shoot1L, shoot1R, shoot2L, shoot2R;
+	public static CANTalon left1, left2, left3, right1, right2, right3, light, arm1, arm2, shoot1L, shoot1R, shoot2L, shoot2R;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
 	public static ArmDrive armDrive;
@@ -20,13 +20,15 @@ public class RobotMap {
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
-    	left1  = new CANTalon(4);
-    	left2  = new CANTalon(3);
-    	right1  = new CANTalon(2);
-    	right2  = new CANTalon(1);
-    	light = new CANTalon(5);
-    	arm1 = new CANTalon(6);
-    	arm2 = new CANTalon(7);
+    	left1 = new CANTalon(1);
+    	left2 = new CANTalon(2);
+    	left3 = new CANTalon(3);
+    	right1 = new CANTalon(4);
+    	right2 = new CANTalon(5);
+    	right3 = new CANTalon(6);
+    	light = new CANTalon(13);
+    	arm1 = new CANTalon(7);
+    	arm2 = new CANTalon(8);
     	// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
     	shoot1L = new CANTalon(9);
     	shoot1R = new CANTalon(10);
@@ -35,7 +37,7 @@ public class RobotMap {
     	
     	am = new ArduPilotAttitudeMonitor();
     	
-    	CANTalon[] leftTable = {left1, left2, };//left3};
+    	CANTalon[] leftTable = {left1, left2, left3};
     	for (CANTalon t : leftTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
@@ -51,7 +53,7 @@ public class RobotMap {
     		
     	}
     	
-    	CANTalon[] rightTable = {right1, right2, };//left3};
+    	CANTalon[] rightTable = {right1, right2, right3};
     	for (CANTalon t : rightTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
@@ -80,7 +82,7 @@ public class RobotMap {
     	arm1.enableControl();
     	
     	arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	arm2.set(6);
+    	arm2.set(7);
     	arm2.enableControl();
     	
     	//Do we need this? Copied the arm stuff but changed the Constants
@@ -129,14 +131,20 @@ public class RobotMap {
     	left1.changeControlMode(CANTalon.TalonControlMode.PercentVbus); // Speed
     	left1.enableControl();
     	left2.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	left2.set(4);
+    	left2.set(1);
     	left2.enableControl();
+    	left3.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	left3.set(1);
+    	left3.enableControl();
     	right1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	right1.reverseSensor(true);
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	right2.set(2);
+    	right2.set(4);
     	right2.enableControl();
+    	right3.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	right3.set(4);
+    	right3.enableControl();
     	
     	
     	
