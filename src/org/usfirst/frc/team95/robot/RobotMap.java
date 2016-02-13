@@ -2,6 +2,7 @@ package org.usfirst.frc.team95.robot;
 
 
 import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
+import org.usfirst.frc.team95.robot.auto.PreserveHeading;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
@@ -11,7 +12,9 @@ public class RobotMap {
 	public static CANTalon left1, left2, right1, right2, light, arm, shoot1L, shoot1R, shoot2L, shoot2R;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
-	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, preserveHeading, fire;
+	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, preserveHeadingButtonTracker, fire;
+	public static PreserveHeading preserveHeadingAutoMove;
+	public static ArduPilotAttitudeMonitor am = null;
 	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
@@ -26,6 +29,8 @@ public class RobotMap {
     	shoot1R = new CANTalon(10);
     	shoot2L = new CANTalon(11);
     	shoot2R = new CANTalon(12);
+    	
+    	am = new ArduPilotAttitudeMonitor();
     	
     	CANTalon[] leftTable = {left1, left2, };//left3};
     	for (CANTalon t : leftTable) {
@@ -141,7 +146,8 @@ public class RobotMap {
     	magDec = new ButtonTracker(driveStick, 4);
     	incF = new ButtonTracker(driveStick, 13);
     	decF = new ButtonTracker(driveStick, 14);
-    	preserveHeading = new ButtonTracker(driveStick, 2);
+    	preserveHeadingAutoMove = new PreserveHeading();
+    	preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
     	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
     	
     	drive = new Drive(left1, right1);
