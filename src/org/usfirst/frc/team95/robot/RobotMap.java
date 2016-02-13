@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, left3, right1, right2, right3, light, arm1, arm2, shoot1L, shoot1R, shoot2L, shoot2R;
+	public static CANTalon left1, left2, left3, right1, right2, right3, arm1, arm2, shoot1L, shoot1R, shoot2L, shoot2R, light;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
 	public static ArmDrive armDrive;
@@ -19,14 +19,15 @@ public class RobotMap {
 	public static ArduPilotAttitudeMonitor am = null;
 	
 	public static void init() {
-		// Not actually mapped to the real locations on the robot
+		// drive motors
     	left1 = new CANTalon(1);
     	left2 = new CANTalon(2);
     	left3 = new CANTalon(3);
     	right1 = new CANTalon(4);
     	right2 = new CANTalon(5);
     	right3 = new CANTalon(6);
-    	light = new CANTalon(13);
+    	
+    	// arm shoulder motors
     	arm1 = new CANTalon(7);
     	arm2 = new CANTalon(8);
     	// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
@@ -34,6 +35,9 @@ public class RobotMap {
     	shoot1R = new CANTalon(10);
     	shoot2L = new CANTalon(11);
     	shoot2R = new CANTalon(12);
+    	
+    	// ring light for vision
+    	light = new CANTalon(13);
     	
     	am = new ArduPilotAttitudeMonitor();
     	
@@ -145,8 +149,6 @@ public class RobotMap {
     	right3.changeControlMode(CANTalon.TalonControlMode.Follower);
     	right3.set(4);
     	right3.enableControl();
-    	
-    	
     	
     	driveStick = new Joystick(0);
     	weaponStick = new Joystick(2);
