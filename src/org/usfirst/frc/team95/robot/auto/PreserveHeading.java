@@ -1,6 +1,7 @@
 package org.usfirst.frc.team95.robot.auto;
 
 import org.usfirst.frc.team95.robot.Constants;
+import org.usfirst.frc.team95.robot.Drive;
 import org.usfirst.frc.team95.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -9,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PreserveHeading extends HybridAutoDrive
 {
 	double headingToPreserve;
-
+	Drive drive;
 	public PreserveHeading()
 	{
 		// TODO Auto-generated constructor stub
@@ -25,7 +26,7 @@ public class PreserveHeading extends HybridAutoDrive
 	public void update()
 	{
 		SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
-
+		
 	}
 
 	@Override
@@ -45,20 +46,16 @@ public class PreserveHeading extends HybridAutoDrive
 	@Override
 	public void drive(Joystick driveStick)
 	{
-		double leftSpeed = driveStick.getY();
-		double rightSpeed = -driveStick.getY();
-	
-		if (Math.abs(leftSpeed) <= Constants.deadBand) {
-			leftSpeed = 0;
-		}
+		double ySpeed = driveStick.getY();
+		double yawError = headingToPreserve - RobotMap.am.getYaw();
+		double zCorrection;
 		
-		if (Math.abs(rightSpeed) <= Constants.deadBand) {
-			rightSpeed = 0;
-		}
+		zCorrection = yawError / Math.PI;
 		
-		RobotMap.left1.setSetpoint(Constants.timeserRPM * leftSpeed * 0.001);
-		RobotMap.right1.setSetpoint(Constants.timeserRPM * rightSpeed * 0.001);
-
+		drive = new Drive(RobotMap.left1, RobotMap.right1);
+		
+		drive.arcadeDrive(ySpeed*(((driveStick.getThrottle()*-1)+1)/-2), zCorrection*(((driveStick.getThrottle()*-1)+1)/2));
+		
 	}
 
 }
