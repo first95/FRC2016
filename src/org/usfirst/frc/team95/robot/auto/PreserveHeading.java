@@ -54,7 +54,8 @@ public class PreserveHeading extends HybridAutoDrive
 		
 		drive = new Drive(RobotMap.left1, RobotMap.right1);
 		
-		drive.arcadeDrive(ySpeed*(((driveStick.getThrottle()*-1)+1)/-2), zCorrection*(((driveStick.getThrottle()*-1)+1)/2));
+		SmartDashboard.putNumber("weapon throttle",(((RobotMap.weaponStick.getThrottle()*-1)+1)/2));
+		drive.arcadeDrive(ySpeed*(((driveStick.getThrottle()*-1)+1)/-2), zCorrection*(((RobotMap.weaponStick.getThrottle()*-1)+1)/2));
 		
 	}
 
