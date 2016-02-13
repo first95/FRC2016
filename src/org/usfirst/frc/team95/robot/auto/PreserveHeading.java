@@ -47,7 +47,15 @@ public class PreserveHeading extends HybridAutoDrive
 	{
 		double leftSpeed = driveStick.getY();
 		double rightSpeed = -driveStick.getY();
-
+	
+		if (Math.abs(leftSpeed) <= Constants.deadBand) {
+			leftSpeed = 0;
+		}
+		
+		if (Math.abs(rightSpeed) <= Constants.deadBand) {
+			rightSpeed = 0;
+		}
+		
 		RobotMap.left1.setSetpoint(Constants.timeserRPM * leftSpeed * 0.001);
 		RobotMap.right1.setSetpoint(Constants.timeserRPM * rightSpeed * 0.001);
 
