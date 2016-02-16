@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot
 
 		for (PollableSubsystem p : updates)
 		{
-			p.update();
+			//p.update();
 		}
 
 		SmartDashboard.putNumber("Pitch", RobotMap.am.getPitch());
@@ -140,9 +140,9 @@ public class Robot extends IterativeRobot
 			}
 		}
 
-		RobotMap.testDrive();
-		PIDTuner();
-		/*if (RobotMap.preserveHeadingButtonTracker.Pressedp())
+		//RobotMap.testDrive();
+		//PIDTuner();
+		if (RobotMap.preserveHeadingButtonTracker.Pressedp())
 		{
 			RobotMap.preserveHeadingAutoMove.drive(RobotMap.driveStick);
 			SmartDashboard.putString("Drive ", "preserveHeading Working");
@@ -151,7 +151,7 @@ public class Robot extends IterativeRobot
 		{
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 			SmartDashboard.putString("Drive ", "Normal Drive Working");
-		}*/
+		}
 
 	}
 

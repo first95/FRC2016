@@ -23,6 +23,7 @@ public class Constants {
 	
 	//deadbanding
 	static final public double deadBand = 0.007;
+	static final public double horDeadBand = 0.01;
 	
 	//tolerance for shooter speed
 	static final public double shootPowTol = .1;
