@@ -9,7 +9,11 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 public class ArduPilotAthenaInputStream extends InputStream {
 	SerialPort sp = null;
 	public ArduPilotAthenaInputStream() {
-		sp = new SerialPort(115200, Port.kUSB);		
+		try {
+			sp = new SerialPort(115200, Port.kUSB);
+		} catch (Exception e) {
+			;
+		}
 	}
 
 	@Override
@@ -22,6 +26,10 @@ public class ArduPilotAthenaInputStream extends InputStream {
 	@Override
 	public int available()
 	{
+		if (sp == null) {
+			return 0;
+		}
+		
 		return sp.getBytesReceived();
 	}	
 }

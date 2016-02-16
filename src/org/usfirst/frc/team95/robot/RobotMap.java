@@ -1,6 +1,7 @@
 package org.usfirst.frc.team95.robot;
 
 
+import org.usfirst.frc.team95.robot.auto.Align;
 import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
 import org.usfirst.frc.team95.robot.auto.PreserveHeading;
 
@@ -9,10 +10,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, right1, right2, light, arm, shoot1L, shoot1R, shoot2L, shoot2R;
+	public static CANTalon left1, left2, right1, right2, light, arm, shoot1L, shoot1R, shoot2L, 
+							shoot2R;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
-	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, preserveHeadingButtonTracker, fire;
+	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
+								preserveHeadingButtonTracker, fire, align;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	
@@ -149,6 +152,7 @@ public class RobotMap {
     	preserveHeadingAutoMove = new PreserveHeading();
     	preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
     	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
+    	align = new ButtonTracker(weaponStick, 2, new Align());
     	
     	drive = new Drive(left1, right1);
 	}

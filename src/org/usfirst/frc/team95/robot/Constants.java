@@ -52,5 +52,5 @@ public class Constants {
 	static final public double verticalHeight = 480; // (Pixels)
 	
 	// Autonomous
-	static final public double autonomousRotateSpeed=0.15;
+	static final public double autonomousRotateSpeed=0.1;
 }
