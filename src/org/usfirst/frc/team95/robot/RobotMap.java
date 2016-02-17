@@ -137,7 +137,7 @@ public class RobotMap {
     	
     	
     	driveStick = new Joystick(0);
-    	weaponStick = new Joystick(2);
+    	weaponStick = new Joystick(1);
     	
     	incP = new ButtonTracker(driveStick, 5);
     	decP = new ButtonTracker(driveStick, 10);

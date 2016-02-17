@@ -102,6 +102,8 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().y);
 		SmartDashboard.putNumber("Current Heading", RobotMap.am.getYaw());
 		SmartDashboard.putNumber("Heading To Preserve", headingToPreserve);
+		SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
+		SmartDashboard.putNumber("weapon throttle",((RobotMap.weaponStick.getThrottle()*-1)+1));
 		// System.out.println(VisionHandler.getInstance().y);
 		// System.out.println("----");
 		// SmartDashboard.putNumber("Right Setpoint",
