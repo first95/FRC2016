@@ -82,13 +82,15 @@ public class RobotMap {
     	
     	arm1.setF(Constants.armF);
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
-    	arm1.changeControlMode(CANTalon.TalonControlMode.Position);
+    	//arm1.changeControlMode(CANTalon.TalonControlMode.Position);
     	arm1.enableControl();
     	
-    	arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	arm2.set(7);
+    	//arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	arm2.set(0);
     	arm2.enableControl();
-    	
+    	arm2.setInverted(true);
+    	//can't invert a follower
+    	arm2.set(arm1.get());
     	//Do we need this? Copied the arm stuff but changed the Constants
     	shoot1L.setPosition(0);
     	shoot1L.enableBrakeMode(Constants.brakeMode);
@@ -102,11 +104,12 @@ public class RobotMap {
     	
     	shoot1L.setF(Constants.shootF);
     	shoot1L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
-    	shoot1L.changeControlMode(CANTalon.TalonControlMode.Position);
+    	//shoot1L.changeControlMode(CANTalon.TalonControlMode.Position);
     	shoot1L.enableControl();
     	
-    	shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	shoot1R.set(9);
+    	//shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	shoot1R.setInverted(true);
+    	shoot1R.set(0);
     	shoot1R.enableControl();
     	
     	shoot2L.setPosition(0);
@@ -121,11 +124,12 @@ public class RobotMap {
     	
     	shoot2L.setF(Constants.shootF);
     	shoot2L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
-    	shoot2L.changeControlMode(CANTalon.TalonControlMode.Position);
+    	//shoot2L.changeControlMode(CANTalon.TalonControlMode.Position);
     	shoot2L.enableControl();
     	
     	shoot2R.changeControlMode(CANTalon.TalonControlMode.Follower);
     	shoot2R.set(11);
+    	//shoot2R.setInverted(true);
     	shoot2R.enableControl();
     	
     	
@@ -151,7 +155,7 @@ public class RobotMap {
     	right3.enableControl();
     	
     	driveStick = new Joystick(0);
-    	weaponStick = new Joystick(2);
+    	weaponStick = new Joystick(1);
     	
     	incP = new ButtonTracker(driveStick, 5);
     	decP = new ButtonTracker(driveStick, 10);
@@ -165,7 +169,7 @@ public class RobotMap {
     	decF = new ButtonTracker(driveStick, 14);
     	preserveHeadingAutoMove = new PreserveHeading();
     	preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
-    	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
+    	//fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
     	pickUp = new ButtonTracker(weaponStick, 2, new PickUp());
     	
     	armDrive = new ArmDrive(arm1);

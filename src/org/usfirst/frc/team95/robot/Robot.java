@@ -152,8 +152,14 @@ public class Robot extends IterativeRobot
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 			SmartDashboard.putString("Drive ", "Normal Drive Working");
 		}
-
-	}
+		
+		//RobotMap.armDrive.Move(RobotMap.weaponStick.getY());
+		//testing code
+		RobotMap.shoot1L.set(RobotMap.weaponStick.getY());
+		RobotMap.shoot2L.set(RobotMap.weaponStick.getRawButton(1) ? -1 : 0);
+		//need manual following and invertion
+		RobotMap.shoot1R.set(RobotMap.shoot1L.get());
+		}
 
 	/**
 	 * This function is called periodically during test mode
