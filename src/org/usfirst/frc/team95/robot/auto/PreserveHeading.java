@@ -5,11 +5,13 @@ import org.usfirst.frc.team95.robot.Drive;
 import org.usfirst.frc.team95.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PreserveHeading extends HybridAutoDrive
 {
-	double headingToPreserve;
+	double headingToPreserve, ySpeed, yawError, zCorrection;
+	Timer timer = new Timer();
 	Drive drive;
 	public PreserveHeading()
 	{
@@ -26,7 +28,10 @@ public class PreserveHeading extends HybridAutoDrive
 	public void update()
 	{
 		SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
-		
+		SmartDashboard.putNumber("weapon throttle",((RobotMap.weaponStick.getThrottle()*-1)+1));
+		yawError = headingToPreserve - RobotMap.am.getYaw();
+		zCorrection = yawError / Math.PI;
+		SmartDashboard.putNumber("z Correction", zCorrection);
 	}
 
 	@Override
@@ -46,16 +51,9 @@ public class PreserveHeading extends HybridAutoDrive
 	@Override
 	public void drive(Joystick driveStick)
 	{
-		double ySpeed = driveStick.getY();
-		double yawError = headingToPreserve - RobotMap.am.getYaw();
-		double zCorrection;
-		
-		zCorrection = yawError / Math.PI;
-		
+		ySpeed = driveStick.getY();
 		drive = new Drive(RobotMap.left1, RobotMap.right1);
-		
-		SmartDashboard.putNumber("weapon throttle",(((RobotMap.weaponStick.getThrottle()*-1)+1)/2));
-		drive.arcadeDrive(ySpeed*(((driveStick.getThrottle()*-1)+1)/-2), zCorrection*(((RobotMap.weaponStick.getThrottle()*-1)+1)/2));
+	drive.arcadeDrive(ySpeed*(((driveStick.getThrottle()*-1)+1)/-2), zCorrection*((RobotMap.weaponStick.getThrottle()*-1)+1));
 		
 	}
 
