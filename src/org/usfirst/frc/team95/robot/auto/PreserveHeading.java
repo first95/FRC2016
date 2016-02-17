@@ -11,6 +11,7 @@ public class PreserveHeading extends HybridAutoDrive
 {
 	double headingToPreserve;
 	Drive drive;
+	
 	public PreserveHeading()
 	{
 		// TODO Auto-generated constructor stub

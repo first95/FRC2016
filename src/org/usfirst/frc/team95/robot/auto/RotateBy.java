@@ -12,23 +12,34 @@ public class RotateBy extends Auto {
 	
 	
 	public RotateBy(double angle) {
-		this.angle = angle;
-		distance = angle / 180 * Math.PI * Constants.robotWidth;
-		time = distance / Constants.autonomousRotateSpeed;
+		this.angle = angle; // Note to self: the problem is with units
+		distance = angle * Constants.robotWidth;
+		time = Math.abs(distance / (Constants.wheelDiameter * Math.PI));
+		time /= (Constants.timeserRPM * Constants.autonomousRotateSpeed);
+		time *= 60;
+		System.out.println(time);
+		
+		
+		// move * RPM
 	}
 
 	@Override
 	public void init() {
 		timer.reset();
 		timer.start();
-		RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed/Constants.timeserRPM, 0);
+		RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed*-sign(distance), 0);
 	}
 
 	@Override
 	public void update() {
+		System.out.println("Time: "+time);
+		System.out.println("Angle: "+angle);
+		System.out.println("Distance: "+distance);
 		if (timer.get() > time) {
 			done = true;
 			RobotMap.drive.tankDrive(0, 0);
+		} else {
+			RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed*-sign(distance), 0);
 		}
 		
 	}
@@ -44,5 +55,8 @@ public class RotateBy extends Auto {
 		return done;
 	}
 	
+	double sign(double a) {
+		return a < 0 ? -1 : 1;
+	}
 
 }

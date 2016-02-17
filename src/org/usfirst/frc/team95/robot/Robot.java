@@ -52,6 +52,12 @@ public class Robot extends IterativeRobot
 				updates.add(b);
 			}
 		}
+		
+		for (ButtonTracker b : ButtonTracker.usedNumbers.get(RobotMap.weaponStick)) {
+			if (b != null) {
+				updates.add(b);
+			}
+		}
 
 		updates.add(RobotMap.am);
 		updates.add(RobotMap.preserveHeadingButtonTracker);
@@ -147,10 +153,12 @@ public class Robot extends IterativeRobot
 		{
 			RobotMap.preserveHeadingAutoMove.drive(RobotMap.driveStick);
 			SmartDashboard.putString("Drive ", "preserveHeading Working");
+		} else if (RobotMap.align.Pressedp()) {
+			;
 		}
 		else
 		{
-			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+			//RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 			SmartDashboard.putString("Drive ", "Normal Drive Working");
 		}
 

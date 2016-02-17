@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -16,6 +17,9 @@ import edu.wpi.first.wpilibj.tables.ITableListener;
 public class VisionHandler {
 	double x, y, aimX, aimY, distance, power; // These represent the x and y, in pixels, of the
 		// center of the goal.
+	
+	public static Timer time = new Timer();
+	public static int count = 0;
 	
 	public double getX() { // Getters!
 		return x;
@@ -89,6 +93,16 @@ public class VisionHandler {
 		//GRIPTable.addTableListener(updater);
 		
 		new Thread(poller).start();
+		
+		GRIPTable.addTableListener(new ITableListener() {
+
+			@Override
+			public void valueChanged(ITable arg0, String arg1, Object arg2, boolean arg3) {
+				VisionHandler.count += 1;
+				System.out.println(VisionHandler.count/VisionHandler.time.get());
+			}
+			
+		}, true);
 	}
 	
 	public static VisionHandler getInstance() { // Yay. Boilerplate.
@@ -172,15 +186,15 @@ public class VisionHandler {
 		
 		
 		double tX = Constants.horizontalWidth/2 - x;
-		tX *= Constants.horizontalPixelsToDegrees;
+		tX *= Constants.horizontalPixelsToRadians;
 		
 		double tY = Constants.verticalHeight/2 - y;
-		tY *= Constants.verticalPixelsToDegrees;
+		tY *= Constants.verticalPixelsToRadians;
 		
-		distance = 1/Math.tan(aimY)*(Constants.goalHeight-Math.sin(RobotMap.arm.getPosition())*
+		distance = 1/Math.tan(tY)*(Constants.goalHeight-Math.sin(1)*
 				Constants.cameraDistanceToPivot);
 		
-		double V0y = Math.sqrt(2*Constants.gravity*Math.sin(RobotMap.arm.getPosition())*
+		double V0y = Math.sqrt(2*Constants.gravity*Math.sin(1)*
 				Constants.shooterLength);
 		double t = V0y / Constants.gravity;
 		double V0x = distance / t;
@@ -190,6 +204,9 @@ public class VisionHandler {
 		aimX = tX;
 		aimY = theta;
 		power = m * Constants.shootVelocityToRPM;
+		
+		SmartDashboard.putNumber("Turn: ", tX);
+		SmartDashboard.putNumber("Up: ", theta);
 		
 		
 	}
@@ -204,24 +221,38 @@ public class VisionHandler {
 		double[] angles = lineReport.getNumberArray("angle", Constants.emptydoubleTable);
 		Line[] lineTable = new Line[x1s.length];
 		for (int i=0; i<x1s.length; i++) {
+			if (i >= x1s.length)
+				break;
 			lineTable[i] = new Line();
 		}
 		for (int i=0; i<x1s.length; i++) {
+			if (i >= x1s.length)
+				break;
 			lineTable[i].x1 = x1s[i];
 		}
 		for (int i=0; i<x2s.length; i++) {
+			if (i >= x1s.length)
+				break;
 			lineTable[i].x2 = x2s[i];
 		}
 		for (int i=0; i<y1s.length; i++) {
+			if (i >= x1s.length)
+				break;
 			lineTable[i].y1 = y1s[i];
 		}
 		for (int i=0; i<y2s.length; i++) {
+			if (i >= x1s.length)
+				break;
 			lineTable[i].y2 = y2s[i];
 		}
 		for (int i=0; i<lengths.length; i++) {
+			if (i >= x1s.length)
+				break;
 			lineTable[i].length = lengths[i];
 		}
 		for (int i=0; i<angles.length; i++) {
+			if (i >= x1s.length)
+				break;
 			lineTable[i].angle = angles[i];
 		}
 		return lineTable;
