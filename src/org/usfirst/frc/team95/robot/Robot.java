@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot
 
 		for (PollableSubsystem p : updates)
 		{
-			p.update();
+			//p.update();
 		}
 
 		SmartDashboard.putNumber("Pitch", RobotMap.am.getPitch());
@@ -128,7 +128,6 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic()
 	{
 		commonPeriodic();
-		// RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 
 		// Run all automoves
 		for (Auto x : runningAutonomousMoves)
@@ -141,8 +140,8 @@ public class Robot extends IterativeRobot
 			}
 		}
 
-		// RobotMap.testDrive();
-		// PIDTuner();
+		//RobotMap.testDrive();
+		//PIDTuner();
 		if (RobotMap.preserveHeadingButtonTracker.Pressedp())
 		{
 			RobotMap.preserveHeadingAutoMove.drive(RobotMap.driveStick);
@@ -153,8 +152,14 @@ public class Robot extends IterativeRobot
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 			SmartDashboard.putString("Drive ", "Normal Drive Working");
 		}
-
-	}
+		
+		//RobotMap.armDrive.Move(RobotMap.weaponStick.getY());
+		//testing code
+		RobotMap.shoot1L.set(RobotMap.weaponStick.getY());
+		RobotMap.shoot2L.set(RobotMap.weaponStick.getRawButton(1) ? -1 : 0);
+		//need manual following and invertion
+		RobotMap.shoot1R.set(RobotMap.shoot1L.get());
+		}
 
 	/**
 	 * This function is called periodically during test mode

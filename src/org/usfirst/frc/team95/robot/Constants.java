@@ -19,10 +19,11 @@ public class Constants {
 	static final public boolean brakeMode = false;
 	
 	//for changing -1 - 1 to RPM
-	static final public double timeserRPM = 4425;
+	static final public double timeserRPM = 430.89;
 	
 	//deadbanding
 	static final public double deadBand = 0.007;
+	static final public double horDeadBand = 0.01;
 	
 	//tolerance for shooter speed
 	static final public double shootPowTol = .1;

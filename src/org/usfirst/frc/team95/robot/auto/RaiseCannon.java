@@ -12,7 +12,7 @@ public class RaiseCannon extends Auto {
 
 	@Override
 	public void init() {
-		RobotMap.arm.set(RobotMap.arm.get() + angle);
+		RobotMap.arm1.set(RobotMap.arm1.get() + angle);
 		
 	}
 

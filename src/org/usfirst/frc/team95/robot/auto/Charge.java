@@ -13,15 +13,15 @@ public class Charge extends Auto{
 	
 	@Override
 	public void init() {
-		RobotMap.shoot2L.setSetpoint(VisionHandler.getInstance().getPower());
+		RobotMap.shoot2L.setSetpoint(1);//VisionHandler.getInstance().getPower());
 	}
 
 	@Override
 	public void update() {
-		if(RobotMap.shoot2L.getSpeed() > VisionHandler.getInstance().getPower() - shootTolerance && 
-				RobotMap.shoot2L.getSpeed() < VisionHandler.getInstance().getPower() + shootTolerance ){
+		//if(RobotMap.shoot2L.getSpeed() > VisionHandler.getInstance().getPower() - shootTolerance && 
+			//	RobotMap.shoot2L.getSpeed() < VisionHandler.getInstance().getPower() + shootTolerance ){
 			done = true;
-		}
+		//}
 		
 	}
 

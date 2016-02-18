@@ -15,7 +15,7 @@ public class ArmDrive {
 	}
 	
 	public void ArmControll(Joystick stick) {
-		double y = stick.getY();
+		double y = stick.getY()*(((stick.getThrottle()*-1)+1)/-2);
 		if (Math.abs(y) <= Constants.deadBand) {
 			y = 0;
 		}
