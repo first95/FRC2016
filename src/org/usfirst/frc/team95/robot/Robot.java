@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
 
 import org.mavlink.*;
 import org.mavlink.messages.*;
@@ -16,6 +15,7 @@ import org.usfirst.frc.team95.robot.auto.Auto;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CameraServer;
 
@@ -82,11 +82,13 @@ public class Robot extends IterativeRobot
 		{
 			p.update();
 		}
-
+		
 		SmartDashboard.putNumber("Pitch", RobotMap.am.getPitch());
 		SmartDashboard.putNumber("Roll", RobotMap.am.getRoll());
 		SmartDashboard.putNumber("Yaw", RobotMap.am.getYaw());
-
+		
+		SmartDashboard.putNumber("ardutime", ArduPilotAttitudeMonitor.time);
+		
 		SmartDashboard.putNumber("P", Constants.P);
 		SmartDashboard.putNumber("10^6*I", Constants.I * (1e6));
 		SmartDashboard.putNumber("D", Constants.D);
@@ -104,6 +106,7 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("Heading To Preserve", headingToPreserve);
 		SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
 		SmartDashboard.putNumber("weapon throttle",((RobotMap.weaponStick.getThrottle()*-1)+1));
+		SmartDashboard.putNumber("driver throttle",((RobotMap.driveStick.getThrottle()*-1)+1));
 		// System.out.println(VisionHandler.getInstance().y);
 		// System.out.println("----");
 		// SmartDashboard.putNumber("Right Setpoint",

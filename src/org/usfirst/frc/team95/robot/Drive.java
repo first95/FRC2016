@@ -31,8 +31,8 @@ public class Drive {
 	
 	//gets the joystick values for stuff and adds throttle sensitivity (redundant negatives on y are nessacary for some reason
 	public void arcadeDrive(Joystick stick) {
-		double y = stick.getY()*(((stick.getThrottle()*-1)+1)/-2);
-		double z = stick.getZ()*(((stick.getThrottle()*-1)+1)/2);
+		double y = stick.getY()*-.05;//(((stick.getThrottle()*-1)+1)/-2); for testing, wanted throttle and lower sensitivity
+		double z = stick.getZ()*.05;//(((stick.getThrottle()*-1)+1)/2);
 		arcadeDrive(y, z);
 	}
 }
