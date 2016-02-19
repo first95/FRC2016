@@ -14,7 +14,8 @@ public class RobotMap {
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
 	public static ArmDrive armDrive;
-	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, preserveHeadingButtonTracker, fire, pickUp;
+	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
+				preserveHeadingButtonTracker, fire, pickUp;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	
@@ -41,6 +42,7 @@ public class RobotMap {
     	
     	am = new ArduPilotAttitudeMonitor();
     	
+    	//talon setup
     	CANTalon[] leftTable = {left1, left2, left3};
     	for (CANTalon t : leftTable) {
     		t.setPosition(0);
@@ -169,7 +171,7 @@ public class RobotMap {
     	decF = new ButtonTracker(driveStick, 14);
     	preserveHeadingAutoMove = new PreserveHeading();
     	preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
-    	//fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
+    	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
     	pickUp = new ButtonTracker(weaponStick, 2, new PickUp());
     	
     	armDrive = new ArmDrive(arm1);
