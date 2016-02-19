@@ -25,7 +25,7 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 	}
 	
 	public void init() {
-		msg_param_set msg = new msg_param_set(1,1);
+		/*msg_param_set msg = new msg_param_set(1,1);
 		msg.param_id = new char[]{'S', 'R', '0', '_', 'E', 'X', 'T', 'R', 'A', '1', 0, 0, 0, 0, 0, 0};
 		msg.param_value = 10;
 		msg.param_type = 1;
@@ -36,7 +36,7 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public void update() { // Check for and Process New Data
