@@ -31,5 +31,15 @@ public class ArduPilotAthenaInputStream extends InputStream {
 		}
 		
 		return sp.getBytesReceived();
-	}	
+	}
+	
+	public void write(byte[] buffer)
+	{
+		try {
+			sp.write(buffer, buffer.length);
+			sp.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

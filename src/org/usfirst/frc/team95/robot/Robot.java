@@ -61,6 +61,10 @@ public class Robot extends IterativeRobot
 
 		updates.add(RobotMap.am);
 		updates.add(RobotMap.preserveHeadingButtonTracker);
+		
+		for (PollableSubsystem p: updates) {
+			p.init();
+		}
 
 	}
 
