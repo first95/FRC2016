@@ -162,6 +162,7 @@ public class Robot extends IterativeRobot
 		RobotMap.shoot1R.set(RobotMap.shoot1L.get());*/
 		}
 
+	
 	/**
 	 * This function is called periodically during test mode
 	 */

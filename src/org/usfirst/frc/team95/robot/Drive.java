@@ -12,27 +12,27 @@ public class Drive {
 		this.right = right;
 	}
 	
-	//pure tank controlls and switch to RPM
+	//pure tank controlls (not) and switch to RPM
 	public void tankDrive(double leftsp, double rightsp) {
 		left.set(leftsp);// * Constants.timeserRPM);
 		right.set(rightsp);// * Constants.timeserRPM);
 	}
 	
-	//squared arcade style drive
-	public void arcadeDrive(double y, double z) {
-		tankDrive(z+y, z-y);
+	//arcade style drive
+	public void arcadeDrive(double y, double x) {
+		tankDrive(x+y, x-y);
 	}
 	
 	//gets the joystick values for stuff and adds throttle sensitivity (redundant negatives on y are nessacary for some reason
 	public void arcadeDrive(Joystick stick) {
 		double y = stick.getY()*(((stick.getThrottle()*-1)+1)/-2);
-		double z = stick.getX()*(((stick.getThrottle()*-1)+1)/2);
+		double x = stick.getX()*(((stick.getThrottle()*-1)+1)/2);
 		if (Math.abs(y) <= Constants.deadBand) {
 			y = 0;
 		}
-		if (Math.abs(z) <= Constants.horDeadBand) {
-			z = 0;
+		if (Math.abs(x) <= Constants.horDeadBand) {
+			x = 0;
 		}
-		arcadeDrive(y,z);
+		arcadeDrive(y,x);
 	}
 }
