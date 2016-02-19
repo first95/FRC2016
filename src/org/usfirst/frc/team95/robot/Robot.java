@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot
 
 		updates.add(RobotMap.am);
 		updates.add(RobotMap.preserveHeadingButtonTracker);
-
+		updates.add(RobotMap.fire);
 	}
 
 	/**
