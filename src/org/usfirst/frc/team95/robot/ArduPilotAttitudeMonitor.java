@@ -6,14 +6,16 @@ import org.mavlink.*;
 import org.mavlink.messages.*;
 import org.mavlink.messages.ardupilotmega.*;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 	ArduPilotAthenaInputStream is = null;
 	MAVLinkReader rd = null;
-	
+	Timer arduTime = new Timer();
 	double pitch = 0;
 	double roll  = 0;
 	double yaw   = 0;
-	
+	static double time;
 	
 	public ArduPilotAttitudeMonitor() {
 		is = new ArduPilotAthenaInputStream();
@@ -30,10 +32,13 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 			MAVLinkMessage msg = rd.getNextMessageWithoutBlocking();
 			if (msg != null) {
 				if (msg instanceof msg_attitude) {
+					time = arduTime.get();
 					msg_attitude attitude = (msg_attitude)msg;
 					pitch = attitude.pitch;
 					roll  = attitude.roll;
 					yaw   = attitude.yaw;
+					arduTime.reset();
+					arduTime.start();
 				}
 			}
 		} catch (Exception e) {
