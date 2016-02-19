@@ -153,10 +153,11 @@ public class Robot extends IterativeRobot
 			SmartDashboard.putString("Drive ", "Normal Drive Working");
 		}
 		
-		//RobotMap.armDrive.Move(RobotMap.weaponStick.getY());
+		RobotMap.arm1.set(RobotMap.weaponStick.getY());
+		RobotMap.arm2.set(RobotMap.weaponStick.getY());
 		//testing code
-		RobotMap.shoot1L.set(RobotMap.weaponStick.getY());
-		RobotMap.shoot2L.set(RobotMap.weaponStick.getRawButton(1) ? -1 : 0);
+		//RobotMap.shoot1L.set(RobotMap.weaponStick.getY());
+		//RobotMap.shoot2L.set(RobotMap.weaponStick.getRawButton(1) ? -1 : 0);
 		//need manual following and invertion
 		RobotMap.shoot1R.set(RobotMap.shoot1L.get());
 		}
