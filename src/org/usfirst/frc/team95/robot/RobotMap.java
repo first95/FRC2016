@@ -103,8 +103,8 @@ public class RobotMap {
     	shoot1L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	shoot1L.configEncoderCodesPerRev(1024);
     	
-    	shoot1L.setF(Constants.shootF);
-    	shoot1L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
+    	//shoot1L.setF(Constants.shootF);
+    	//shoot1L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
     	//shoot1L.changeControlMode(CANTalon.TalonControlMode.Position);
     	shoot1L.enableControl();
     	
@@ -123,8 +123,8 @@ public class RobotMap {
     	shoot2L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	shoot2L.configEncoderCodesPerRev(1024);
     	
-    	shoot2L.setF(Constants.shootF);
-    	shoot2L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
+    	//shoot2L.setF(Constants.shootF);
+    	//shoot2L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
     	//shoot2L.changeControlMode(CANTalon.TalonControlMode.Position);
     	shoot2L.enableControl();
     	
@@ -136,6 +136,7 @@ public class RobotMap {
     	
     	left1.setF(Constants.F);
     	left1.setPID(Constants.P, Constants.I, Constants.D);
+    	right1.setF(Constants.F);
     	right1.setPID(Constants.P, Constants.I, Constants.D);
     	left1.changeControlMode(CANTalon.TalonControlMode.PercentVbus); // Speed
     	left1.enableControl();

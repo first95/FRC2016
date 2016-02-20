@@ -53,9 +53,16 @@ public class Robot extends IterativeRobot
 			}
 		}
 
+		for (ButtonTracker b : ButtonTracker.usedNumbers.get(RobotMap.weaponStick))
+		{
+			if (b != null)
+			{
+				updates.add(b);
+			}
+		}
+		
 		updates.add(RobotMap.am);
-		updates.add(RobotMap.preserveHeadingButtonTracker);
-		updates.add(RobotMap.fire);
+		
 	}
 
 	/**
@@ -80,7 +87,7 @@ public class Robot extends IterativeRobot
 
 		for (PollableSubsystem p : updates)
 		{
-			//p.update();
+			p.update();
 		}
 
 		SmartDashboard.putNumber("Pitch", RobotMap.am.getPitch());
@@ -141,7 +148,7 @@ public class Robot extends IterativeRobot
 		}
 
 		//RobotMap.testDrive();
-		//PIDTuner();
+		PIDTuner();
 		if (RobotMap.preserveHeadingButtonTracker.Pressedp())
 		{
 			RobotMap.preserveHeadingAutoMove.drive(RobotMap.driveStick);

@@ -32,6 +32,8 @@ public class PickUp extends Auto{
 
 	@Override
 	public boolean done() {
+		//RobotMap.shoot1L.setSetpoint(0);
+		//RobotMap.shoot2L.setSetpoint(0);
 		return done;
 	}
 
