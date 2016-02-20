@@ -93,7 +93,7 @@ public class RobotMap {
     	arm2.enableControl();
     	arm2.setInverted(true);
     	//can't invert a follower
-    	arm2.set(arm1.get());
+    	
     	//Do we need this? Copied the arm stuff but changed the Constants
     	shoot1L.setPosition(0);
     	shoot1L.enableBrakeMode(Constants.brakeMode);
@@ -112,7 +112,7 @@ public class RobotMap {
     	
     	//shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
     	shoot1R.setInverted(true);
-    	shoot1R.set(0);
+    	
     	shoot1R.enableControl();
     	
     	shoot2L.setPosition(0);
@@ -176,7 +176,7 @@ public class RobotMap {
     	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
     	pickUp = new ButtonTracker(weaponStick, 2, new PickUp());
     	
-        align = new ButtonTracker(weaponStick, 2, new Align());
+        align = new ButtonTracker(weaponStick, 4, new Align());
         
         relign = new ButtonTracker(weaponStick, 3, new PreserveHeading(0));
 
