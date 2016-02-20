@@ -1,6 +1,7 @@
 package org.usfirst.frc.team95.robot.auto;
 
 import org.usfirst.frc.team95.robot.Constants;
+import org.usfirst.frc.team95.robot.RobotMap;
 import org.usfirst.frc.team95.robot.VisionHandler;
 
 public class Align extends Auto {
@@ -19,9 +20,16 @@ public class Align extends Auto {
 		
 		verticalRotation = VisionHandler.getInstance().getAimY();
 		
-		Auto[] autoMoves = {new RotateBy(horizontalRotation),};
-				//new RaiseCannon(verticalRotation),};
-				//new Charge()};
+		double heading = RobotMap.am.getYaw()+horizontalRotation;
+		if (heading > Math.PI) {
+			heading -= Math.PI*2;
+		} else if (heading < -Math.PI) {
+			heading += Math.PI*2;
+		}
+		
+		Auto[] autoMoves = {new PreserveHeading(heading),
+				new RaiseCannon(verticalRotation),
+				new Charge()};
 		
 		combined = new SimultaneousMove(autoMoves);
 		combined.init();

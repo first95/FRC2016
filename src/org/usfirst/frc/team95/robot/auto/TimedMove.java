@@ -17,7 +17,10 @@ public class TimedMove extends Auto {
 	public void init() {
 		timer.reset();
 		timer.start();
-		RobotMap.drive.tankDrive(left, right);
+		if (RobotMap.driveLock == this || RobotMap.driveLock == null) {
+			RobotMap.driveLock = this;
+			RobotMap.drive.tankDrive(left, right);
+		}
 	}
 
 	@Override
@@ -31,7 +34,10 @@ public class TimedMove extends Auto {
 
 	@Override
 	public void stop() {
-		RobotMap.drive.tankDrive(0, 0);
+		if (RobotMap.driveLock == null || RobotMap.driveLock == this) {
+			RobotMap.drive.tankDrive(0, 0);
+			RobotMap.driveLock = null;
+		}
 	}
 
 	@Override

@@ -19,6 +19,8 @@ public class RobotMap {
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	
+	public static Object driveLock = null;
+	
 	public static void init() {
 		// Not actually mapped to the real locations on the robot
     	left1  = new CANTalon(4);

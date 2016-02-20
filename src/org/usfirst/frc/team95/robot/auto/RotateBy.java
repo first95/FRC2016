@@ -27,7 +27,10 @@ public class RotateBy extends Auto {
 	public void init() {
 		timer.reset();
 		timer.start();
-		RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed*-sign(distance), 0);
+		if (RobotMap.driveLock == this || RobotMap.driveLock == null) {
+			RobotMap.driveLock = this;
+			RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed*-sign(distance), 0);
+		}
 	}
 
 	@Override
@@ -35,18 +38,24 @@ public class RotateBy extends Auto {
 		System.out.println("Time: "+time);
 		System.out.println("Angle: "+angle);
 		System.out.println("Distance: "+distance);
-		if (timer.get() > time) {
-			done = true;
-			RobotMap.drive.tankDrive(0, 0);
-		} else {
-			RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed*-sign(distance), 0);
+		if ((RobotMap.driveLock == this || RobotMap.driveLock == null) && !done) {
+			RobotMap.driveLock = this;
+			if (timer.get() > time) {
+				done = true;
+				RobotMap.driveLock = null;
+				RobotMap.drive.tankDrive(0, 0);
+			} else {
+				RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed*-sign(distance), 0);
+			}
 		}
 		
 	}
 
 	@Override
 	public void stop() {
-		RobotMap.drive.tankDrive(0,0);
+		if (RobotMap.driveLock == null || RobotMap.driveLock == this) {
+			RobotMap.drive.tankDrive(0,0);
+		}
 		
 	}
 

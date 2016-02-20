@@ -52,6 +52,7 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 					arduTime.reset();
 					arduTime.start();
 				}
+				System.out.println("Message ID: "+msg.messageType);
 			}
 		} catch (Exception e) {
 			System.out.println("Got error reading Ardupilot message:");

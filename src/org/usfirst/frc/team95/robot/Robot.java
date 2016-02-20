@@ -158,17 +158,9 @@ public class Robot extends IterativeRobot
 
 		// RobotMap.testDrive();
 		// PIDTuner();
-		if (RobotMap.preserveHeadingButtonTracker.Pressedp())
+		if (RobotMap.driveLock == null)
 		{
-			RobotMap.preserveHeadingAutoMove.drive(RobotMap.driveStick);
-			SmartDashboard.putString("Drive ", "preserveHeading Working");
-		} else if (RobotMap.align.Pressedp()) {
-			;
-		}
-		else
-		{
-			//RobotMap.drive.arcadeDrive(RobotMap.driveStick);
-			SmartDashboard.putString("Drive ", "Normal Drive Working");
+			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
 
 	}

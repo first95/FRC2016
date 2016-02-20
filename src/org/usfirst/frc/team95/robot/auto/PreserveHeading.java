@@ -10,24 +10,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PreserveHeading extends HybridAutoDrive
 {
+	boolean manualHeading = false;
 	double headingToPreserve, ySpeed, yawError, zCorrection, timerSens, yawToSpeed;
 	Timer timer = new Timer();
 	Drive drive;
 	
 	public PreserveHeading()
 	{
-		// TODO Auto-generated constructor stub
+		;
+	}
+	
+	public PreserveHeading(double heading) {
+		headingToPreserve = heading;
+		manualHeading = true;
 	}
 
 	@Override
 	public void init()
 	{
-		headingToPreserve = RobotMap.am.getYaw();
+		if (!manualHeading) {
+			headingToPreserve = RobotMap.am.getYaw();
+		}
 	}
 
 	@Override
 	public void update()
 	{
+		if ((RobotMap.driveLock == null || RobotMap.driveLock == this) && !done()) {
+			RobotMap.driveLock = this;
+			yawError = headingToPreserve - RobotMap.am.getYaw();
+			zCorrection = yawError / Math.PI;
+			yawToSpeed = (zCorrection*((Constants.headingPreservationUnAgressiveness*-1)+1));
+			RobotMap.drive.arcadeDrive(RobotMap.driveStick.getY()*-.05, yawToSpeed);
+		} else if (RobotMap.driveLock == this && done()) {
+			RobotMap.driveLock = null;
+		}
+		
 		SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
 		SmartDashboard.putNumber("weapon throttle",((RobotMap.weaponStick.getThrottle()*-1)+1));
 		SmartDashboard.putNumber("yaw error", yawError);
@@ -39,15 +57,14 @@ public class PreserveHeading extends HybridAutoDrive
 	@Override
 	public void stop()
 	{
-		// TODO Auto-generated method stub
-
+		RobotMap.drive.arcadeDrive(0, 0);
 	}
 
 	@Override
 	public boolean done()
 	{
 		// TODO Auto-generated method stub
-		return true;
+		return Math.abs(yawError) < Constants.headingPreservationClosenessTolerance;
 	}
 
 	@Override
@@ -55,13 +72,8 @@ public class PreserveHeading extends HybridAutoDrive
 	{
 		yawError = headingToPreserve - RobotMap.am.getYaw();
 		zCorrection = yawError / Math.PI;
-		yawToSpeed = (zCorrection*((RobotMap.weaponStick.getThrottle()*-1)+1));
-		timerSens = yawToSpeed;
-		//ySpeed = driveStick.getY();
-		drive = new Drive(RobotMap.left1, RobotMap.right1);
-		//timer.reset();
-		//timer.start();
-		drive.arcadeDrive(driveStick.getY()*-.05, yawToSpeed);		
+		yawToSpeed = (zCorrection*((Constants.headingPreservationUnAgressiveness*-1)+1));
+		RobotMap.drive.arcadeDrive(driveStick.getY()*-.05, yawToSpeed);		
 		
 	}
 
