@@ -1,6 +1,7 @@
 package org.usfirst.frc.team95.robot;
 
 
+import org.usfirst.frc.team95.robot.auto.Align;
 import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
 import org.usfirst.frc.team95.robot.auto.PickUp;
 import org.usfirst.frc.team95.robot.auto.PreserveHeading;
@@ -15,9 +16,10 @@ public class RobotMap {
 	public static Drive drive;
 	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
-				preserveHeadingButtonTracker, fire, pickUp;
+				preserveHeadingButtonTracker, fire, pickUp, align, relign;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
+	public static Object driveLock = null;
 	
 	public static void init() {
 		// drive motors
