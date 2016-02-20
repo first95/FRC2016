@@ -14,7 +14,7 @@ public class Shoot extends Auto { // Assumes Cannon is Charged
 	public void init() {
 		timer.reset();
 		timer.start();
-		RobotMap.shoot1L.set(1);
+		RobotMap.shoot1L.set(-1);
 	}
 
 	@Override

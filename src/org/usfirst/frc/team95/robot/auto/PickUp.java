@@ -10,8 +10,8 @@ public class PickUp extends Auto{
 	
 	@Override
 	public void init() {
-		RobotMap.shoot1L.setSetpoint(-1);
-		RobotMap.shoot2L.setSetpoint(-1);
+		RobotMap.shoot1L.setSetpoint(1);
+		RobotMap.shoot2L.setSetpoint(0.5);
 		timer.reset();
 		timer.start();
 	}

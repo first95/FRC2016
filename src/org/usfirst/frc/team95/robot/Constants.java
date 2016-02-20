@@ -52,6 +52,9 @@ public class Constants {
 	static final public double horizontalWidth = 640; // (Pixels)
 	static final public double verticalHeight = 480; // (Pixels)
 	
+	static final public double headingPreservationUnAgressiveness = 7/8;
+	static final public double headingPreservationD = 0.5;
+	static final public double headingPreservationClosenessTolerance = 0;
 	// Autonomous
 	static final public double autonomousRotateSpeed=0.15;
 }

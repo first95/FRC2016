@@ -60,7 +60,6 @@ public class Robot extends IterativeRobot
 		}
 
 		updates.add(RobotMap.am);
-		//updates.add(RobotMap.preserveHeadingButtonTracker);
 		
 		for (PollableSubsystem p: updates) {
 			p.init();
@@ -150,7 +149,7 @@ public class Robot extends IterativeRobot
 	{
 		commonPeriodic();
 		// RobotMap.drive.arcadeDrive(RobotMap.driveStick);
-
+		RobotMap.armDrive.ArmControll(RobotMap.weaponStick);
 		// Run all automoves
 		for (Auto x : runningAutonomousMoves)
 		{
@@ -168,7 +167,9 @@ public class Robot extends IterativeRobot
 		{
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
-
+		
+		RobotMap.shoot1R.setSetpoint(RobotMap.shoot2R.get());
+		RobotMap.arm2.set(RobotMap.arm1.get());
 	}
 
 	/**

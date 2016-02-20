@@ -13,7 +13,7 @@ public class Charge extends Auto{
 	
 	@Override
 	public void init() {
-		RobotMap.shoot2L.setSetpoint(1);//VisionHandler.getInstance().getPower());
+		RobotMap.shoot2L.setSetpoint(-1);//VisionHandler.getInstance().getPower());
 	}
 
 	@Override
