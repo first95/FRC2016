@@ -104,9 +104,9 @@ public class Robot extends IterativeRobot
 		
 		SmartDashboard.putNumber("ardutime", ArduPilotAttitudeMonitor.time);
 		
-		SmartDashboard.putNumber("P", Constants.P);
-		SmartDashboard.putNumber("10^6*I", Constants.I * (1e6));
-		SmartDashboard.putNumber("D", Constants.D);
+		SmartDashboard.putNumber("P", Constants.headingPreservationP);
+		SmartDashboard.putNumber("10^6*I", Constants.headingPreservationI * (1e6));
+		SmartDashboard.putNumber("D", Constants.headingPreservationD);
 		SmartDashboard.putNumber("F", Constants.F);
 
 		SmartDashboard.putNumber("encoder position", RobotMap.left1.getEncPosition());
@@ -162,7 +162,7 @@ public class Robot extends IterativeRobot
 		}
 
 		// RobotMap.testDrive();
-		// PIDTuner();
+		PIDTuner();
 		if (RobotMap.driveLock == null)
 		{
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
@@ -200,32 +200,32 @@ public class Robot extends IterativeRobot
 		boolean changed = false;
 		if (RobotMap.decP.justPressedp())
 		{
-			Constants.P = Constants.P - (.1 * d);
+			Constants.headingPreservationP = Constants.headingPreservationP - (.1 * d);
 			changed = true;
 		}
 		else if (RobotMap.incP.justPressedp())
 		{
-			Constants.P = Constants.P + (.1 * d);
+			Constants.headingPreservationP = Constants.headingPreservationP + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.decI.justPressedp())
 		{
-			Constants.I = Constants.I - (.0000001 * d);
+			Constants.headingPreservationI = Constants.headingPreservationI - (.0000001 * d);
 			changed = true;
 		}
 		else if (RobotMap.incI.justPressedp())
 		{
-			Constants.I = Constants.I + (.0000001 * d);
+			Constants.headingPreservationI = Constants.headingPreservationI + (.0000001 * d);
 			changed = true;
 		}
 		if (RobotMap.decD.justPressedp())
 		{
-			Constants.D = Constants.D - (.1 * d);
+			Constants.headingPreservationD = Constants.headingPreservationD - (.1 * d);
 			changed = true;
 		}
 		else if (RobotMap.incD.justPressedp())
 		{
-			Constants.D = Constants.D + (.1 * d);
+			Constants.headingPreservationD = Constants.headingPreservationD + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.incF.justPressedp())

@@ -45,7 +45,7 @@ public class RobotMap {
     	am = new ArduPilotAttitudeMonitor();
     	
     	//talon setup
-    	CANTalon[] leftTable = {left1, left2, left3};
+    	CANTalon[] leftTable = {left1, left2,};// left3};
     	for (CANTalon t : leftTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
@@ -61,7 +61,7 @@ public class RobotMap {
     		
     	}
     	
-    	CANTalon[] rightTable = {right1, right2, right3};
+    	CANTalon[] rightTable = {right1, right2,};// right3};
     	for (CANTalon t : rightTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
@@ -145,18 +145,18 @@ public class RobotMap {
     	left2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	left2.set(1);
     	left2.enableControl();
-    	left3.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	left3.set(1);
-    	left3.enableControl();
+    	//left3.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	//left3.set(1);
+    	//left3.enableControl();
     	right1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	right1.reverseSensor(true);
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	right2.set(4);
     	right2.enableControl();
-    	right3.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	right3.set(4);
-    	right3.enableControl();
+    	//right3.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	//right3.set(4);
+    	//right3.enableControl();
     	
     	driveStick = new Joystick(0);
     	weaponStick = new Joystick(1);
