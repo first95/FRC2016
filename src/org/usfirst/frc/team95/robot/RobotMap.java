@@ -79,8 +79,7 @@ public class RobotMap {
     	} else {
     		arm1.setVoltageRampRate(0);
     	}
-    	arm1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	arm1.configEncoderCodesPerRev(1024);
+    	arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
     	
     	arm1.setF(Constants.armF);
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
