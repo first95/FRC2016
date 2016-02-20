@@ -8,20 +8,20 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Charge extends Auto{
 	
-	double shootTolerance = VisionHandler.getInstance().getPower() * Constants.shootPowTol;
+	//double shootTolerance = VisionHandler.getInstance().getPower() * Constants.shootPowTol;
 	boolean done = false;
 	
 	@Override
 	public void init() {
-		RobotMap.shoot2L.setSetpoint(VisionHandler.getInstance().getPower());
+		RobotMap.shoot2L.setSetpoint(1);//VisionHandler.getInstance().getPower());
 	}
 
 	@Override
 	public void update() {
-		if(RobotMap.shoot2L.getSpeed() > VisionHandler.getInstance().getPower() - shootTolerance && 
-				RobotMap.shoot2L.getSpeed() < VisionHandler.getInstance().getPower() + shootTolerance ){
+		//if(RobotMap.shoot2L.getSpeed() > VisionHandler.getInstance().getPower() - shootTolerance && 
+			//	RobotMap.shoot2L.getSpeed() < VisionHandler.getInstance().getPower() + shootTolerance ){
 			done = true;
-		}
+		//}
 		
 	}
 

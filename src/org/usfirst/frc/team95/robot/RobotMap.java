@@ -1,8 +1,8 @@
 package org.usfirst.frc.team95.robot;
 
 
-import org.usfirst.frc.team95.robot.auto.Align;
 import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
+import org.usfirst.frc.team95.robot.auto.PickUp;
 import org.usfirst.frc.team95.robot.auto.PreserveHeading;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -10,34 +10,40 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, right1, right2, light, arm, shoot1L, shoot1R, shoot2L, 
-							shoot2R;
+	public static CANTalon left1, left2, left3, right1, right2, right3, arm1, arm2, shoot1L, shoot1R, shoot2L, shoot2R, light;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
+	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
-								preserveHeadingButtonTracker, fire, align, relign;
+				preserveHeadingButtonTracker, fire, pickUp;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	
-	public static Object driveLock = null;
-	
 	public static void init() {
-		// Not actually mapped to the real locations on the robot
-    	left1  = new CANTalon(4);
-    	left2  = new CANTalon(3);
-    	right1  = new CANTalon(2);
-    	right2  = new CANTalon(1);
-    	light = new CANTalon(5);
-    	arm = new CANTalon(6);
+		// drive motors
+    	left1 = new CANTalon(1);
+    	left2 = new CANTalon(2);
+    	left3 = new CANTalon(3);
+    	right1 = new CANTalon(4);
+    	right2 = new CANTalon(5);
+    	right3 = new CANTalon(6);
+    	
+    	// arm shoulder motors
+    	arm1 = new CANTalon(7);
+    	arm2 = new CANTalon(8);
     	// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
     	shoot1L = new CANTalon(9);
     	shoot1R = new CANTalon(10);
     	shoot2L = new CANTalon(11);
     	shoot2R = new CANTalon(12);
     	
+    	// ring light for vision
+    	light = new CANTalon(13);
+    	
     	am = new ArduPilotAttitudeMonitor();
     	
-    	CANTalon[] leftTable = {left1, left2, };//left3};
+    	//talon setup
+    	CANTalon[] leftTable = {left1, left2, left3};
     	for (CANTalon t : leftTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
@@ -53,7 +59,7 @@ public class RobotMap {
     		
     	}
     	
-    	CANTalon[] rightTable = {right1, right2, };//left3};
+    	CANTalon[] rightTable = {right1, right2, right3};
     	for (CANTalon t : rightTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
@@ -66,21 +72,26 @@ public class RobotMap {
     		t.configEncoderCodesPerRev(1024);
     	}
     	
-    	arm.setPosition(0);
-    	arm.enableBrakeMode(Constants.brakeMode);
+    	arm1.setPosition(0);
+    	arm1.enableBrakeMode(Constants.brakeMode);
     	if (Constants.useVoltageRamp) {
-    		arm.setVoltageRampRate(Constants.voltageRampRate);
+    		arm1.setVoltageRampRate(Constants.voltageRampRate);
     	} else {
-    		arm.setVoltageRampRate(0);
+    		arm1.setVoltageRampRate(0);
     	}
-    	arm.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	arm.configEncoderCodesPerRev(1024);
+    	arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
     	
-    	arm.setF(Constants.armF);
-    	arm.setPID(Constants.armP, Constants.armI, Constants.armD);
-    	arm.changeControlMode(CANTalon.TalonControlMode.Position);
-    	arm.enableControl();
+    	arm1.setF(Constants.armF);
+    	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
+    	//arm1.changeControlMode(CANTalon.TalonControlMode.Position);
+    	arm1.enableControl();
     	
+    	//arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	arm2.set(0);
+    	arm2.enableControl();
+    	arm2.setInverted(true);
+    	//can't invert a follower
+    	arm2.set(arm1.get());
     	//Do we need this? Copied the arm stuff but changed the Constants
     	shoot1L.setPosition(0);
     	shoot1L.enableBrakeMode(Constants.brakeMode);
@@ -92,13 +103,14 @@ public class RobotMap {
     	shoot1L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	shoot1L.configEncoderCodesPerRev(1024);
     	
-    	shoot1L.setF(Constants.shootF);
-    	shoot1L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
-    	shoot1L.changeControlMode(CANTalon.TalonControlMode.Position);
+    	//shoot1L.setF(Constants.shootF);
+    	//shoot1L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
+    	//shoot1L.changeControlMode(CANTalon.TalonControlMode.Position);
     	shoot1L.enableControl();
     	
-    	shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	shoot1R.set(9);
+    	//shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	shoot1R.setInverted(true);
+    	shoot1R.set(0);
     	shoot1R.enableControl();
     	
     	shoot2L.setPosition(0);
@@ -111,32 +123,38 @@ public class RobotMap {
     	shoot2L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	shoot2L.configEncoderCodesPerRev(1024);
     	
-    	shoot2L.setF(Constants.shootF);
-    	shoot2L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
-    	shoot2L.changeControlMode(CANTalon.TalonControlMode.Position);
+    	//shoot2L.setF(Constants.shootF);
+    	//shoot2L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
+    	//shoot2L.changeControlMode(CANTalon.TalonControlMode.Position);
     	shoot2L.enableControl();
     	
     	shoot2R.changeControlMode(CANTalon.TalonControlMode.Follower);
     	shoot2R.set(11);
+    	//shoot2R.setInverted(true);
     	shoot2R.enableControl();
     	
     	
     	left1.setF(Constants.F);
     	left1.setPID(Constants.P, Constants.I, Constants.D);
+    	right1.setF(Constants.F);
     	right1.setPID(Constants.P, Constants.I, Constants.D);
     	left1.changeControlMode(CANTalon.TalonControlMode.PercentVbus); // Speed
     	left1.enableControl();
     	left2.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	left2.set(4);
+    	left2.set(1);
     	left2.enableControl();
+    	left3.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	left3.set(1);
+    	left3.enableControl();
     	right1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	right1.reverseSensor(true);
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	right2.set(2);
+    	right2.set(4);
     	right2.enableControl();
-    	
-    	
+    	right3.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	right3.set(4);
+    	right3.enableControl();
     	
     	driveStick = new Joystick(0);
     	weaponStick = new Joystick(1);
@@ -154,10 +172,13 @@ public class RobotMap {
     	preserveHeadingAutoMove = new PreserveHeading();
     	preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
     	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
-    	align = new ButtonTracker(weaponStick, 2, new Align());
+    	pickUp = new ButtonTracker(weaponStick, 2, new PickUp());
     	
-    	relign = new ButtonTracker(weaponStick, 3, new PreserveHeading(0));
-    	
+        align = new ButtonTracker(weaponStick, 2, new Align());
+        
+        relign = new ButtonTracker(weaponStick, 3, new PreserveHeading(0));
+
+    	armDrive = new ArmDrive(arm1);
     	drive = new Drive(left1, right1);
 	}
 

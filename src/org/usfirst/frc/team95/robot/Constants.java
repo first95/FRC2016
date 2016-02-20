@@ -3,7 +3,7 @@ package org.usfirst.frc.team95.robot;
 public class Constants {
 	
 	// The distance from one wheel to the other.
-	static final public double robotWidth = 39;
+	static final public double robotWidth = 25;
 	static final public double wheelDiameter = 6;
 	static final public double cameraDistanceToPivot = 36; // inches
 	static final public double shooterLength = 40;
@@ -19,10 +19,11 @@ public class Constants {
 	static final public boolean brakeMode = false;
 	
 	//for changing -1 - 1 to RPM
-	static final public double timeserRPM = 425;//4425;
+	static final public double timeserRPM = 430.89;
 	
 	//deadbanding
 	static final public double deadBand = 0.007;
+	static final public double horDeadBand = 0.01;
 	
 	//tolerance for shooter speed
 	static final public double shootPowTol = .1;
@@ -46,14 +47,11 @@ public class Constants {
 	static final public double lineDistanceTolerance = 50;
 	
 	// Vision - Camera specific conversions
-	static final public double horizontalPixelsToRadians = 0.1046875/180 * Math.PI;
-	static final public double verticalPixelsToRadians = 0.10625/180 * Math.PI;
+	static final public double horizontalPixelsToDegrees = 0.1046875;
+	static final public double verticalPixelsToDegrees = 0.10625;
 	static final public double horizontalWidth = 640; // (Pixels)
 	static final public double verticalHeight = 480; // (Pixels)
 	
 	// Autonomous
-	static final public double autonomousRotateSpeed = 0.1;
-	static final public double headingPreservationUnAgressiveness = 15/16;
-	static final public double headingPreservationClosenessTolerance = 0.05;
-	static final public double headingPreservationD = 0.5;
+	static final public double autonomousRotateSpeed=0.15;
 }
