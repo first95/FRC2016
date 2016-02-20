@@ -13,9 +13,10 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 	ArduPilotAthenaInputStream is = null;
 	MAVLinkReader rd = null;
 	Timer arduTime = new Timer();
-	double pitch = 0;
-	double roll  = 0;
-	double yaw   = 0;
+	double pitch   = 0;
+	double roll    = 0;
+	double yaw     = 0;
+	double yawRate = 0;
 	static double time;
 	
 	public ArduPilotAttitudeMonitor() {
@@ -46,13 +47,14 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 				if (msg instanceof msg_attitude) {
 					time = arduTime.get();
 					msg_attitude attitude = (msg_attitude)msg;
-					pitch = attitude.pitch;
-					roll  = attitude.roll;
-					yaw   = attitude.yaw;
+					pitch   = attitude.pitch;
+					roll    = attitude.roll;
+					yaw     = attitude.yaw;
+					yawRate = attitude.yawspeed;
 					arduTime.reset();
 					arduTime.start();
 				}
-				System.out.println("Message ID: "+msg.messageType);
+				//System.out.println("Message ID: "+msg.messageType);
 			}
 		} catch (Exception e) {
 			System.out.println("Got error reading Ardupilot message:");
@@ -60,7 +62,8 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 		}
 	}
 	
-	public double getPitch() { return pitch; }
-	public double getRoll()  { return roll; }
-	public double getYaw()   { return yaw; }
+	public double getPitch()   { return pitch; }
+	public double getRoll()    { return roll; }
+	public double getYaw()     { return yaw; }
+	public double getYawRate() { return yawRate; }
 }

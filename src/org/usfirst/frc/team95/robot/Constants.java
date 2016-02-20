@@ -53,6 +53,7 @@ public class Constants {
 	
 	// Autonomous
 	static final public double autonomousRotateSpeed = 0.1;
-	static final public double headingPreservationUnAgressiveness = 3/4;
+	static final public double headingPreservationUnAgressiveness = 15/16;
 	static final public double headingPreservationClosenessTolerance = 0.05;
+	static final public double headingPreservationD = 0.5;
 }

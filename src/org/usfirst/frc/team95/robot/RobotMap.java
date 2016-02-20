@@ -15,7 +15,7 @@ public class RobotMap {
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
-								preserveHeadingButtonTracker, fire, align;
+								preserveHeadingButtonTracker, fire, align, relign;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	
@@ -155,6 +155,8 @@ public class RobotMap {
     	preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
     	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
     	align = new ButtonTracker(weaponStick, 2, new Align());
+    	
+    	relign = new ButtonTracker(weaponStick, 3, new PreserveHeading(0));
     	
     	drive = new Drive(left1, right1);
 	}

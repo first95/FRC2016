@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot
 		}
 
 		updates.add(RobotMap.am);
-		updates.add(RobotMap.preserveHeadingButtonTracker);
+		//updates.add(RobotMap.preserveHeadingButtonTracker);
 		
 		for (PollableSubsystem p: updates) {
 			p.init();
@@ -91,6 +91,12 @@ public class Robot extends IterativeRobot
 		for (PollableSubsystem p : updates)
 		{
 			p.update();
+		}
+		
+		if (RobotMap.driveLock != null) {
+			SmartDashboard.putString("Drive Lock:", RobotMap.driveLock.getClass().getName());
+		} else {
+			SmartDashboard.putString("Drive Lock:", "Nothing");
 		}
 		
 		SmartDashboard.putNumber("Pitch", RobotMap.am.getPitch());

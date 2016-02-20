@@ -178,7 +178,7 @@ public class VisionHandler {
 			this.x = (target.a.x1+target.a.x2+target.c.x1+target.c.x2)/4;
 			// Note: When the bot aims at the bottom of the goal, this is the culprit:
 			this.y = (target.a.x1+target.b.x1)/2;
-			System.out.println(this.x + " - " + this.y);
+			//System.out.println(this.x + " - " + this.y);
 			SmartDashboard.putBoolean("Ready to Autoaim", true);
 		} else {
 			SmartDashboard.putBoolean("Ready to Autoaim", false);
@@ -186,7 +186,7 @@ public class VisionHandler {
 		
 		
 		double tX = Constants.horizontalWidth/2 - x;
-		tX *= Constants.horizontalPixelsToRadians;
+		tX *= -Constants.horizontalPixelsToRadians;
 		
 		double tY = Constants.verticalHeight/2 - y;
 		tY *= Constants.verticalPixelsToRadians;
@@ -206,6 +206,7 @@ public class VisionHandler {
 		power = m * Constants.shootVelocityToRPM;
 		
 		SmartDashboard.putNumber("Turn: ", tX);
+		System.out.println("Turn: " + tX);
 		SmartDashboard.putNumber("Up: ", theta);
 		
 		

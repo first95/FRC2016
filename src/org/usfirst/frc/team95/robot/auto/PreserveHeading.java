@@ -28,6 +28,9 @@ public class PreserveHeading extends HybridAutoDrive
 	@Override
 	public void init()
 	{
+		if (RobotMap.driveLock == null) {
+			RobotMap.driveLock = this;
+		}
 		if (!manualHeading) {
 			headingToPreserve = RobotMap.am.getYaw();
 		}
@@ -36,14 +39,14 @@ public class PreserveHeading extends HybridAutoDrive
 	@Override
 	public void update()
 	{
-		if ((RobotMap.driveLock == null || RobotMap.driveLock == this) && !done()) {
+		if ((RobotMap.driveLock == null || RobotMap.driveLock == this)) {
 			RobotMap.driveLock = this;
 			yawError = headingToPreserve - RobotMap.am.getYaw();
 			zCorrection = yawError / Math.PI;
-			yawToSpeed = (zCorrection*((Constants.headingPreservationUnAgressiveness*-1)+1));
+			double a = zCorrection*((Constants.headingPreservationUnAgressiveness*-1)+1);
+			SmartDashboard.putNumber("P Term: ", a);
+			yawToSpeed = diminish(a, RobotMap.am.getYawRate()*Constants.headingPreservationD);
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick.getY()*-.05, yawToSpeed);
-		} else if (RobotMap.driveLock == this && done()) {
-			RobotMap.driveLock = null;
 		}
 		
 		SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
@@ -57,6 +60,9 @@ public class PreserveHeading extends HybridAutoDrive
 	@Override
 	public void stop()
 	{
+		if (RobotMap.driveLock == this) {
+			RobotMap.driveLock = null;
+		}
 		RobotMap.drive.arcadeDrive(0, 0);
 	}
 
@@ -75,6 +81,18 @@ public class PreserveHeading extends HybridAutoDrive
 		yawToSpeed = (zCorrection*((Constants.headingPreservationUnAgressiveness*-1)+1));
 		RobotMap.drive.arcadeDrive(driveStick.getY()*-.05, yawToSpeed);		
 		
+	}
+	
+	double diminish(double a, double b) {
+		b = Math.abs(b);
+		if (Math.abs(a) < b) {
+			return 0;
+		} else if (a > 0) {
+			return a - b;
+		} else if (a < 0) {
+			return a + b;
+		}
+		return 0;
 	}
 
 }
