@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Charge extends Auto{
 	
-	double shootTolerance = VisionHandler.getInstance().getPower() * Constants.shootPowTol;
+	//double shootTolerance = VisionHandler.getInstance().getPower() * Constants.shootPowTol;
 	boolean done = false;
 	
 	@Override

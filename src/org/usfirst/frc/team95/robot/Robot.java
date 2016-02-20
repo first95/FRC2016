@@ -53,9 +53,9 @@ public class Robot extends IterativeRobot
 			}
 		}
 
-		/*updates.add(RobotMap.am);
+		updates.add(RobotMap.am);
 		updates.add(RobotMap.preserveHeadingButtonTracker);
-		updates.add(RobotMap.fire);*/
+		updates.add(RobotMap.fire);
 	}
 
 	/**
@@ -140,20 +140,20 @@ public class Robot extends IterativeRobot
 			}
 		}
 
-		RobotMap.testDrive();
-		PIDTuner();
-		//if (RobotMap.preserveHeadingButtonTracker.Pressedp())
-		//{
-		//	RobotMap.preserveHeadingAutoMove.drive(RobotMap.driveStick);
-		//  SmartDashboard.putString("Drive ", "preserveHeading Working");
-		//}
-		//else
-		//{
+		//RobotMap.testDrive();
+		//PIDTuner();
+		if (RobotMap.preserveHeadingButtonTracker.Pressedp())
+		{
+			RobotMap.preserveHeadingAutoMove.drive(RobotMap.driveStick);
+		  SmartDashboard.putString("Drive ", "preserveHeading Working");
+		}
+		else
+		{
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 			SmartDashboard.putString("Drive ", "Normal Drive Working");
-		//}
+		}
 		
-		//RobotMap.armDrive.Move(RobotMap.weaponStick.getY());
+		RobotMap.armDrive.Move(RobotMap.weaponStick.getY());
 		//need manual following and invertion
 		RobotMap.shoot1R.set(RobotMap.shoot1L.get());
 		}
