@@ -23,6 +23,9 @@ public class Shoot extends Auto { // Assumes Cannon is Charged
 			done = true;
 			RobotMap.shoot1L.setSetpoint(0);
 			RobotMap.shoot2L.setSetpoint(0);
+		}else {
+			RobotMap.shoot1L.setSetpoint(-1);
+			RobotMap.shoot2L.setSetpoint(-1);
 		}
 		
 	}

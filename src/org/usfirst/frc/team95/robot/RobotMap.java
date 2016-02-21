@@ -55,7 +55,7 @@ public class RobotMap {
     			t.setVoltageRampRate(0.0);
     		}
     		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    		t.configEncoderCodesPerRev(1024);
+    		t.configEncoderCodesPerRev(256);
     		
     		t.setIZone(10);
     		
@@ -71,7 +71,7 @@ public class RobotMap {
     			t.setVoltageRampRate(0.0);
     		}
     		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    		t.configEncoderCodesPerRev(1024);
+    		t.configEncoderCodesPerRev(256);
     	}
     	
     	arm1.setPosition(0);
@@ -103,7 +103,7 @@ public class RobotMap {
     		shoot1L.setVoltageRampRate(0);
     	}
     	shoot1L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	shoot1L.configEncoderCodesPerRev(1024);
+    	shoot1L.configEncoderCodesPerRev(256);
     	
     	//shoot1L.setF(Constants.shootF);
     	//shoot1L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
@@ -123,7 +123,7 @@ public class RobotMap {
     		shoot2L.setVoltageRampRate(0);
     	}
     	shoot2L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	shoot2L.configEncoderCodesPerRev(1024);
+    	shoot2L.configEncoderCodesPerRev(256);
     	
     	//shoot2L.setF(Constants.shootF);
     	//shoot2L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
@@ -140,7 +140,7 @@ public class RobotMap {
     	left1.setPID(Constants.P, Constants.I, Constants.D);
     	right1.setF(Constants.F);
     	right1.setPID(Constants.P, Constants.I, Constants.D);
-    	left1.changeControlMode(CANTalon.TalonControlMode.PercentVbus); // Speed
+    	left1.changeControlMode(CANTalon.TalonControlMode.Speed); // Speed
     	left1.enableControl();
     	left2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	left2.set(1);
@@ -148,7 +148,7 @@ public class RobotMap {
     	left3.changeControlMode(CANTalon.TalonControlMode.Follower);
     	left3.set(1);
     	left3.enableControl();
-    	right1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+    	right1.changeControlMode(CANTalon.TalonControlMode.Speed);
     	right1.reverseSensor(true);
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -167,8 +167,8 @@ public class RobotMap {
     	decI = new ButtonTracker(driveStick, 9);
     	incD = new ButtonTracker(driveStick, 7);
     	decD = new ButtonTracker(driveStick, 8);
-    	magInc = new ButtonTracker(driveStick, 3);
-    	magDec = new ButtonTracker(driveStick, 4);
+    	magInc = new ButtonTracker(driveStick, 4);
+    	magDec = new ButtonTracker(driveStick, 3);
     	incF = new ButtonTracker(driveStick, 13);
     	decF = new ButtonTracker(driveStick, 14);
     	preserveHeadingAutoMove = new PreserveHeading();
@@ -185,9 +185,9 @@ public class RobotMap {
 	}
 
 	public static void testDrive() {
-		double setpoint = ((1.0-driveStick.getThrottle()) * 1);
+		double setpoint = ((((driveStick.getThrottle()*-1)+1)/2) * Constants.timeserRPM);
 		SmartDashboard.putNumber("Throttle setpoint", setpoint);
-		SmartDashboard.putNumber("OutputVoltage", left1.getOutputVoltage());
+		SmartDashboard.putNumber("Left speed", (left1.getSpeed() * (60/2.56)));
 		
 		// on/off step function
 		if(driveStick.getRawButton(1)) {

@@ -29,9 +29,11 @@ public class Constants {
 	static final public double shootPowTol = .1;
 	
 	// Drive PID
-	static public double P = 0, I = 0, D = 0, F = 0; // These aren't final because they are changed
+	static public double P = 0, I = 0, D = 0, F = 2.3742; // These aren't final because they are changed
 												// during PID Tuning
 	static public double armP = 0, armI = 0, armD = 0, armF = 0;
+	
+	//ARM ENCODER ON GROUND BEHIND ROBOT IS -.287 
 	
 	// Shoot PID do we need this? Set initial PID values for the shooter motor
 	static public double shootP = 0, shootI = 0, shootD = 0, shootF = 0;

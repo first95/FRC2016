@@ -108,7 +108,7 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("10^6*I", Constants.I * (1e6));
 		SmartDashboard.putNumber("D", Constants.D);
 		SmartDashboard.putNumber("F", Constants.F);
-
+		SmartDashboard.putNumber("armEncoder", RobotMap.arm1.getPosition());
 		SmartDashboard.putNumber("encoder position", RobotMap.left1.getEncPosition());
 
 		SmartDashboard.putNumber("Left Setpoint", RobotMap.left1.getSetpoint());
@@ -161,14 +161,14 @@ public class Robot extends IterativeRobot
 			}
 		}
 
-		// RobotMap.testDrive();
-		// PIDTuner();
+		RobotMap.testDrive();
+		PIDTuner();
 		if (RobotMap.driveLock == null)
 		{
-			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+			//RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
 		
-		RobotMap.shoot1R.setSetpoint(RobotMap.shoot2R.get());
+		RobotMap.shoot1R.setSetpoint(RobotMap.shoot1L.get());
 		RobotMap.arm2.set(RobotMap.arm1.get());
 	}
 
@@ -242,6 +242,8 @@ public class Robot extends IterativeRobot
 		{
 			RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
 			RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
+			RobotMap.left1.setF(Constants.F);
+			RobotMap.right1.setF(Constants.F);
 		}
 
 	}
