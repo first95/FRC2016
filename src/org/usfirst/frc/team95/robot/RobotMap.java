@@ -187,17 +187,17 @@ public class RobotMap {
 	}
 
 	public static void testDrive() {
-		double setpoint = ((((driveStick.getThrottle()*-1)+1)/2)); //* Constants.timeserRPM);
+		double setpoint = ((((driveStick.getThrottle()*-1)+1)/2)* Constants.timeserRPM);
 		SmartDashboard.putNumber("Throttle setpoint", setpoint);
-		SmartDashboard.putNumber("arm speed", (arm1.getSpeed() * (60/2.56)));
+		SmartDashboard.putNumber("left speed", (left1.getSpeed() * (60/25.6)));
 		
 		// on/off step function
 		if(driveStick.getRawButton(1)) {
-			arm1.set(setpoint);
-			RobotMap.arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
+			left1.set(setpoint);
+			//right1.set(setpoint);
 		} else {
-			//arm1.set(0);
-			arm1.setPID(0,0,0);
+			left1.set(0);
+			//right1.set(0);
 		}
 	}
 
