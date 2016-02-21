@@ -16,7 +16,7 @@ public class Constants {
 	static final public double voltageRampRate = 48.0; // in volts/second
 	static final public boolean useVoltageRamp = true;
 	
-	static final public boolean brakeMode = false;
+	static final public boolean brakeMode = true;
 	
 	//for changing -1 - 1 to RPM
 	static final public double timeserRPM = 430.89;
@@ -31,9 +31,9 @@ public class Constants {
 	// Drive PID
 	static public double P = 0, I = 0, D = 0, F = 2.3742; // These aren't final because they are changed
 												// during PID Tuning
-	static public double armP = 0, armI = 0, armD = 0, armF = 0;
+	static public double armP = 0.6, armI = (5.7 * 1e-6), armD = 0, armF = 0;
 	
-	//ARM ENCODER ON GROUND BEHIND ROBOT IS -.287 
+	//arm when level 0.027       .03
 	
 	// Shoot PID do we need this? Set initial PID values for the shooter motor
 	static public double shootP = 0, shootI = 0, shootD = 0, shootF = 0;

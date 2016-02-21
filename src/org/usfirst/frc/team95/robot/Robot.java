@@ -104,10 +104,10 @@ public class Robot extends IterativeRobot
 		
 		SmartDashboard.putNumber("ardutime", ArduPilotAttitudeMonitor.time);
 		
-		SmartDashboard.putNumber("P", Constants.P);
-		SmartDashboard.putNumber("10^6*I", Constants.I * (1e6));
-		SmartDashboard.putNumber("D", Constants.D);
-		SmartDashboard.putNumber("F", Constants.F);
+		SmartDashboard.putNumber("P", Constants.armP);
+		SmartDashboard.putNumber("10^6*I", Constants.armI * (1e6));
+		SmartDashboard.putNumber("D", Constants.armD);
+		SmartDashboard.putNumber("F", Constants.armF);
 		SmartDashboard.putNumber("armEncoder", RobotMap.arm1.getPosition());
 		SmartDashboard.putNumber("encoder position", RobotMap.left1.getEncPosition());
 
@@ -149,7 +149,7 @@ public class Robot extends IterativeRobot
 	{
 		commonPeriodic();
 		// RobotMap.drive.arcadeDrive(RobotMap.driveStick);
-		RobotMap.armDrive.ArmControll(RobotMap.weaponStick);
+		//RobotMap.armDrive.ArmControll(RobotMap.weaponStick);
 		// Run all automoves
 		for (Auto x : runningAutonomousMoves)
 		{
@@ -161,8 +161,8 @@ public class Robot extends IterativeRobot
 			}
 		}
 
-		//RobotMap.testDrive();
-		//PIDTuner();
+		RobotMap.testDrive();
+		PIDTuner();
 		if (RobotMap.driveLock == null)
 		{
 			//RobotMap.drive.arcadeDrive(RobotMap.driveStick);
@@ -203,48 +203,48 @@ public class Robot extends IterativeRobot
 		boolean changed = false;
 		if (RobotMap.decP.justPressedp())
 		{
-			Constants.P = Constants.P - (.1 * d);
+			Constants.armP = Constants.armP - (.1 * d);
 			changed = true;
 		}
 		else if (RobotMap.incP.justPressedp())
 		{
-			Constants.P = Constants.P + (.1 * d);
+			Constants.armP = Constants.armP + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.decI.justPressedp())
 		{
-			Constants.I = Constants.I - (.0000001 * d);
+			Constants.armI = Constants.armI - (.0000001 * d);
 			changed = true;
 		}
 		else if (RobotMap.incI.justPressedp())
 		{
-			Constants.I = Constants.I + (.0000001 * d);
+			Constants.armI = Constants.armI + (.0000001 * d);
 			changed = true;
 		}
 		if (RobotMap.decD.justPressedp())
 		{
-			Constants.D = Constants.D - (.1 * d);
+			Constants.armD = Constants.armD - (.1 * d);
 			changed = true;
 		}
 		else if (RobotMap.incD.justPressedp())
 		{
-			Constants.D = Constants.D + (.1 * d);
+			Constants.armD = Constants.armD + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.incF.justPressedp())
 		{
-			Constants.F = Constants.F + (.1 * d);
+			Constants.armF = Constants.armF + (.1 * d);
 			changed = true;
 		}
 		else if (RobotMap.decF.justPressedp())
 		{
-			Constants.F = Constants.F - (.1 * d);
+			Constants.armF = Constants.armF - (.1 * d);
 			changed = true;
 		}
 		if (changed)
 		{
-			RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
-			RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
+			RobotMap.arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
+			//RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
 			RobotMap.left1.setF(Constants.F);
 			RobotMap.right1.setF(Constants.F);
 		}

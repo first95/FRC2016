@@ -82,12 +82,12 @@ public class RobotMap {
     		arm1.setVoltageRampRate(0);
     	}
     	arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
-    	
+    	arm1.reverseSensor(true);
     	arm1.setF(Constants.armF);
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
-    	//arm1.changeControlMode(CANTalon.TalonControlMode.Position);
+    	arm1.changeControlMode(CANTalon.TalonControlMode.Position);
     	arm1.enableControl();
-    	
+    	//arm1.setAllowableClosedLoopErr(0.005);
     	arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	arm2.set(7);
     	arm2.enableControl();
@@ -187,15 +187,17 @@ public class RobotMap {
 	}
 
 	public static void testDrive() {
-		double setpoint = ((((driveStick.getThrottle()*-1)+1)/2) * Constants.timeserRPM);
+		double setpoint = ((((driveStick.getThrottle()*-1)+1)/2)); //* Constants.timeserRPM);
 		SmartDashboard.putNumber("Throttle setpoint", setpoint);
-		SmartDashboard.putNumber("Left speed", (left1.getSpeed() * (60/2.56)));
+		SmartDashboard.putNumber("arm speed", (arm1.getSpeed() * (60/2.56)));
 		
 		// on/off step function
 		if(driveStick.getRawButton(1)) {
-			left1.set(setpoint);
+			arm1.set(setpoint);
+			RobotMap.arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
 		} else {
-			left1.set(0);
+			//arm1.set(0);
+			arm1.setPID(0,0,0);
 		}
 	}
 
