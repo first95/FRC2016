@@ -161,15 +161,18 @@ public class Robot extends IterativeRobot
 			}
 		}
 
-		RobotMap.testDrive();
-		PIDTuner();
+		//RobotMap.testDrive();
+		//PIDTuner();
 		if (RobotMap.driveLock == null)
 		{
 			//RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
 		
-		RobotMap.shoot1R.setSetpoint(RobotMap.shoot1L.get());
-		RobotMap.arm2.set(RobotMap.arm1.get());
+		if (RobotMap.armGrounded.justPressedp()) {
+			RobotMap.arm1.setPosition(0);
+		}
+		//RobotMap.shoot1R.setSetpoint(RobotMap.shoot1L.get());
+		//RobotMap.arm2.set(RobotMap.arm1.get());
 	}
 
 	/**
@@ -245,7 +248,8 @@ public class Robot extends IterativeRobot
 			RobotMap.left1.setF(Constants.F);
 			RobotMap.right1.setF(Constants.F);
 		}
-
+		
+		
 	}
 
 	public void disabledInit()

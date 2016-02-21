@@ -16,7 +16,7 @@ public class RobotMap {
 	public static Drive drive;
 	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
-				preserveHeadingButtonTracker, fire, pickUp, align, relign;
+				preserveHeadingButtonTracker, fire, pickUp, align, relign, armGrounded;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -88,10 +88,10 @@ public class RobotMap {
     	//arm1.changeControlMode(CANTalon.TalonControlMode.Position);
     	arm1.enableControl();
     	
-    	//arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	arm2.set(0);
+    	arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	arm2.set(7);
     	arm2.enableControl();
-    	arm2.setInverted(true);
+    	arm2.reverseOutput(true);
     	//can't invert a follower
     	
     	//Do we need this? Copied the arm stuff but changed the Constants
@@ -110,9 +110,9 @@ public class RobotMap {
     	//shoot1L.changeControlMode(CANTalon.TalonControlMode.Position);
     	shoot1L.enableControl();
     	
-    	//shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	shoot1R.setInverted(true);
-    	
+    	shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	shoot1R.set(9);
+    	shoot1R.reverseOutput(true);
     	shoot1R.enableControl();
     	
     	shoot2L.setPosition(0);
@@ -180,7 +180,9 @@ public class RobotMap {
         
         relign = new ButtonTracker(weaponStick, 3, new PreserveHeading(0));
 
-    	armDrive = new ArmDrive(arm1);
+        armGrounded = new ButtonTracker(weaponStick, 16);
+    
+        armDrive = new ArmDrive(arm1);
     	drive = new Drive(left1, right1);
 	}
 
