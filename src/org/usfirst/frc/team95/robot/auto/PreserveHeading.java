@@ -43,6 +43,11 @@ public class PreserveHeading extends HybridAutoDrive
 		if ((RobotMap.driveLock == null || RobotMap.driveLock == this)) {
 			RobotMap.driveLock = this;
 			yawError = headingToPreserve - RobotMap.am.getYaw();
+			if (yawError > Math.PI) {
+				yawError -= 2*Math.PI;
+			} else if (yawError < -Math.PI) {
+				yawError += 2*Math.PI;
+			}
 			errorAcc += yawError;
 			zCorrection = yawError / Math.PI;
 			double a = zCorrection*Constants.headingPreservationP;
