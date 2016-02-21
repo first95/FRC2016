@@ -29,7 +29,7 @@ public class Constants {
 	static final public double shootPowTol = .1;
 	
 	// Drive PID
-	static public double P = 0, I = 0, D = 0, F = 1.39; // These aren't final because they are changed
+	static public double P = 4, I = 50 * 1e-6, D = 200, F = 1.39; // These aren't final because they are changed
 												// during PID Tuning
 	static public double armP = 0.6, armI = (5.7 * 1e-6), armD = 0, armF = 0;
 	

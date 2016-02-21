@@ -45,8 +45,8 @@ public class RobotMap {
     	am = new ArduPilotAttitudeMonitor();
     	
     	//talon setup
-    	CANTalon[] leftTable = {left1, left2, left3};
-    	for (CANTalon t : leftTable) {
+    	CANTalon[] talonTable = {left1, left2, left3, right1, right2, right3};
+    	for (CANTalon t : talonTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
     		if (Constants.useVoltageRamp) {
@@ -59,19 +59,6 @@ public class RobotMap {
     		
     		t.setIZone(10);
     		
-    	}
-    	
-    	CANTalon[] rightTable = {right1, right2, right3};
-    	for (CANTalon t : rightTable) {
-    		t.setPosition(0);
-    		t.enableBrakeMode(Constants.brakeMode);
-    		if (Constants.useVoltageRamp) {
-    			t.setVoltageRampRate(Constants.voltageRampRate);
-    		} else {
-    			t.setVoltageRampRate(0.0);
-    		}
-    		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    		t.configEncoderCodesPerRev(256);
     	}
     	
     	arm1.setPosition(0);
@@ -149,7 +136,7 @@ public class RobotMap {
     	left3.set(1);
     	left3.enableControl();
     	right1.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	right1.reverseSensor(true);
+    	//right1.reverseSensor(true); DONT DO THIS
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	right2.set(4);
@@ -189,14 +176,14 @@ public class RobotMap {
 	public static void testDrive() {
 		double setpoint = ((((driveStick.getThrottle()*-1)+1)/2)* Constants.timeserRPM);
 		SmartDashboard.putNumber("Throttle setpoint", setpoint);
-		SmartDashboard.putNumber("left speed", (left1.getSpeed() * (60/25.6)));
+		SmartDashboard.putNumber("right speed", (right1.getSpeed() * (60/25.6)));
 		
 		// on/off step function
 		if(driveStick.getRawButton(1)) {
-			left1.set(setpoint);
+			right1.set(setpoint);
 			//right1.set(setpoint);
 		} else {
-			left1.set(0);
+			right1.set(0);
 			//right1.set(0);
 		}
 	}
