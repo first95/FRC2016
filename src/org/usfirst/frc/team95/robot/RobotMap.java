@@ -47,13 +47,7 @@ public class RobotMap {
     	//talon setup
     	CANTalon[] talonTable = {left1, left2, left3, right1, right2, right3};
     	for (CANTalon t : talonTable) {
-    		t.setPosition(0);
-    		t.enableBrakeMode(Constants.brakeMode);
-    		if (Constants.useVoltageRamp) {
-    			t.setVoltageRampRate(Constants.voltageRampRate);
-    		} else {
-    			t.setVoltageRampRate(0.0);
-    		}
+    		brakeAndVoltage(t);
     		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     		t.configEncoderCodesPerRev(256);
     		
@@ -61,13 +55,7 @@ public class RobotMap {
     		
     	}
     	
-    	arm1.setPosition(0);
-    	arm1.enableBrakeMode(Constants.brakeMode);
-    	if (Constants.useVoltageRamp) {
-    		arm1.setVoltageRampRate(Constants.voltageRampRate);
-    	} else {
-    		arm1.setVoltageRampRate(0);
-    	}
+    	brakeAndVoltage(arm1);
     	arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
     	arm1.reverseSensor(true);
     	arm1.setF(Constants.armF);
@@ -75,6 +63,7 @@ public class RobotMap {
     	arm1.changeControlMode(CANTalon.TalonControlMode.Position);
     	arm1.enableControl();
     	//arm1.setAllowableClosedLoopErr(0.005);
+    	brakeAndVoltage(arm2);
     	arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	arm2.set(7);
     	arm2.enableControl();
@@ -82,44 +71,19 @@ public class RobotMap {
     	//can't invert a follower
     	
     	//Do we need this? Copied the arm stuff but changed the Constants
-    	shoot1L.setPosition(0);
-    	shoot1L.enableBrakeMode(Constants.brakeMode);
-    	if (Constants.useVoltageRamp) {
-    		shoot1L.setVoltageRampRate(Constants.voltageRampRate);
-    	} else {
-    		shoot1L.setVoltageRampRate(0);
-    	}
-    	shoot1L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	shoot1L.configEncoderCodesPerRev(256);
-    	
-    	//shoot1L.setF(Constants.shootF);
-    	//shoot1L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
-    	//shoot1L.changeControlMode(CANTalon.TalonControlMode.Position);
+    	brakeAndVoltage(shoot1L);
     	shoot1L.enableControl();
     	
+    	brakeAndVoltage(shoot1R);
     	shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
     	shoot1R.set(9);
     	shoot1R.reverseOutput(true);
     	shoot1R.enableControl();
     	
-    	shoot2L.setPosition(0);
-    	shoot2L.enableBrakeMode(Constants.brakeMode);
-    	if (Constants.useVoltageRamp) {
-    		shoot2L.setVoltageRampRate(Constants.voltageRampRate);
-    	} else {
-    		shoot2L.setVoltageRampRate(0);
-    	}
-    	shoot2L.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	shoot2L.configEncoderCodesPerRev(256);
-    	
-    	//shoot2L.setF(Constants.shootF);
-    	//shoot2L.setPID(Constants.shootP, Constants.shootI, Constants.shootD);
-    	//shoot2L.changeControlMode(CANTalon.TalonControlMode.Position);
+    	brakeAndVoltage(shoot2L);
     	shoot2L.enableControl();
     	
-    	shoot2R.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	shoot2R.set(11);
-    	//shoot2R.setInverted(true);
+    	brakeAndVoltage(shoot2R);
     	shoot2R.enableControl();
     	
     	
@@ -186,6 +150,16 @@ public class RobotMap {
 			right1.set(0);
 			//right1.set(0);
 		}
+	}
+	
+	static void brakeAndVoltage(CANTalon t) {
+		t.setPosition(0);
+    	t.enableBrakeMode(Constants.brakeMode);
+    	if (Constants.useVoltageRamp) {
+    		t.setVoltageRampRate(Constants.voltageRampRate);
+    	} else {
+    		t.setVoltageRampRate(0);
+    	}
 	}
 
 }
