@@ -33,7 +33,7 @@ public class ButtonTracker implements PollableSubsystem {
 		mJoystick = Joystick;
 		
 		if (!usedNumbers.containsKey(Joystick)) {
-			usedNumbers.put(Joystick, new ButtonTracker[16]);
+			usedNumbers.put(Joystick, new ButtonTracker[17]);
 		}
 		
 		if (usedNumbers.get(Joystick)[Channel] != null) {

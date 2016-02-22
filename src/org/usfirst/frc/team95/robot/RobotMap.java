@@ -16,7 +16,7 @@ public class RobotMap {
 	public static Drive drive;
 	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
-				preserveHeadingButtonTracker, fire, pickUp, align, relign;
+				preserveHeadingButtonTracker, fire, pickUp, align, relign, armGrounded;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -45,8 +45,8 @@ public class RobotMap {
     	am = new ArduPilotAttitudeMonitor();
     	
     	//talon setup
-    	CANTalon[] leftTable = {left1, left2, left3};
-    	for (CANTalon t : leftTable) {
+    	CANTalon[] talonTable = {left1, left2, left3, right1, right2, right3};
+    	for (CANTalon t : talonTable) {
     		t.setPosition(0);
     		t.enableBrakeMode(Constants.brakeMode);
     		if (Constants.useVoltageRamp) {
@@ -61,19 +61,6 @@ public class RobotMap {
     		
     	}
     	
-    	CANTalon[] rightTable = {right1, right2, right3};
-    	for (CANTalon t : rightTable) {
-    		t.setPosition(0);
-    		t.enableBrakeMode(Constants.brakeMode);
-    		if (Constants.useVoltageRamp) {
-    			t.setVoltageRampRate(Constants.voltageRampRate);
-    		} else {
-    			t.setVoltageRampRate(0.0);
-    		}
-    		t.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    		t.configEncoderCodesPerRev(256);
-    	}
-    	
     	arm1.setPosition(0);
     	arm1.enableBrakeMode(Constants.brakeMode);
     	if (Constants.useVoltageRamp) {
@@ -82,17 +69,17 @@ public class RobotMap {
     		arm1.setVoltageRampRate(0);
     	}
     	arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
-    	
+    	arm1.reverseSensor(true);
     	arm1.setF(Constants.armF);
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
-    	//arm1.changeControlMode(CANTalon.TalonControlMode.Position);
+    	arm1.changeControlMode(CANTalon.TalonControlMode.Position);
     	arm1.enableControl();
-    	
-    	//arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	arm2.set(0);
+    	//arm1.setAllowableClosedLoopErr(0.005);
+    	arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	arm2.set(7);
     	arm2.enableControl();
-    	arm2.setInverted(true);
-    	//can't invert a follower - Doing it manually in Robot
+    	arm2.reverseOutput(true);
+    	//can't invert a follower
     	
     	//Do we need this? Copied the arm stuff but changed the Constants
     	shoot1L.setPosition(0);
@@ -110,9 +97,9 @@ public class RobotMap {
     	//shoot1L.changeControlMode(CANTalon.TalonControlMode.Position);
     	shoot1L.enableControl();
     	
-    	//shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	shoot1R.setInverted(true);
-    	
+    	shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	shoot1R.set(9);
+    	shoot1R.reverseOutput(true);
     	shoot1R.enableControl();
     	
     	shoot2L.setPosition(0);
@@ -149,7 +136,7 @@ public class RobotMap {
     	left3.set(1);
     	left3.enableControl();
     	right1.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	right1.reverseSensor(true);
+    	//right1.reverseSensor(true); DONT DO THIS
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	right2.set(4);
@@ -180,20 +167,24 @@ public class RobotMap {
         
         relign = new ButtonTracker(weaponStick, 3, new PreserveHeading(0));
 
-    	armDrive = new ArmDrive(arm1);
+        armGrounded = new ButtonTracker(weaponStick, 16);
+    
+        armDrive = new ArmDrive(arm1);
     	drive = new Drive(left1, right1);
 	}
 
 	public static void testDrive() {
-		double setpoint = ((((driveStick.getThrottle()*-1)+1)/2) * Constants.timeserRPM);
+		double setpoint = ((((driveStick.getThrottle()*-1)+1)/2)* Constants.timeserRPM);
 		SmartDashboard.putNumber("Throttle setpoint", setpoint);
-		SmartDashboard.putNumber("Left speed", (left1.getSpeed() * (60/2.56)));
+		SmartDashboard.putNumber("right speed", (right1.getSpeed() * (60/25.6)));
 		
 		// on/off step function
 		if(driveStick.getRawButton(1)) {
-			left1.set(setpoint);
+			right1.set(setpoint);
+			//right1.set(setpoint);
 		} else {
-			left1.set(0);
+			right1.set(0);
+			//right1.set(0);
 		}
 	}
 
