@@ -92,7 +92,7 @@ public class RobotMap {
     	arm2.set(0);
     	arm2.enableControl();
     	arm2.setInverted(true);
-    	//can't invert a follower
+    	//can't invert a follower - Doing it manually in Robot
     	
     	//Do we need this? Copied the arm stuff but changed the Constants
     	shoot1L.setPosition(0);
