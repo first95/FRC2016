@@ -65,7 +65,7 @@ public class RobotMap {
     	arm1.setPosition(Constants.armPowerOnPlace);
     	arm1.setF(Constants.armF);
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
-    	arm1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+    	arm1.changeControlMode(CANTalon.TalonControlMode.Position);
     	arm1.enableControl();
     	//arm1.setAllowableClosedLoopErr(0.005);
     	brakeAndVoltage(arm2);
