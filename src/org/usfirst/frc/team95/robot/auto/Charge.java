@@ -27,8 +27,6 @@ public class Charge extends Auto{
 			done = true;
 		}
 		
-		//}
-		
 	}
 
 	@Override
