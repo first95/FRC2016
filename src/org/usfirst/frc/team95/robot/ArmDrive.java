@@ -10,8 +10,8 @@ public class ArmDrive {
 		this.arm = arm;
 	}
 	
-	public void Move(double speed) {
-		arm.set(speed);
+	public void Move(double position) {
+		arm.set(position);
 	}
 	
 	public void ArmControll(Joystick stick) {
@@ -19,6 +19,7 @@ public class ArmDrive {
 		if (Math.abs(y) <= Constants.deadBand) {
 			y = 0;
 		}
-		Move(y);
+		double positionAdder = (RobotMap.arm1.getEncPosition() + y);
+		Move(positionAdder);
 	}
 }
