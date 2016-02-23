@@ -8,6 +8,7 @@ import org.usfirst.frc.team95.robot.auto.PreserveHeading;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
@@ -22,6 +23,7 @@ public class RobotMap {
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
+	public static PowerDistributionPanel pdb = new PowerDistributionPanel();
 	
 	public static void init() {
 		// drive motors
@@ -36,10 +38,10 @@ public class RobotMap {
     	arm1 = new CANTalon(7);
     	arm2 = new CANTalon(8);
     	// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
-    	shoot1L = new CANTalon(9);
-    	shoot1R = new CANTalon(10);
-    	shoot2L = new CANTalon(11);
-    	shoot2R = new CANTalon(12);
+    	shoot1L = new VoltageCompensatingTalon(9);
+    	shoot1R = new VoltageCompensatingTalon(10);
+    	shoot2L = new VoltageCompensatingTalon(11);
+    	shoot2R = new VoltageCompensatingTalon(12);
     	
     	// ring light for vision
     	light = new CANTalon(13);
