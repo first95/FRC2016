@@ -72,7 +72,7 @@ public class RobotMap {
     	arm1.reverseSensor(true);
     	arm1.setF(Constants.armF);
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
-    	arm1.changeControlMode(CANTalon.TalonControlMode.Position);
+    	arm1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	arm1.enableControl();
     	//arm1.setAllowableClosedLoopErr(0.005);
     	arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -176,14 +176,18 @@ public class RobotMap {
 	public static void testDrive() {
 		double setpoint = ((((driveStick.getThrottle()*-1)+1)/2)* Constants.timeserRPM);
 		SmartDashboard.putNumber("Throttle setpoint", setpoint);
-		SmartDashboard.putNumber("right speed", (right1.getSpeed() * (60/25.6)));
+		SmartDashboard.putNumber("spood", (left1.get()));
+		//SmartDashboard.putNumber("spood", (right1.get()));
 		
 		// on/off step function
 		if(driveStick.getRawButton(1)) {
-			right1.set(setpoint);
+			left1.set(setpoint);
 			//right1.set(setpoint);
-		} else {
-			right1.set(0);
+		} else if (driveStick.getRawButton(11)){
+			left1.set(-setpoint);
+			//right1.set(-setpoint);
+		}else {
+			left1.set(0);
 			//right1.set(0);
 		}
 	}

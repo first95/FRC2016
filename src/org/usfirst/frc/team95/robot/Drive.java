@@ -14,8 +14,8 @@ public class Drive {
 	
 	//pure tank controlls (not) and switch to RPM
 	public void tankDrive(double leftsp, double rightsp) {
-		left.set(leftsp * Constants.timeserRPM);
-		right.set(rightsp * Constants.timeserRPM);
+		left.set(leftsp);// * Constants.timeserRPM);
+		right.set(rightsp);// * Constants.timeserRPM);
 	}
 	
 	//arcade style drive

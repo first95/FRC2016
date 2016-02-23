@@ -111,9 +111,9 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("armEncoder", RobotMap.arm1.getPosition());
 		SmartDashboard.putNumber("encoder position", RobotMap.left1.getEncPosition());
 
-		SmartDashboard.putNumber("Left Setpoint", RobotMap.left1.getSetpoint());
-		SmartDashboard.putNumber("Left Speed", -1 * RobotMap.left1.getSpeed());
-		SmartDashboard.putNumber("right encoder",(RobotMap.right1.getSpeed() * (60/25.6)));
+		//SmartDashboard.putNumber("Left Setpoint", RobotMap.left1.getSetpoint());
+		//SmartDashboard.putNumber("Left Speed", -1 * RobotMap.left1.getSpeed());
+		//SmartDashboard.putNumber("right encoder",(RobotMap.right1.getSpeed() * (60/25.6)));
 		SmartDashboard.putNumber("Target X", VisionHandler.getInstance().x);
 		// System.out.println(VisionHandler.getInstance().x);
 		SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().y);
@@ -149,7 +149,7 @@ public class Robot extends IterativeRobot
 	{
 		commonPeriodic();
 		// RobotMap.drive.arcadeDrive(RobotMap.driveStick);
-		//RobotMap.armDrive.ArmControll(RobotMap.weaponStick);
+	//	RobotMap.armDrive.ArmControll(RobotMap.weaponStick);
 		// Run all automoves
 		for (Auto x : runningAutonomousMoves)
 		{
@@ -165,7 +165,7 @@ public class Robot extends IterativeRobot
 		PIDTuner();
 		if (RobotMap.driveLock == null)
 		{
-			//RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+		//	RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
 		
 		if (RobotMap.armGrounded.justPressedp()) {
