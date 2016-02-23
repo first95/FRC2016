@@ -1,7 +1,7 @@
 <grip:Pipeline>
   <sources>
     <grip:Camera>
-      <property name="deviceNumber" value="0"/>
+      <property name="address" value="http://raspberrypi.local:1180/?action=stream"/>
     </grip:Camera>
   </sources>
   <steps>
@@ -9,19 +9,19 @@
       <grip:Input step="0" socket="0"/>
       <grip:Input step="0" socket="1">
         <value>
-          <double>51.798561151079134</double>
-          <double>124.7098976109215</double>
+          <double>43.70503597122302</double>
+          <double>92.45733788395906</double>
         </value>
       </grip:Input>
       <grip:Input step="0" socket="2">
         <value>
-          <double>20.638489208633093</double>
+          <double>0.0</double>
           <double>255.0</double>
         </value>
       </grip:Input>
       <grip:Input step="0" socket="3">
         <value>
-          <double>220.14388489208633</double>
+          <double>45.86330935251798</double>
           <double>255.0</double>
         </value>
       </grip:Input>
@@ -38,9 +38,9 @@
         <value>BOX</value>
       </grip:Input>
       <grip:Input step="2" socket="2">
-        <value>9.909909909909912</value>
+        <value>4.504504504504505</value>
       </grip:Input>
-      <grip:Output step="2" socket="0" previewed="false"/>
+      <grip:Output step="2" socket="0" previewed="true"/>
     </grip:Step>
     <grip:Step name="Find Lines">
       <grip:Input step="3" socket="0"/>
@@ -49,15 +49,15 @@
     <grip:Step name="Filter Lines">
       <grip:Input step="4" socket="0"/>
       <grip:Input step="4" socket="1">
-        <value>30.0</value>
+        <value>15.0</value>
       </grip:Input>
       <grip:Input step="4" socket="2">
         <value>
-          <int>0</int>
-          <int>360</int>
+          <double>0.0</double>
+          <double>360.0</double>
         </value>
       </grip:Input>
-      <grip:Output step="4" socket="0" previewed="false"/>
+      <grip:Output step="4" socket="0" previewed="true"/>
     </grip:Step>
     <grip:Step name="Publish LinesReport">
       <grip:Input step="5" socket="0"/>
@@ -86,15 +86,7 @@
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output step="3" socket="0" previewed="false"/>
-      <grip:Input step="4" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="2" socket="0" previewed="false"/>
-      <grip:Input step="3" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="4" socket="0" previewed="false"/>
+      <grip:Output step="4" socket="0" previewed="true"/>
       <grip:Input step="5" socket="0"/>
     </grip:Connection>
     <grip:Connection>
@@ -102,12 +94,20 @@
       <grip:Input step="2" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Output step="3" socket="0" previewed="false"/>
+      <grip:Input step="4" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
+      <grip:Input step="1" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
       <grip:Input step="0" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="false"/>
-      <grip:Input step="1" socket="0"/>
+      <grip:Output step="2" socket="0" previewed="true"/>
+      <grip:Input step="3" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="0" socket="0" previewed="false"/>
@@ -116,10 +116,11 @@
   </connections>
   <settings>
     <teamNumber>0</teamNumber>
-    <publishAddress></publishAddress>
-    <deployAddress>roborio-95-frc.local</deployAddress>
-    <deployDir>/home/lvuser</deployDir>
-    <deployUser>admin</deployUser>
+    <publishAddress>roborio-95-frc.local</publishAddress>
+    <deployAddress>raspberrypi.local</deployAddress>
+    <deployDir>/home/pi/vision/grip/</deployDir>
+    <deployUser>pi</deployUser>
     <deployJavaHome>/usr/local/frc/JRE/</deployJavaHome>
+    <deployJvmOptions> </deployJvmOptions>
   </settings>
 </grip:Pipeline>
