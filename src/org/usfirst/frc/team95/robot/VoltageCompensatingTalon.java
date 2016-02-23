@@ -9,7 +9,7 @@ public class VoltageCompensatingTalon extends CANTalon {
 	}
 	
 	public void set(double speed) {
-		super.set(speed/RobotMap.pdb.getVoltage()*10);
+		super.set(speed*(10/RobotMap.pdb.getVoltage()));
 	}
 
 }

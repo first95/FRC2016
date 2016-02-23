@@ -18,8 +18,10 @@ public class ArmDrive {
 		double y = stick.getY()*(((stick.getThrottle()*-1)+1)/2);
 		if (Math.abs(y) <= Constants.deadBand) {
 			y = 0;
+		}else {
+			double positionAdder = (RobotMap.arm1.getPosition() + y);
+			Move(positionAdder);
 		}
-		double positionAdder = (RobotMap.arm1.getEncPosition() + y);
-		Move(positionAdder);
+		
 	}
 }

@@ -59,6 +59,6 @@ public class Constants {
 	static final public double autonomousRotateSpeed=0.15;
 	
 	static final public double armPowerOnPlace = Math.PI/2 - 0.4537852;
-	static final public double armGroundedBack = 0;
-	static final public double armGroundedFront = Math.PI;
+	static final public double armGroundedBack = -5.5/180*Math.PI;
+	static final public double armGroundedFront = Math.PI + 30/180*Math.PI;
 }

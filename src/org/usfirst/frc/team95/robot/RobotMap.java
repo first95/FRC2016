@@ -7,6 +7,7 @@ import org.usfirst.frc.team95.robot.auto.PickUp;
 import org.usfirst.frc.team95.robot.auto.PreserveHeading;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,7 +20,7 @@ public class RobotMap {
 	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
 				preserveHeadingButtonTracker, fire, pickUp, align, relign, armGroundedFront, 
-				armGroundedBack;
+				armGroundedBack, limitOveride;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -38,10 +39,10 @@ public class RobotMap {
     	arm1 = new CANTalon(7);
     	arm2 = new CANTalon(8);
     	// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
-    	shoot1L = new VoltageCompensatingTalon(9);
-    	shoot1R = new VoltageCompensatingTalon(10);
-    	shoot2L = new VoltageCompensatingTalon(11);
-    	shoot2R = new VoltageCompensatingTalon(12);
+    	shoot1L = new CANTalon(9);
+    	shoot1R = new CANTalon(10);
+    	shoot2L = new CANTalon(11);
+    	shoot2R = new CANTalon(12);
     	
     	// ring light for vision
     	light = new CANTalon(13);
@@ -66,6 +67,9 @@ public class RobotMap {
     	arm1.setF(Constants.armF);
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
     	arm1.changeControlMode(CANTalon.TalonControlMode.Position);
+    	//arm1.setForwardSoftLimit(Constants.armGroundedBack);
+    	//arm1.setReverseSoftLimit(Constants.armGroundedFront);
+    	
     	arm1.enableControl();
     	//arm1.setAllowableClosedLoopErr(0.005);
     	brakeAndVoltage(arm2);
@@ -77,7 +81,9 @@ public class RobotMap {
     	
     	//Do we need this? Copied the arm stuff but changed the Constants
     	brakeAndVoltage(shoot1L);
+    	shoot1L.changeControlMode(TalonControlMode.PercentVbus);
     	shoot1L.enableControl();
+    	shoot1L.set(0);
     	
     	brakeAndVoltage(shoot1R);
     	shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -138,7 +144,9 @@ public class RobotMap {
 
         armGroundedBack = new ButtonTracker(weaponStick, 16);
         armGroundedFront = new ButtonTracker(weaponStick, 15);
-    
+        
+        limitOveride = new ButtonTracker(weaponStick, 8);
+        
         armDrive = new ArmDrive(arm1);
     	drive = new Drive(left1, right1);
 	}

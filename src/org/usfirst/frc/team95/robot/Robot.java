@@ -104,6 +104,7 @@ public class Robot extends IterativeRobot
 		
 		SmartDashboard.putNumber("ardutime", ArduPilotAttitudeMonitor.time);
 		
+		SmartDashboard.putNumber("armSetpoint", RobotMap.arm1.getSetpoint());
 		SmartDashboard.putNumber("P", Constants.P);
 		SmartDashboard.putNumber("10^6*I", Constants.I * (1e6));
 		SmartDashboard.putNumber("D", Constants.D);
@@ -149,7 +150,7 @@ public class Robot extends IterativeRobot
 	{
 		commonPeriodic();
 		// RobotMap.drive.arcadeDrive(RobotMap.driveStick);
-	//	RobotMap.armDrive.ArmControll(RobotMap.weaponStick);
+		RobotMap.armDrive.ArmControll(RobotMap.weaponStick);
 		// Run all automoves
 		for (Auto x : runningAutonomousMoves)
 		{
@@ -173,6 +174,14 @@ public class Robot extends IterativeRobot
 		} else if (RobotMap.armGroundedFront.justPressedp()) {
 			RobotMap.arm1.setPosition(Constants.armGroundedFront);
 		}
+		
+		/*if (RobotMap.limitOveride.Pressedp()){
+			RobotMap.arm1.enableForwardSoftLimit(false);
+			RobotMap.arm1.enableReverseSoftLimit(false);
+		}else {
+			RobotMap.arm1.enableForwardSoftLimit(true);
+			RobotMap.arm1.enableReverseSoftLimit(true);
+		}*/
 		//RobotMap.shoot1R.setSetpoint(RobotMap.shoot1L.get());
 		//RobotMap.arm2.set(RobotMap.arm1.get());
 	}
