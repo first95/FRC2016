@@ -168,8 +168,10 @@ public class Robot extends IterativeRobot
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
 		
-		if (RobotMap.armGrounded.justPressedp()) {
-			RobotMap.arm1.setPosition(0);
+		if (RobotMap.armGroundedBack.justPressedp()) {
+			RobotMap.arm1.setPosition(Constants.armGroundedBack);
+		} else if (RobotMap.armGroundedFront.justPressedp()) {
+			RobotMap.arm1.setPosition(Constants.armGroundedFront);
 		}
 		//RobotMap.shoot1R.setSetpoint(RobotMap.shoot1L.get());
 		//RobotMap.arm2.set(RobotMap.arm1.get());

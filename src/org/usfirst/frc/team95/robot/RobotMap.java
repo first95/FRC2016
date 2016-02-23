@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, left3, right1, right2, right3, arm1, arm2, shoot1L, shoot1R, shoot2L, shoot2R, light;
+	public static CANTalon left1, left2, left3, right1, right2, right3, arm1, arm2, shoot1L, shoot1R, 
+							shoot2L, shoot2R, light;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
 	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
-				preserveHeadingButtonTracker, fire, pickUp, align, relign, armGrounded;
+				preserveHeadingButtonTracker, fire, pickUp, align, relign, armGroundedFront, 
+				armGroundedBack;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -58,6 +60,7 @@ public class RobotMap {
     	brakeAndVoltage(arm1);
     	arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
     	arm1.reverseSensor(true);
+    	arm1.setPosition(Constants.armPowerOnPlace);
     	arm1.setF(Constants.armF);
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
     	arm1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -131,7 +134,8 @@ public class RobotMap {
         
         relign = new ButtonTracker(weaponStick, 3, new PreserveHeading(0));
 
-        armGrounded = new ButtonTracker(weaponStick, 16);
+        armGroundedBack = new ButtonTracker(weaponStick, 16);
+        armGroundedFront = new ButtonTracker(weaponStick, 15);
     
         armDrive = new ArmDrive(arm1);
     	drive = new Drive(left1, right1);
