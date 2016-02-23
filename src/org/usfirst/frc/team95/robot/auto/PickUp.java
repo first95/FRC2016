@@ -11,7 +11,8 @@ public class PickUp extends Auto{
 	@Override
 	public void init() {
 		RobotMap.shoot1L.setSetpoint(.4);
-		RobotMap.shoot2L.setSetpoint(.75);
+		RobotMap.shoot2L.setSetpoint(RobotMap.arm1.getPosition() < Math.PI/2 ? .75 : 1);
+		RobotMap.shoot2R.setSetpoint(RobotMap.arm1.getPosition() >= Math.PI/2 ? .75 : 1);
 		timer.reset();
 		timer.start();
 	}
@@ -26,6 +27,7 @@ public class PickUp extends Auto{
 	public void stop() {
 		RobotMap.shoot1L.setSetpoint(0);
 		RobotMap.shoot2L.setSetpoint(0);
+		RobotMap.shoot2R.setSetpoint(0);
 		done = true;
 		
 	}

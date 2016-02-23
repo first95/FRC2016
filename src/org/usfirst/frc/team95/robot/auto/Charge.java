@@ -14,7 +14,9 @@ public class Charge extends Auto{
 	
 	@Override
 	public void init() {
-		RobotMap.shoot2L.setSetpoint(-1);//VisionHandler.getInstance().getPower());
+		// The trinary operator is for backspin.
+		RobotMap.shoot2L.setSetpoint(RobotMap.arm1.getPosition() < Math.PI/2 ? -0.9 : -1);
+		RobotMap.shoot2R.setSetpoint(RobotMap.arm1.getPosition() >= Math.PI/2 ? -0.9 : -1);
 		timer.reset();
 		timer.start();
 	}
@@ -34,6 +36,7 @@ public class Charge extends Auto{
 	@Override
 	public void stop() {
 		RobotMap.shoot2L.setSetpoint(0);
+		RobotMap.shoot2R.setSetpoint(0);
 	}
 
 	@Override

@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot
 
 	public void commonPeriodic()
 	{
-		SmartDashboard.putNumber("Test", 5);
+		//SmartDashboard.putNumber("Arm Position:", RobotMap.arm1.getEncPosition());
 
 		for (PollableSubsystem p : updates)
 		{

@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
 public class VisionHandler {
-	double x, y, aimX, aimY, distance, power; // These represent the x and y, in pixels, of the
+	double x, y, aimX, aimY, distance, power = 1; // These represent the x and y, in pixels, of the
 		// center of the goal.
 	
 	public double getX() { // Getters!
@@ -180,16 +180,16 @@ public class VisionHandler {
 		distance = 1/Math.tan(aimY)*(Constants.goalHeight-Math.sin(RobotMap.arm1.getPosition())*
 				Constants.cameraDistanceToPivot);
 		
-		double V0y = Math.sqrt(2*Constants.gravity*Math.sin(RobotMap.arm1.getPosition())*
-				Constants.shooterLength);
-		double t = V0y / Constants.gravity;
-		double V0x = distance / t;
-		double theta = Math.atan(V0y/V0x);
-		double m = Math.sqrt(Math.pow(V0y, 2) + Math.pow(V0x, 2));
+		//double V0y = Math.sqrt(2*Constants.gravity*Math.sin(RobotMap.arm1.getPosition())*
+		//		Constants.shooterLength);
+		//double t = V0y / Constants.gravity;
+		//double V0x = distance / t;
+		//double theta = Math.atan(V0y/V0x);
+		//double m = Math.sqrt(Math.pow(V0y, 2) + Math.pow(V0x, 2));
 		
 		aimX = tX;
-		aimY = theta;
-		power = m * Constants.shootVelocityToRPM;
+		aimY = tY;
+		//power = m * Constants.shootVelocityToRPM;
 		
 		
 	}
