@@ -44,17 +44,17 @@ public class PreserveHeading extends HybridAutoDrive
 			yawError = headingToPreserve - RobotMap.am.getYaw();
 			zCorrection = yawError / Math.PI;
 			double a = zCorrection*((Constants.headingPreservationUnAgressiveness*-1)+1);
-			SmartDashboard.putNumber("P Term: ", a);
+			//SmartDashboard.putNumber("P Term: ", a);
 			yawToSpeed = diminish(a, RobotMap.am.getYawRate()*Constants.headingPreservationD);
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick.getY()*-.05, yawToSpeed);
 		}
 		
-		SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
-		SmartDashboard.putNumber("weapon throttle",((RobotMap.weaponStick.getThrottle()*-1)+1));
-		SmartDashboard.putNumber("yaw error", yawError);
-		SmartDashboard.putNumber("yaw to speed", yawToSpeed);
-		SmartDashboard.putNumber("z Correction", zCorrection);
-		SmartDashboard.putNumber("driver throttle",(((RobotMap.driveStick.getThrottle()*-1)+1))/2);
+		//SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
+		//SmartDashboard.putNumber("weapon throttle",((RobotMap.weaponStick.getThrottle()*-1)+1));
+		//SmartDashboard.putNumber("yaw error", yawError);
+		//SmartDashboard.putNumber("yaw to speed", yawToSpeed);
+		//SmartDashboard.putNumber("z Correction", zCorrection);
+		//SmartDashboard.putNumber("driver throttle",(((RobotMap.driveStick.getThrottle()*-1)+1))/2);
 	}
 
 	@Override
@@ -69,7 +69,6 @@ public class PreserveHeading extends HybridAutoDrive
 	@Override
 	public boolean done()
 	{
-		// TODO Auto-generated method stub
 		return Math.abs(yawError) < Constants.headingPreservationClosenessTolerance;
 	}
 

@@ -187,6 +187,9 @@ public class VisionHandler {
 		//double theta = Math.atan(V0y/V0x);
 		//double m = Math.sqrt(Math.pow(V0y, 2) + Math.pow(V0x, 2));
 		
+		SmartDashboard.putNumber("Autoaim Proposed Turn", tX);
+		SmartDashboard.putNumber("Autoaim Proposed Arm Offset", tY);
+		
 		aimX = tX;
 		aimY = tY;
 		//power = m * Constants.shootVelocityToRPM;

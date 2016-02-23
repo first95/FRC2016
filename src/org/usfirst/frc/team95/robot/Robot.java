@@ -1,23 +1,13 @@
 
 package org.usfirst.frc.team95.robot;
 
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import org.mavlink.*;
-import org.mavlink.messages.*;
 import org.usfirst.frc.team95.robot.auto.Auto;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -98,11 +88,11 @@ public class Robot extends IterativeRobot
 			SmartDashboard.putString("Drive Lock:", "Nothing");
 		}
 		
-		SmartDashboard.putNumber("Pitch", RobotMap.am.getPitch());
-		SmartDashboard.putNumber("Roll", RobotMap.am.getRoll());
-		SmartDashboard.putNumber("Yaw", RobotMap.am.getYaw());
+		//SmartDashboard.putNumber("Pitch", RobotMap.am.getPitch());
+		//SmartDashboard.putNumber("Roll", RobotMap.am.getRoll());
+		//SmartDashboard.putNumber("Yaw", RobotMap.am.getYaw());
 		
-		SmartDashboard.putNumber("ardutime", ArduPilotAttitudeMonitor.time);
+		//SmartDashboard.putNumber("ardutime", ArduPilotAttitudeMonitor.time);
 		
 		SmartDashboard.putNumber("armSetpoint", RobotMap.arm1.getSetpoint());
 		SmartDashboard.putNumber("P", Constants.P);
@@ -110,17 +100,17 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("D", Constants.D);
 		SmartDashboard.putNumber("F", Constants.F);
 		SmartDashboard.putNumber("armEncoder", RobotMap.arm1.getPosition());
-		SmartDashboard.putNumber("encoder position", RobotMap.left1.getEncPosition());
+		//SmartDashboard.putNumber("encoder position", RobotMap.left1.getEncPosition());
 
 		//SmartDashboard.putNumber("Left Setpoint", RobotMap.left1.getSetpoint());
 		//SmartDashboard.putNumber("Left Speed", -1 * RobotMap.left1.getSpeed());
 		//SmartDashboard.putNumber("right encoder",(RobotMap.right1.getSpeed() * (60/25.6)));
-		SmartDashboard.putNumber("Target X", VisionHandler.getInstance().x);
+		//SmartDashboard.putNumber("Target X", VisionHandler.getInstance().x);
 		// System.out.println(VisionHandler.getInstance().x);
-		SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().y);
+		//SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().y);
 		SmartDashboard.putNumber("Current Heading", RobotMap.am.getYaw());
 		SmartDashboard.putNumber("Heading To Preserve", headingToPreserve);
-		SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
+		//SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
 		SmartDashboard.putNumber("weapon throttle",((RobotMap.weaponStick.getThrottle()*-1)+1));
 		SmartDashboard.putNumber("driver throttle",((RobotMap.driveStick.getThrottle()*-1)+1));
 		// System.out.println(VisionHandler.getInstance().y);
@@ -142,7 +132,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
-		RobotMap.light.set(0.5);
+		RobotMap.light.set(1);
 
 	}
 
