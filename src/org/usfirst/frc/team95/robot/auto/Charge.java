@@ -1,8 +1,6 @@
 package org.usfirst.frc.team95.robot.auto;
 
-import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.RobotMap;
-import org.usfirst.frc.team95.robot.VisionHandler;
 
 import edu.wpi.first.wpilibj.Timer;
 
