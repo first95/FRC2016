@@ -127,7 +127,7 @@ public class RobotMap {
     	left1.setPID(Constants.P, Constants.I, Constants.D);
     	right1.setF(Constants.F);
     	right1.setPID(Constants.P, Constants.I, Constants.D);
-    	left1.changeControlMode(CANTalon.TalonControlMode.Speed); // Speed
+    	left1.changeControlMode(CANTalon.TalonControlMode.PercentVbus); // Speed
     	left1.enableControl();
     	left2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	left2.set(1);
@@ -135,7 +135,7 @@ public class RobotMap {
     	left3.changeControlMode(CANTalon.TalonControlMode.Follower);
     	left3.set(1);
     	left3.enableControl();
-    	right1.changeControlMode(CANTalon.TalonControlMode.Speed);
+    	right1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	//right1.reverseSensor(true); DONT DO THIS
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);

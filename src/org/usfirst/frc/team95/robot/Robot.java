@@ -161,11 +161,11 @@ public class Robot extends IterativeRobot
 			}
 		}
 
-		RobotMap.testDrive();
-		PIDTuner();
+		//RobotMap.testDrive();
+		//PIDTuner();
 		if (RobotMap.driveLock == null)
 		{
-		//	RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
 		
 		if (RobotMap.armGrounded.justPressedp()) {
