@@ -25,9 +25,6 @@ public class Constants {
 	static final public double deadBand = 0.007;
 	static final public double horDeadBand = 0.01;
 	
-	//tolerance for shooter speed
-	static final public double shootPowTol = .1;
-	
 	// Drive PID
 	//static public double P = 4, I = 50 * 1e-6, D = 200, F = 1.39; //left
 												// during PID Tuning

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Charge extends Auto{
 	
-	//double shootTolerance = VisionHandler.getInstance().getPower() * Constants.shootPowTol;
 	boolean done = false;
 	Timer timer = new Timer();
 	
@@ -23,8 +22,7 @@ public class Charge extends Auto{
 
 	@Override
 	public void update() {
-		//if(RobotMap.shoot2L.getSpeed() > VisionHandler.getInstance().getPower() - shootTolerance && 
-			//	RobotMap.shoot2L.getSpeed() < VisionHandler.getInstance().getPower() + shootTolerance ){
+		
 		if (timer.get() >= 2.0) {
 			done = true;
 		}
