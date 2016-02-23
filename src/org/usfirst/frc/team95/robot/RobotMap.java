@@ -3,6 +3,7 @@ package org.usfirst.frc.team95.robot;
 
 import org.usfirst.frc.team95.robot.auto.Align;
 import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
+import org.usfirst.frc.team95.robot.auto.EjectBall;
 import org.usfirst.frc.team95.robot.auto.PickUp;
 import org.usfirst.frc.team95.robot.auto.PreserveHeading;
 
@@ -20,7 +21,7 @@ public class RobotMap {
 	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
 				preserveHeadingButtonTracker, fire, pickUp, align, relign, armGroundedFront, 
-				armGroundedBack, limitOveride;
+				armGroundedBack, limitOveride, eject;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -137,6 +138,7 @@ public class RobotMap {
     	preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
     	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
     	pickUp = new ButtonTracker(weaponStick, 2, new PickUp());
+    	eject = new ButtonTracker(weaponStick, 5, new EjectBall());
     	
         align = new ButtonTracker(weaponStick, 4, new Align());
         
