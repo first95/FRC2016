@@ -204,32 +204,32 @@ public class Robot extends IterativeRobot
 		boolean changed = false;
 		if (RobotMap.decP.justPressedp())
 		{
-			Constants.P = Constants.P - (.1 * d);
+			Constants.headingPreservationP = Constants.headingPreservationP - (.1 * d);
 			changed = true;
 		}
 		else if (RobotMap.incP.justPressedp())
 		{
-			Constants.P = Constants.P + (.1 * d);
+			Constants.headingPreservationP = Constants.headingPreservationP + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.decI.justPressedp())
 		{
-			Constants.I = Constants.I - (.0000001 * d);
+			Constants.headingPreservationI = Constants.headingPreservationI - (.0000001 * d);
 			changed = true;
 		}
 		else if (RobotMap.incI.justPressedp())
 		{
-			Constants.I = Constants.I + (.0000001 * d);
+			Constants.headingPreservationI = Constants.headingPreservationI + (.0000001 * d);
 			changed = true;
 		}
 		if (RobotMap.decD.justPressedp())
 		{
-			Constants.D = Constants.D - (.1 * d);
+			Constants.headingPreservationD = Constants.headingPreservationD - (.1 * d);
 			changed = true;
 		}
 		else if (RobotMap.incD.justPressedp())
 		{
-			Constants.D = Constants.D + (.1 * d);
+			Constants.headingPreservationD = Constants.headingPreservationD + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.incF.justPressedp())
