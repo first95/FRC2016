@@ -14,13 +14,13 @@ public class Drive {
 	
 	//pure tank controlls (not) and switch to RPM
 	public void tankDrive(double leftsp, double rightsp) {
-		left.set(leftsp);// * Constants.timeserRPM);
+		left.set(-leftsp);// * Constants.timeserRPM);
 		right.set(rightsp);// * Constants.timeserRPM);
 	}
 	
 	//arcade style drive
-	public void arcadeDrive(double y, double x) {
-		tankDrive(x+y, x-y);
+	public void arcadeDrive(double forward, double turn) {
+		tankDrive(forward-turn, forward+turn);
 	}
 	
 	//gets the joystick values for stuff and adds throttle sensitivity (redundant negatives on y are nessacary for some reason

@@ -132,7 +132,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
-		RobotMap.light.set(1);
+		//RobotMap.light.set(1);
 
 	}
 

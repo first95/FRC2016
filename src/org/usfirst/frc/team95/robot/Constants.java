@@ -57,7 +57,7 @@ public class Constants {
 	static public double headingPreservationD = 0.05;
 	static final public double headingPreservationClosenessTolerance = 0;
 	// Autonomous
-	static final public double autonomousRotateSpeed=0.15;
+	static final public double autonomousRotateSpeed=0.30;
 	
 	static final public double armPowerOnPlace = Math.PI/2 - 0.4537852;
 	static final public double armGroundedBack = -5.5/180*Math.PI;

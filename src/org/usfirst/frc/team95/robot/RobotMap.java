@@ -31,10 +31,10 @@ public class RobotMap {
 		// drive motors
     	left1 = new CANTalon(1);
     	left2 = new CANTalon(2);
-    	//left3 = new CANTalon(3);
-    	right1 = new CANTalon(3);
-    	right2 = new CANTalon(4);
-    	//right3 = new CANTalon(6);
+    	left3 = new CANTalon(3);
+    	right1 = new CANTalon(4);
+    	right2 = new CANTalon(5);
+    	right3 = new CANTalon(6);
     	
     	// arm shoulder motors
     	arm1 = new CANTalon(7);
@@ -46,7 +46,7 @@ public class RobotMap {
     	shoot2R = new CANTalon(12);
     	
     	// ring light for vision
-    	light = new CANTalon(5);
+    	//light = new CANTalon(5);
     	
     	am = new ArduPilotAttitudeMonitor();
     	
@@ -108,18 +108,18 @@ public class RobotMap {
     	left2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	left2.set(1);
     	left2.enableControl();
-    	//left3.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	//left3.set(1);
-    	//left3.enableControl();
+    	left3.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	left3.set(1);
+    	left3.enableControl();
     	right1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
     	//right1.reverseSensor(true); DONT DO THIS
     	right1.enableControl();
     	right2.changeControlMode(CANTalon.TalonControlMode.Follower);
     	right2.set(4);
     	right2.enableControl();
-    	//right3.changeControlMode(CANTalon.TalonControlMode.Follower);
-    	//right3.set(4);
-    	//right3.enableControl();
+    	right3.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	right3.set(4);
+    	right3.enableControl();
     	
     	driveStick = new Joystick(0);
     	weaponStick = new Joystick(1);
