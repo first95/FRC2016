@@ -133,6 +133,7 @@ public class Robot extends IterativeRobot
 	public void teleopInit()
 	{
 		//RobotMap.light.set(1);
+		RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
 
 	}
 
@@ -161,8 +162,10 @@ public class Robot extends IterativeRobot
 		
 		if (RobotMap.armGroundedBack.justPressedp()) {
 			RobotMap.arm1.setPosition(Constants.armGroundedBack);
+			RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
 		} else if (RobotMap.armGroundedFront.justPressedp()) {
 			RobotMap.arm1.setPosition(Constants.armGroundedFront);
+			RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
 		}
 		
 		/*if (RobotMap.limitOveride.Pressedp()){

@@ -17,10 +17,11 @@ public class ArmDrive {
 	}
 	
 	public void ArmControll(Joystick stick) {
-		double y = stick.getY()*(((stick.getThrottle()*-1)+1)/2);
+		double y = stick.getY();
 		if (Math.abs(y) <= Constants.deadBand) {
 			y = 0;
 		}else {
+			y *= (((stick.getThrottle()*-1)+1)/2);
 			double positionAdder = (RobotMap.arm1.getPosition() + y);
 			Move(positionAdder);
 		}

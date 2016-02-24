@@ -28,8 +28,8 @@ public class Align extends Auto {
 		}
 		
 		Auto[] autoMoves = {new PreserveHeading(heading),//};
-				new RaiseCannon(verticalRotation),
-				new Charge()};
+				new RaiseCannon(verticalRotation),};
+				//new Charge()};
 		
 		combined = new SimultaneousMove(autoMoves);
 		combined.init();

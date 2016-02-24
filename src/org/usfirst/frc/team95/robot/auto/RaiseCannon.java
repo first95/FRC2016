@@ -29,7 +29,7 @@ public class RaiseCannon extends Auto {
 
 	@Override
 	public boolean done() {
-		return RobotMap.arm1.getClosedLoopError() < 1;
+		return RobotMap.arm1.getClosedLoopError() < 0.1;
 	}
 	
 

@@ -190,7 +190,7 @@ public class VisionHandler {
 		SmartDashboard.putNumber("Autoaim Proposed Turn", tX);
 		SmartDashboard.putNumber("Autoaim Proposed Arm Offset", tY);
 		
-		aimX = tX;
+		aimX = -tX;
 		aimY = tY;
 		//power = m * Constants.shootVelocityToRPM;
 		

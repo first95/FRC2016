@@ -71,7 +71,9 @@ public class RobotMap {
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
     	arm1.changeControlMode(CANTalon.TalonControlMode.Position);
     	//arm1.setForwardSoftLimit(Constants.armGroundedBack);
+    	arm1.enableForwardSoftLimit(false);
     	//arm1.setReverseSoftLimit(Constants.armGroundedFront);
+    	arm1.enableReverseSoftLimit(false);
     	
     	arm1.enableControl();
     	//arm1.setAllowableClosedLoopErr(0.005);
