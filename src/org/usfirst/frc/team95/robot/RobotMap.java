@@ -25,7 +25,9 @@ public class RobotMap {
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
+	public static Object armLock = null;
 	public static PowerDistributionPanel pdb = new PowerDistributionPanel();
+	
 	
 	public static void init() {
 		// drive motors

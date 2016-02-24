@@ -27,9 +27,9 @@ public class Align extends Auto {
 			heading += Math.PI*2;
 		}
 		
-		Auto[] autoMoves = {new PreserveHeading(heading),};
-				//new RaiseCannon(verticalRotation),
-				//new Charge()};
+		Auto[] autoMoves = {new PreserveHeading(heading),//};
+				new RaiseCannon(verticalRotation),
+				new Charge()};
 		
 		combined = new SimultaneousMove(autoMoves);
 		combined.init();

@@ -11,7 +11,9 @@ public class ArmDrive {
 	}
 	
 	public void Move(double position) {
-		arm.set(position);
+		if (RobotMap.armLock == null) {
+			arm.set(position);
+		}
 	}
 	
 	public void ArmControll(Joystick stick) {

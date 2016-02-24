@@ -12,6 +12,7 @@ public class RaiseCannon extends Auto {
 
 	@Override
 	public void init() {
+		RobotMap.armLock = this;
 		RobotMap.arm1.set(RobotMap.arm1.get() + angle);
 		
 	}
@@ -23,12 +24,12 @@ public class RaiseCannon extends Auto {
 
 	@Override
 	public void stop() {
-		;
+		RobotMap.armLock = null;
 	}
 
 	@Override
 	public boolean done() {
-		return true;
+		return RobotMap.arm1.getClosedLoopError() < 1;
 	}
 	
 
