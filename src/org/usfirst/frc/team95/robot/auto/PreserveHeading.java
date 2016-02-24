@@ -46,7 +46,7 @@ public class PreserveHeading extends HybridAutoDrive
 			double a = zCorrection*((Constants.headingPreservationUnAgressiveness*-1)+1);
 			//SmartDashboard.putNumber("P Term: ", a);
 			yawToSpeed = diminish(a, RobotMap.am.getYawRate()*Constants.headingPreservationD);
-			RobotMap.drive.arcadeDrive(RobotMap.driveStick.getY()*-.05, yawToSpeed);
+			RobotMap.drive.arcadeDrive(RobotMap.driveStick.getY()*(RobotMap.driveStick.getThrottle()*-0.5+1), yawToSpeed);
 		}
 		
 		//SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);

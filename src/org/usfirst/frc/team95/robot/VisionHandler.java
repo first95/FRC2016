@@ -177,7 +177,7 @@ public class VisionHandler {
 		double tY = Constants.verticalHeight/2 - y;
 		tY *= Constants.verticalPixelsToDegrees;
 		
-		distance = 1/Math.tan(aimY)*(Constants.goalHeight-Math.sin(RobotMap.arm1.getPosition())*
+		distance = 1/Math.tan(tY)*(Constants.goalHeight-Math.sin(RobotMap.arm1.getPosition())*
 				Constants.cameraDistanceToPivot);
 		
 		//double V0y = Math.sqrt(2*Constants.gravity*Math.sin(RobotMap.arm1.getPosition())*
