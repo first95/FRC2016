@@ -22,8 +22,8 @@ public class Constants {
 	static final public double timeserRPM = 430.89;
 	
 	//deadbanding
-	static final public double deadBand = 0.007;
-	static final public double horDeadBand = 0.01;
+	static final public double deadBand = 0.05;
+	static final public double horDeadBand = 0.07;
 	
 	// Drive PID
 	//static public double P = 4, I = 50 * 1e-6, D = 200, F = 1.39; //left
@@ -47,10 +47,10 @@ public class Constants {
 	static final public double lineDistanceTolerance = 50;
 	
 	// Vision - Camera specific conversions
-	static final public double horizontalPixelsToDegrees = 0.1046875;
-	static final public double verticalPixelsToDegrees = 0.10625;
 	static final public double horizontalWidth = 640; // (Pixels)
 	static final public double verticalHeight = 480; // (Pixels)
+	static final public double horizontalPixelsToDegrees = 53/horizontalWidth;
+	static final public double verticalPixelsToDegrees = 40/verticalHeight;
 	
 	static public double headingPreservationP = 4.2;
 	static public double headingPreservationI = 0.0000003;
@@ -66,6 +66,9 @@ public class Constants {
 	
 	// Camera offsets
 	public final static double cameraHorizontalOffset = 0;
-	static final public double cameraVerticalOffset = 0;
+	static final public double cameraVerticalOffset = -0.2;
 	static final public double rangeAdjustment = 0;
+	
+	
+	static final public double setPointChangeLimit = 0.15;
 }

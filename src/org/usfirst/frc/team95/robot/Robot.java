@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.usfirst.frc.team95.robot.auto.Auto;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -163,16 +164,15 @@ public class Robot extends IterativeRobot
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
 		
-		if (RobotMap.armGroundedBack.justPressedp()) {
+		/*if (RobotMap.armGroundedBack.justPressedp()) {
 			Constants.encoderOffset = Constants.armGroundedBack-RobotMap.arm1.getPosition();
 			RobotMap.armDrive.Move(RobotMap.arm1.getPosition()-Constants.encoderOffset);
 		} else if (RobotMap.armGroundedFront.justPressedp()) {
 			Constants.encoderOffset = Constants.armGroundedFront-RobotMap.arm1.getPosition();
 			RobotMap.armDrive.Move(RobotMap.arm1.getPosition()-Constants.encoderOffset);
-		}
+		}*/
 		if (RobotMap.zero.justPressedp()) {
-			Constants.encoderOffset = -RobotMap.arm1.getPosition();
-			RobotMap.armDrive.Move(RobotMap.arm1.getPosition()-Constants.encoderOffset);
+			RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
 		}
 		
 		/*if (RobotMap.limitOveride.Pressedp()){
@@ -184,6 +184,13 @@ public class Robot extends IterativeRobot
 		}*/
 		//RobotMap.shoot1R.setSetpoint(RobotMap.shoot1L.get());
 		//RobotMap.arm2.set(RobotMap.arm1.get());
+		
+		if (RobotMap.up.justPressedp()) {
+			RobotMap.arm1.set(RobotMap.arm1.getSetpoint()+0.01);
+		}
+		if (RobotMap.down.justPressedp()) {
+			RobotMap.arm1.set(RobotMap.arm1.getSetpoint()-0.01);
+		}
 	}
 
 	/**

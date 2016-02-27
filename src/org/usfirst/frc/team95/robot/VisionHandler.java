@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -141,6 +142,12 @@ public class VisionHandler {
 		
 		ArrayList<Line> lines = new ArrayList<Line>(); // This would be a Set, if I could get sets working.
 		lines.addAll(Arrays.asList(lineTable));
+		lines.removeIf(new Predicate<Line>() {
+			@Override
+			public boolean test(Line t) {
+				return t == null;
+			}
+		});
 		lines.sort(sort);
 		
 		ArrayList<Triple<Line>> targets = new ArrayList<Triple<Line>>();
@@ -176,11 +183,11 @@ public class VisionHandler {
 		
 		
 		double tX = Constants.horizontalWidth/2 - x;
-		tX *= Constants.horizontalPixelsToDegrees / 180 * Math.PI;
+		tX *= -Constants.horizontalPixelsToDegrees / 180 * Math.PI;
 		tX += Constants.cameraHorizontalOffset;
 		
 		double tY = Constants.verticalHeight/2 - y;
-		tY *= Constants.verticalPixelsToDegrees / 180 * Math.PI;
+		tY *= -Constants.verticalPixelsToDegrees / 180 * Math.PI;
 		tY += Constants.cameraVerticalOffset;
 		
 		distance = 1/Math.tan(tY)*(Constants.goalHeight-Math.sin(RobotMap.arm1.getPosition())*
@@ -211,7 +218,7 @@ public class VisionHandler {
 		double[] y2s = lineReport.getNumberArray("y2", Constants.emptydoubleTable);
 		double[] lengths = lineReport.getNumberArray("length", Constants.emptydoubleTable);
 		double[] angles = lineReport.getNumberArray("angle", Constants.emptydoubleTable);
-		Line[] lineTable = new Line[x1s.length];
+		Line[] lineTable = new Line[x1s.length+10];
 		for (int i=0; i<x1s.length; i++) {
 			lineTable[i] = new Line();
 		}

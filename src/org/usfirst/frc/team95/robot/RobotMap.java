@@ -3,6 +3,7 @@ package org.usfirst.frc.team95.robot;
 
 import org.usfirst.frc.team95.robot.auto.Align;
 import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
+import org.usfirst.frc.team95.robot.auto.Coast;
 import org.usfirst.frc.team95.robot.auto.EjectBall;
 import org.usfirst.frc.team95.robot.auto.PickUp;
 import org.usfirst.frc.team95.robot.auto.PreserveHeading;
@@ -21,8 +22,8 @@ public class RobotMap {
 	public static Drive drive;
 	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
-				preserveHeadingButtonTracker, fire, pickUp, align, relign, armGroundedFront, 
-				armGroundedBack, limitOveride, eject, zero;
+				preserveHeadingButtonTracker, fireL, fireR, pickUp, align, relign, armGroundedFront, 
+				armGroundedBack, limitOveride, eject, zero, coast, up, down;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -144,9 +145,10 @@ public class RobotMap {
     	decF = new ButtonTracker(driveStick, 14);
     	preserveHeadingAutoMove = new PreserveHeading();
     	preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
-    	fire = new ButtonTracker(weaponStick, 1, new ChargeAndShoot());
+    	fireL = new ButtonTracker(weaponStick, 11, new ChargeAndShoot());
+    	fireR = new ButtonTracker(weaponStick, 5, new ChargeAndShoot());
     	pickUp = new ButtonTracker(weaponStick, 2, new PickUp());
-    	eject = new ButtonTracker(weaponStick, 5, new EjectBall());
+    	//eject = new ButtonTracker(weaponStick, 5, new EjectBall());
     	
         align = new ButtonTracker(weaponStick, 4, new Align());
         
@@ -157,6 +159,10 @@ public class RobotMap {
         zero = new ButtonTracker(weaponStick, 14);
         
         limitOveride = new ButtonTracker(weaponStick, 8);
+        
+        coast = new ButtonTracker(weaponStick, 1, new Coast());
+        up = new ButtonTracker(weaponStick, 6);
+        down = new ButtonTracker(weaponStick, 9);
         
         armDrive = new ArmDrive(arm1);
     	drive = new Drive(left1, right1);

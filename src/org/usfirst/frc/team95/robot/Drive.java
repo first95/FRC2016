@@ -33,6 +33,7 @@ public class Drive {
 		if (Math.abs(x) <= Constants.horDeadBand) {
 			x = 0;
 		}
+		x *= Math.abs(x);
 		arcadeDrive(y,x);
 	}
 }
