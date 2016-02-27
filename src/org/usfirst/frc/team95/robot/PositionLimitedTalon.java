@@ -29,19 +29,22 @@ public class PositionLimitedTalon extends CANTalon implements PollableSubsystem 
 
 	@Override
 	public void update() {
-		if (this.getPosition() > this.forward && !RobotMap.limitOveride.Pressedp()) {
-			this.set(this.getSetpoint()-0.1);
+		if (this.getPosition()+Constants.encoderOffset > this.forward && 
+				!RobotMap.limitOveride.Pressedp()) {
+			//this.set(this.getSetpoint()-0.1);
 		}
-		if (this.getPosition() < this.reverse && !RobotMap.limitOveride.Pressedp()) {
-			this.set(this.getSetpoint()+0.1);
+		if (this.getPosition()+Constants.encoderOffset < this.reverse && 
+				!RobotMap.limitOveride.Pressedp()) {
+			//this.set(this.getSetpoint()+0.1);
 		}
 	}
 	
 	@Override
 	public void set(double pos) {
-		if (pos > this.forward && !RobotMap.limitOveride.Pressedp()) {
+		pos += Constants.encoderOffset;
+		if (pos < this.forward && !RobotMap.limitOveride.Pressedp()) {
 			super.set(this.forward);
-		} else if (pos < this.reverse && !RobotMap.limitOveride.Pressedp()) {
+		} else if (pos > this.reverse && !RobotMap.limitOveride.Pressedp()) {
 			super.set(this.reverse);
 		}
 		super.set(pos);

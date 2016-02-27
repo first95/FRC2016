@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot
 		}
 
 		updates.add(RobotMap.am);
-		updates.add(RobotMap.arm1);
+		//updates.add(RobotMap.arm1);
 		
 		for (PollableSubsystem p: updates) {
 			p.init();
@@ -101,6 +101,8 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("D", Constants.D);
 		SmartDashboard.putNumber("F", Constants.F);
 		SmartDashboard.putNumber("armEncoder", RobotMap.arm1.getPosition());
+		SmartDashboard.putNumber("arm Position with Offset", RobotMap.arm1.getPosition()
+				+Constants.encoderOffset);
 		//SmartDashboard.putNumber("encoder position", RobotMap.left1.getEncPosition());
 
 		//SmartDashboard.putNumber("Left Setpoint", RobotMap.left1.getSetpoint());
@@ -162,11 +164,15 @@ public class Robot extends IterativeRobot
 		}
 		
 		if (RobotMap.armGroundedBack.justPressedp()) {
-			RobotMap.arm1.setPosition(Constants.armGroundedBack);
-			RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
+			Constants.encoderOffset = Constants.armGroundedBack-RobotMap.arm1.getPosition();
+			RobotMap.armDrive.Move(RobotMap.arm1.getPosition()-Constants.encoderOffset);
 		} else if (RobotMap.armGroundedFront.justPressedp()) {
-			RobotMap.arm1.setPosition(Constants.armGroundedFront);
-			RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
+			Constants.encoderOffset = Constants.armGroundedFront-RobotMap.arm1.getPosition();
+			RobotMap.armDrive.Move(RobotMap.arm1.getPosition()-Constants.encoderOffset);
+		}
+		if (RobotMap.zero.justPressedp()) {
+			Constants.encoderOffset = -RobotMap.arm1.getPosition();
+			RobotMap.armDrive.Move(RobotMap.arm1.getPosition()-Constants.encoderOffset);
 		}
 		
 		/*if (RobotMap.limitOveride.Pressedp()){

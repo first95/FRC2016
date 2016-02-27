@@ -16,13 +16,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotMap {
 	public static CANTalon left1, left2, left3, right1, right2, right3, arm2, shoot1L, shoot1R, 
 							shoot2L, shoot2R, light;
-	public static PositionLimitedTalon arm1;
+	public static CANTalon arm1;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
 	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
 				preserveHeadingButtonTracker, fire, pickUp, align, relign, armGroundedFront, 
-				armGroundedBack, limitOveride, eject;
+				armGroundedBack, limitOveride, eject, zero;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -40,9 +40,9 @@ public class RobotMap {
     	right3 = new CANTalon(6);
     	
     	// arm shoulder motors
-    	arm1 = new PositionLimitedTalon(7);
-    	arm1.setForwardLimit(Constants.armGroundedFront);
-    	arm1.setReverseLimit(Constants.armGroundedBack);
+    	arm1 = new CANTalon(7);
+    	//arm1.setForwardLimit(Constants.armGroundedFront);
+    	//arm1.setReverseLimit(Constants.armGroundedBack);
     	arm2 = new CANTalon(8);
     	// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
     	shoot1L = new CANTalon(9);
@@ -70,6 +70,7 @@ public class RobotMap {
     	arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
     	arm1.reverseSensor(true);
     	arm1.setPosition(Constants.armPowerOnPlace);
+    	arm1.set(arm1.getPosition());
     	arm1.setF(Constants.armF);
     	arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
     	arm1.changeControlMode(CANTalon.TalonControlMode.Position);
@@ -153,6 +154,7 @@ public class RobotMap {
 
         armGroundedBack = new ButtonTracker(weaponStick, 16);
         armGroundedFront = new ButtonTracker(weaponStick, 15);
+        zero = new ButtonTracker(weaponStick, 14);
         
         limitOveride = new ButtonTracker(weaponStick, 8);
         

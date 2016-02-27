@@ -60,8 +60,9 @@ public class Constants {
 	static final public double autonomousRotateSpeed=0.30;
 	
 	static final public double armPowerOnPlace = Math.PI/2 - 0.4537852;
-	static final public double armGroundedBack = -5.5/180*Math.PI;
-	static final public double armGroundedFront = Math.PI + 30/180*Math.PI;
+	static final public double armGroundedBack = Math.PI + (6*Math.PI/180);
+	static final public double armGroundedFront = -28.7*Math.PI/180;
+	static public double encoderOffset = (armPowerOnPlace)+0.413;
 	
 	// Camera offsets
 	public final static double cameraHorizontalOffset = 0;
