@@ -50,6 +50,7 @@ public class Robot extends IterativeRobot
 		}
 
 		updates.add(RobotMap.am);
+		updates.add(RobotMap.arm1);
 		
 		for (PollableSubsystem p: updates) {
 			p.init();

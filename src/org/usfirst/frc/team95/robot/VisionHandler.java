@@ -37,6 +37,10 @@ public class VisionHandler {
 		return power;
 	}
 	
+	public double getRange() {
+		return distance;
+	}
+	
 	private final static String[] CLEAR_TMP_CMD =
 		{"/bin/rm", "-rf", "/tmp/*"};
 	
@@ -173,9 +177,11 @@ public class VisionHandler {
 		
 		double tX = Constants.horizontalWidth/2 - x;
 		tX *= Constants.horizontalPixelsToDegrees / 180 * Math.PI;
+		tX += Constants.cameraHorizontalOffset;
 		
 		double tY = Constants.verticalHeight/2 - y;
 		tY *= Constants.verticalPixelsToDegrees / 180 * Math.PI;
+		tY += Constants.cameraVerticalOffset;
 		
 		distance = 1/Math.tan(tY)*(Constants.goalHeight-Math.sin(RobotMap.arm1.getPosition())*
 				Constants.cameraDistanceToPivot);

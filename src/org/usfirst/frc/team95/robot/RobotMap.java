@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, left3, right1, right2, right3, arm1, arm2, shoot1L, shoot1R, 
+	public static CANTalon left1, left2, left3, right1, right2, right3, arm2, shoot1L, shoot1R, 
 							shoot2L, shoot2R, light;
+	public static PositionLimitedTalon arm1;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
 	public static ArmDrive armDrive;
@@ -39,7 +40,9 @@ public class RobotMap {
     	right3 = new CANTalon(6);
     	
     	// arm shoulder motors
-    	arm1 = new CANTalon(7);
+    	arm1 = new PositionLimitedTalon(7);
+    	arm1.setForwardLimit(Constants.armGroundedFront);
+    	arm1.setReverseLimit(Constants.armGroundedBack);
     	arm2 = new CANTalon(8);
     	// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
     	shoot1L = new CANTalon(9);

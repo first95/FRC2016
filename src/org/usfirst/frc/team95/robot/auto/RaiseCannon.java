@@ -1,6 +1,8 @@
 package org.usfirst.frc.team95.robot.auto;
 
+import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.RobotMap;
+import org.usfirst.frc.team95.robot.VisionHandler;
 
 public class RaiseCannon extends Auto {
 	
@@ -13,7 +15,8 @@ public class RaiseCannon extends Auto {
 	@Override
 	public void init() {
 		RobotMap.armLock = this;
-		RobotMap.arm1.set(RobotMap.arm1.get() + angle);
+		double range = VisionHandler.getInstance().getRange();
+		RobotMap.arm1.set(RobotMap.arm1.getSetpoint() + angle + (Constants.rangeAdjustment * range));
 		
 	}
 

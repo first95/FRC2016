@@ -62,4 +62,9 @@ public class Constants {
 	static final public double armPowerOnPlace = Math.PI/2 - 0.4537852;
 	static final public double armGroundedBack = -5.5/180*Math.PI;
 	static final public double armGroundedFront = Math.PI + 30/180*Math.PI;
+	
+	// Camera offsets
+	public final static double cameraHorizontalOffset = 0;
+	static final public double cameraVerticalOffset = 0;
+	static final public double rangeAdjustment = 0;
 }
