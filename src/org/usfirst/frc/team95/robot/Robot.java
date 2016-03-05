@@ -3,11 +3,19 @@ package org.usfirst.frc.team95.robot;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team95.robot.auto.AlignAndShoot;
 import org.usfirst.frc.team95.robot.auto.Auto;
+import org.usfirst.frc.team95.robot.auto.ConfigMove;
+import org.usfirst.frc.team95.robot.auto.Nothing;
+import org.usfirst.frc.team95.robot.auto.OverRoughTerrain;
+import org.usfirst.frc.team95.robot.auto.RotateBy;
+import org.usfirst.frc.team95.robot.auto.TimedMove;
+import org.usfirst.frc.team95.robot.auto.UnderLowBar;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -23,6 +31,10 @@ public class Robot extends IterativeRobot
 	CameraServer cameraServer;
 	ArrayList<PollableSubsystem> updates = new ArrayList<PollableSubsystem>();
 	ArrayList<Auto> runningAutonomousMoves = new ArrayList<Auto>();
+	
+	SendableChooser a, b, c;
+	
+	Auto move;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -56,7 +68,48 @@ public class Robot extends IterativeRobot
 		for (PollableSubsystem p: updates) {
 			p.init();
 		}
-
+		
+		a = new SendableChooser();
+		b = new SendableChooser();
+		c = new SendableChooser();
+		a.addDefault("None", new Nothing());
+		a.addObject("Go Under Low Bar", new UnderLowBar());
+		a.addObject("Cross other Obstacle", new OverRoughTerrain());
+		a.addObject("Go Forward", new TimedMove(0.5, 0.5, 5));
+		a.addObject("Turn 45 Right", new RotateBy(Math.PI/4));
+		a.addObject("Turn 45 Left", new RotateBy(-Math.PI/4));
+		a.addObject("Autoaim & Shoot", new AlignAndShoot());
+		
+		b.addDefault("None", new Nothing());
+		b.addObject("Go Under Low Bar", new UnderLowBar());
+		b.addObject("Cross other Obstacle", new OverRoughTerrain());
+		b.addObject("Go Forward", new TimedMove(0.5, 0.5, 5));
+		b.addObject("Turn 45 Right", new RotateBy(Math.PI/4));
+		b.addObject("Turn 45 Left", new RotateBy(-Math.PI/4));
+		b.addObject("Autoaim & Shoot", new AlignAndShoot());
+		
+		c.addDefault("None", new Nothing());
+		c.addObject("Go Under Low Bar", new UnderLowBar());
+		c.addObject("Cross other Obstacle", new OverRoughTerrain());
+		c.addObject("Go Forward", new TimedMove(0.5, 0.5, 5));
+		c.addObject("Turn 45 Right", new RotateBy(Math.PI/4));
+		c.addObject("Turn 45 Left", new RotateBy(-Math.PI/4));
+		c.addObject("Autoaim & Shoot", new AlignAndShoot());
+		
+		SmartDashboard.putData("1st", a);
+		SmartDashboard.putData("2nd", b);
+		SmartDashboard.putData("3rd", c);
+		
+	}
+	
+	public void autonomuosInit() {
+		Auto am = (Auto) a.getSelected();
+		Auto bm = (Auto) b.getSelected();
+		Auto cm = (Auto) c.getSelected();
+		Auto[] m = {am, bm, cm};
+		
+		move = new ConfigMove(m);
+		move.init();
 	}
 
 	/**
@@ -73,7 +126,9 @@ public class Robot extends IterativeRobot
 				runningAutonomousMoves.remove(x);
 			}
 		}
+		move.update();
 	}
+	
 
 	public void commonPeriodic()
 	{
@@ -137,8 +192,8 @@ public class Robot extends IterativeRobot
 	public void teleopInit()
 	{
 		//RobotMap.light.set(1);
+		move.stop();
 		RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
-
 	}
 
 	public void teleopPeriodic()
@@ -272,7 +327,7 @@ public class Robot extends IterativeRobot
 
 	public void disabledInit()
 	{
-
+		move.stop();
 	}
 
 }
