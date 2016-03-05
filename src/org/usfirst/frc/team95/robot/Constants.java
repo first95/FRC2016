@@ -71,4 +71,5 @@ public class Constants {
 	
 	
 	static final public double setPointChangeLimit = 0.15;
+	public static final double GRIPDeadTime = 2;
 }

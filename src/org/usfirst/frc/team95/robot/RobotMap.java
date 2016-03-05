@@ -68,6 +68,7 @@ public class RobotMap {
     	}
     	
     	brakeAndVoltage(arm1);
+    	//arm1.setVoltageRampRate(rampRate);
     	arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
     	arm1.reverseSensor(true);
     	arm1.setPosition(Constants.armPowerOnPlace);

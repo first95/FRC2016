@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.usfirst.frc.team95.robot.auto.AlignAndShoot;
 import org.usfirst.frc.team95.robot.auto.Auto;
+import org.usfirst.frc.team95.robot.auto.BringArmDown;
 import org.usfirst.frc.team95.robot.auto.ConfigMove;
 import org.usfirst.frc.team95.robot.auto.Nothing;
 import org.usfirst.frc.team95.robot.auto.OverRoughTerrain;
@@ -79,6 +80,7 @@ public class Robot extends IterativeRobot
 		a.addObject("Turn 45 Right", new RotateBy(Math.PI/4));
 		a.addObject("Turn 45 Left", new RotateBy(-Math.PI/4));
 		a.addObject("Autoaim & Shoot", new AlignAndShoot());
+		a.addObject("Drop Arm", new BringArmDown());
 		
 		b.addDefault("None", new Nothing());
 		b.addObject("Go Under Low Bar", new UnderLowBar());
@@ -87,6 +89,7 @@ public class Robot extends IterativeRobot
 		b.addObject("Turn 45 Right", new RotateBy(Math.PI/4));
 		b.addObject("Turn 45 Left", new RotateBy(-Math.PI/4));
 		b.addObject("Autoaim & Shoot", new AlignAndShoot());
+		b.addObject("Drop Arm", new BringArmDown());
 		
 		c.addDefault("None", new Nothing());
 		c.addObject("Go Under Low Bar", new UnderLowBar());
@@ -95,6 +98,7 @@ public class Robot extends IterativeRobot
 		c.addObject("Turn 45 Right", new RotateBy(Math.PI/4));
 		c.addObject("Turn 45 Left", new RotateBy(-Math.PI/4));
 		c.addObject("Autoaim & Shoot", new AlignAndShoot());
+		c.addObject("Drop Arm", new BringArmDown());
 		
 		SmartDashboard.putData("1st", a);
 		SmartDashboard.putData("2nd", b);
@@ -112,6 +116,11 @@ public class Robot extends IterativeRobot
 		Auto am = (Auto) a.getSelected();
 		Auto bm = (Auto) b.getSelected();
 		Auto cm = (Auto) c.getSelected();
+		String picked = "We picked: ";
+		picked += am.getClass().getName() + ", ";
+		picked += bm.getClass().getName() + ", ";
+		picked += cm.getClass().getName();
+		DriverStation.reportError(picked, false);
 		Auto[] m = {am, bm, cm};
 		
 		move = new ConfigMove(m);
@@ -125,6 +134,7 @@ public class Robot extends IterativeRobot
 	{
 		for (Auto x : runningAutonomousMoves)
 		{
+			System.out.println("Running " + x.getClass().getName());
 			x.update();
 			if (x.done())
 			{
@@ -203,6 +213,9 @@ public class Robot extends IterativeRobot
 		if (move != null) {
 			move.stop();
 		}
+		
+		RobotMap.armLock = null;
+		
 		RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
 	}
 

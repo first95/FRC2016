@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -17,6 +18,11 @@ import edu.wpi.first.wpilibj.tables.ITableListener;
 public class VisionHandler {
 	double x, y, aimX, aimY, distance, power = 1; // These represent the x and y, in pixels, of the
 		// center of the goal.
+	
+	boolean aimStalled;
+	Timer time = new Timer();
+	
+	double timeLastSeen;
 	
 	public double getX() { // Getters!
 		return x;
@@ -49,6 +55,9 @@ public class VisionHandler {
 		{"/usr/local/frc/JRE/bin/java", "-jar", "/home/lvuser/grip.jar", 
 				"/home/lvuser/project.grip"};
 	
+	private final static String[] KILL_REMOTE_GRIP =
+		{"ssh", "pi@raspberrypi.local", "sudo", "killall", "java"};
+	
 	static VisionHandler instance; // This is the only instance of VisionHandler that should be used
 	
 	NetworkTable GRIPTable; // This represents GRIPs published reports
@@ -61,10 +70,41 @@ public class VisionHandler {
 	};
 	
 	ITableListener updater = new ITableListener() { // This updates the x and y whenever the table updates.
+		public void valueChanged(ITable table, String x, Object y, boolean n) {
+			;
+		}
+		
 		@Override
-		public void valueChanged(ITable table, String key, Object value, boolean newP) {
-			if (key.equals("x")) // So that we don't get spammed by updates.
+		public void valueChangedEx(ITable table, String key, Object value, int newP) {
+			timeLastSeen = time.get();
+			boolean newKey = (newP & 0x04) != 0;
+			boolean updated = (newP & 0x10) != 0;
+			if (updated) {
 				VisionHandler.getInstance().update(table);
+			}
+		}
+	};
+	
+	Runnable crashCheck = new Runnable() {
+		@Override
+		public void run() {
+			while (true) {
+				System.out.println("Time "+(time.get() - timeLastSeen));
+				if (time.get() - timeLastSeen > Constants.GRIPDeadTime) {
+					try {
+						new ProcessBuilder(KILL_REMOTE_GRIP).inheritIO().start();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	};
 	
@@ -72,7 +112,9 @@ public class VisionHandler {
 		@Override
 		public void run() {
 			while (true) {
-				VisionHandler.getInstance().update(NetworkTable.getTable("GRIP/myLinesReport"));
+				ITable grip = NetworkTable.getTable("GRIP/myLinesReport");
+				;
+				VisionHandler.getInstance().update(grip);
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
@@ -90,10 +132,14 @@ public class VisionHandler {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-		GRIPTable = NetworkTable.getTable("GRIP/myLinesReport");
-		//GRIPTable.addTableListener(updater);
 		
-		new Thread(poller).start();
+		time.reset();
+		time.start();
+		
+		GRIPTable = NetworkTable.getTable("GRIP/myLinesReport");
+		GRIPTable.addTableListener(updater);
+		
+		new Thread(crashCheck).start();
 	}
 	
 	public static VisionHandler getInstance() { // Yay. Boilerplate.
