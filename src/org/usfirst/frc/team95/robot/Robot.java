@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot
 	public void robotInit()
 	{
 		RobotMap.init();
-		VisionHandler.getInstance().init();
+		//VisionHandler.getInstance().init();
 
 		// cameraServer = CameraServer.getInstance();
 		// cameraServer.startAutomaticCapture("/dev/video0");
@@ -134,7 +134,7 @@ public class Robot extends IterativeRobot
 	{
 		for (Auto x : runningAutonomousMoves)
 		{
-			System.out.println("Running " + x.getClass().getName());
+			//System.out.println("Running " + x.getClass().getName());
 			x.update();
 			if (x.done())
 			{

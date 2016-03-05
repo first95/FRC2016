@@ -139,7 +139,7 @@ public class VisionHandler {
 		GRIPTable = NetworkTable.getTable("GRIP/myLinesReport");
 		GRIPTable.addTableListener(updater);
 		
-		new Thread(crashCheck).start();
+		//new Thread(crashCheck).start();
 	}
 	
 	public static VisionHandler getInstance() { // Yay. Boilerplate.
