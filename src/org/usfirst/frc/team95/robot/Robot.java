@@ -102,7 +102,13 @@ public class Robot extends IterativeRobot
 		
 	}
 	
-	public void autonomuosInit() {
+	@Override
+	public void autonomousInit() {
+		
+		System.out.println("Auto INIT");
+		
+		RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
+		
 		Auto am = (Auto) a.getSelected();
 		Auto bm = (Auto) b.getSelected();
 		Auto cm = (Auto) c.getSelected();
@@ -126,6 +132,8 @@ public class Robot extends IterativeRobot
 				runningAutonomousMoves.remove(x);
 			}
 		}
+		
+		System.out.println("Auto Periodic");
 		move.update();
 	}
 	

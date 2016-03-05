@@ -169,7 +169,7 @@ public class VisionHandler {
 		    }
 		}
 		
-		System.out.println("Targets found: " + targets.size());
+		//System.out.println("Targets found: " + targets.size());
 		if (targets.size() > 0) {
 			Triple<Line> target = targets.get(0);
 			this.x = (target.a.x1+target.a.x2+target.c.x1+target.c.x2)/4;
