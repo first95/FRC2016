@@ -192,7 +192,9 @@ public class Robot extends IterativeRobot
 	public void teleopInit()
 	{
 		//RobotMap.light.set(1);
-		move.stop();
+		if (move != null) {
+			move.stop();
+		}
 		RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
 	}
 
@@ -327,7 +329,9 @@ public class Robot extends IterativeRobot
 
 	public void disabledInit()
 	{
-		move.stop();
+		if (move != null) {
+			move.stop();
+		}
 	}
 
 }
