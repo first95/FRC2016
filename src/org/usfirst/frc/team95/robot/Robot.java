@@ -111,8 +111,6 @@ public class Robot extends IterativeRobot
 		
 		System.out.println("Auto INIT");
 		
-		RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
-		
 		Auto am = (Auto) a.getSelected();
 		Auto bm = (Auto) b.getSelected();
 		Auto cm = (Auto) c.getSelected();
@@ -122,6 +120,8 @@ public class Robot extends IterativeRobot
 		picked += cm.getClass().getName();
 		DriverStation.reportError(picked, false);
 		Auto[] m = {am, bm, cm};
+		
+		RobotMap.arm1.setSetpoint(RobotMap.arm1.getSetpoint());
 		
 		move = new ConfigMove(m);
 		move.init();
@@ -174,6 +174,10 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("10^6*I", Constants.I * (1e6));
 		SmartDashboard.putNumber("D", Constants.D);
 		SmartDashboard.putNumber("F", Constants.F);
+		
+		SmartDashboard.putNumber("Arm P", RobotMap.arm1.getP());
+		SmartDashboard.putNumber("Arm I", RobotMap.arm1.getI());
+		SmartDashboard.putNumber("Arm D", RobotMap.arm1.getD());
 		SmartDashboard.putNumber("armEncoder", RobotMap.arm1.getPosition());
 		SmartDashboard.putNumber("arm Position with Offset", RobotMap.arm1.getPosition()
 				+Constants.encoderOffset);
@@ -209,6 +213,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
+		
 		//RobotMap.light.set(1);
 		if (move != null) {
 			move.stop();
@@ -216,14 +221,13 @@ public class Robot extends IterativeRobot
 		
 		RobotMap.armLock = null;
 		
-		RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
+		RobotMap.arm1.setSetpoint(RobotMap.arm1.getPosition());
 	}
 
 	public void teleopPeriodic()
 	{
 		commonPeriodic();
 		// RobotMap.drive.arcadeDrive(RobotMap.driveStick);
-		RobotMap.armDrive.ArmControll(RobotMap.weaponStick);
 		// Run all automoves
 		for (Auto x : runningAutonomousMoves)
 		{
@@ -249,26 +253,14 @@ public class Robot extends IterativeRobot
 			Constants.encoderOffset = Constants.armGroundedFront-RobotMap.arm1.getPosition();
 			RobotMap.armDrive.Move(RobotMap.arm1.getPosition()-Constants.encoderOffset);
 		}*/
-		if (RobotMap.zero.justPressedp()) {
-			RobotMap.armDrive.Move(RobotMap.arm1.getPosition());
-		}
 		
-		/*if (RobotMap.limitOveride.Pressedp()){
-			RobotMap.arm1.enableForwardSoftLimit(false);
-			RobotMap.arm1.enableReverseSoftLimit(false);
-		}else {
-			RobotMap.arm1.enableForwardSoftLimit(true);
-			RobotMap.arm1.enableReverseSoftLimit(true);
-		}*/
-		//RobotMap.shoot1R.setSetpoint(RobotMap.shoot1L.get());
-		//RobotMap.arm2.set(RobotMap.arm1.get());
 		
-		if (RobotMap.up.justPressedp()) {
+		/*if (RobotMap.up.justPressedp()) {
 			RobotMap.arm1.set(RobotMap.arm1.getSetpoint()+0.01);
 		}
 		if (RobotMap.down.justPressedp()) {
 			RobotMap.arm1.set(RobotMap.arm1.getSetpoint()-0.01);
-		}
+		}*/
 	}
 
 	/**

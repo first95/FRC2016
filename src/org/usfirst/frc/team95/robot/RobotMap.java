@@ -2,9 +2,11 @@ package org.usfirst.frc.team95.robot;
 
 
 import org.usfirst.frc.team95.robot.auto.Align;
+import org.usfirst.frc.team95.robot.auto.BumpSetpoint;
 import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
 import org.usfirst.frc.team95.robot.auto.Coast;
 import org.usfirst.frc.team95.robot.auto.EjectBall;
+import org.usfirst.frc.team95.robot.auto.OpenLoopArm;
 import org.usfirst.frc.team95.robot.auto.PickUp;
 import org.usfirst.frc.team95.robot.auto.PreserveHeading;
 
@@ -20,10 +22,9 @@ public class RobotMap {
 	public static CANTalon arm1;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
-	public static ArmDrive armDrive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF, 
 				preserveHeadingButtonTracker, fireL, fireR, pickUp, align, relign, armGroundedFront, 
-				armGroundedBack, limitOveride, eject, zero, coast, up, down;
+				armGroundedBack, limitOveride, eject, zero, coast, up, down, upSmall, downSmall, upBig, downBig;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -149,7 +150,7 @@ public class RobotMap {
     	preserveHeadingAutoMove = new PreserveHeading();
     	preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
     	fireL = new ButtonTracker(weaponStick, 11, new ChargeAndShoot());
-    	fireR = new ButtonTracker(weaponStick, 5, new ChargeAndShoot());
+    	//fireR = new ButtonTracker(weaponStick, 5, new ChargeAndShoot());
     	pickUp = new ButtonTracker(weaponStick, 2, new PickUp());
     	//eject = new ButtonTracker(weaponStick, 5, new EjectBall());
     	
@@ -164,10 +165,13 @@ public class RobotMap {
         limitOveride = new ButtonTracker(weaponStick, 8);
         
         coast = new ButtonTracker(weaponStick, 1, new Coast());
-        up = new ButtonTracker(weaponStick, 6);
-        down = new ButtonTracker(weaponStick, 9);
-        
-        armDrive = new ArmDrive(arm1);
+        upSmall = new ButtonTracker(weaponStick, 5, new BumpSetpoint(-0.0075));
+        downSmall = new ButtonTracker(weaponStick, 10, new BumpSetpoint(0.0075));
+        up = new ButtonTracker(weaponStick, 6, new BumpSetpoint(-0.015));
+        down = new ButtonTracker(weaponStick, 9, new BumpSetpoint(0.015));
+        upBig = new ButtonTracker(weaponStick, 7, new BumpSetpoint(-0.15));
+        downBig = new ButtonTracker(weaponStick, 8, new BumpSetpoint(0.15));
+
     	drive = new Drive(left1, right1);
 	}
 
@@ -190,7 +194,7 @@ public class RobotMap {
 		}
 	}
 	
-	static void brakeAndVoltage(CANTalon t) {
+	static public void brakeAndVoltage(CANTalon t) {
 		t.setPosition(0);
     	t.enableBrakeMode(Constants.brakeMode);
     	if (Constants.useVoltageRamp) {
