@@ -6,9 +6,9 @@ import java.util.Iterator;
 public class SequentialMove extends Auto {
 	Auto move;
 	Iterator<Auto> table;
-	
+
 	boolean done = false;
-	
+
 	public SequentialMove(Auto[] moves) {
 		ArrayList<Auto> a = new ArrayList<Auto>();
 		for (Auto x : moves) {
@@ -17,7 +17,7 @@ public class SequentialMove extends Auto {
 		table = a.iterator();
 		move = table.next();
 	}
-	
+
 	public SequentialMove(Iterator<Auto> moves) {
 		this.table = moves;
 	}
@@ -44,9 +44,9 @@ public class SequentialMove extends Auto {
 	@Override
 	public void stop() {
 		move.stop();
-		
+
 	}
-	
+
 	@Override
 	public boolean done() {
 		return done;

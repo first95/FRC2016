@@ -1,8 +1,8 @@
 package org.usfirst.frc.team95.robot.auto;
 
-public class ConfigMove extends Auto{
+public class ConfigMove extends Auto {
 	Auto seq;
-	
+
 	public ConfigMove(Auto[] moves) {
 		seq = new SequentialMove(moves);
 	}

@@ -13,31 +13,26 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 	ArduPilotAthenaInputStream is = null;
 	MAVLinkReader rd = null;
 	Timer arduTime = new Timer();
-	double pitch   = 0;
-	double roll    = 0;
-	double yaw     = 0;
+	double pitch = 0;
+	double roll = 0;
+	double yaw = 0;
 	double yawRate = 0;
 	static double time;
-	
+
 	public ArduPilotAttitudeMonitor() {
 		is = new ArduPilotAthenaInputStream();
 		DataInputStream dis = new DataInputStream(is);
 		rd = new MAVLinkReader(dis, IMAVLinkMessage.MAVPROT_PACKET_START_V10);
 	}
-	
+
 	public void init() {
-		/*msg_param_set msg = new msg_param_set(1,1);
-		msg.param_id = new char[]{'S', 'R', '0', '_', 'E', 'X', 'T', 'R', 'A', '1', 0, 0, 0, 0, 0, 0};
-		msg.param_value = 10;
-		msg.param_type = 1;
-		byte[] buffer;
-		try {
-			buffer = msg.encode();
-			is.write(buffer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		/*
+		 * msg_param_set msg = new msg_param_set(1,1); msg.param_id = new
+		 * char[]{'S', 'R', '0', '_', 'E', 'X', 'T', 'R', 'A', '1', 0, 0, 0, 0,
+		 * 0, 0}; msg.param_value = 10; msg.param_type = 1; byte[] buffer; try {
+		 * buffer = msg.encode(); is.write(buffer); } catch (IOException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); }
+		 */
 	}
 
 	public void update() { // Check for and Process New Data
@@ -46,24 +41,35 @@ public class ArduPilotAttitudeMonitor implements PollableSubsystem {
 			if (msg != null) {
 				if (msg instanceof msg_attitude) {
 					time = arduTime.get();
-					msg_attitude attitude = (msg_attitude)msg;
-					pitch   = attitude.pitch;
-					roll    = attitude.roll;
-					yaw     = attitude.yaw;
+					msg_attitude attitude = (msg_attitude) msg;
+					pitch = attitude.pitch;
+					roll = attitude.roll;
+					yaw = attitude.yaw;
 					yawRate = attitude.yawspeed;
 					arduTime.reset();
 					arduTime.start();
 				}
-				//System.out.println("Message ID: "+msg.messageType);
+				// System.out.println("Message ID: "+msg.messageType);
 			}
 		} catch (Exception e) {
 			System.out.println("Got error reading Ardupilot message:");
 			e.printStackTrace();
 		}
 	}
-	
-	public double getPitch()   { return pitch; }
-	public double getRoll()    { return roll; }
-	public double getYaw()     { return yaw; }
-	public double getYawRate() { return yawRate; }
+
+	public double getPitch() {
+		return pitch;
+	}
+
+	public double getRoll() {
+		return roll;
+	}
+
+	public double getYaw() {
+		return yaw;
+	}
+
+	public double getYawRate() {
+		return yawRate;
+	}
 }

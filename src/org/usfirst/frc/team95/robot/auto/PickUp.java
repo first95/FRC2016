@@ -4,10 +4,10 @@ import org.usfirst.frc.team95.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class PickUp extends Auto{
+public class PickUp extends Auto {
 	Timer timer = new Timer();
 	boolean done = false;
-	
+
 	@Override
 	public void init() {
 		RobotMap.shoot1L.setSetpoint(.6);
@@ -16,6 +16,7 @@ public class PickUp extends Auto{
 		timer.reset();
 		timer.start();
 	}
+
 	@Override
 	public void update() {
 		if (timer.get() >= 1) {
@@ -29,13 +30,13 @@ public class PickUp extends Auto{
 		RobotMap.shoot2L.setSetpoint(0);
 		RobotMap.shoot2R.setSetpoint(0);
 		done = true;
-		
+
 	}
 
 	@Override
 	public boolean done() {
-		//RobotMap.shoot1L.setSetpoint(0);
-		//RobotMap.shoot2L.setSetpoint(0);
+		// RobotMap.shoot1L.setSetpoint(0);
+		// RobotMap.shoot2L.setSetpoint(0);
 		return done;
 	}
 

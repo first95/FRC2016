@@ -19,35 +19,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author daroc
  */
 public class ButtonTracker implements PollableSubsystem {
-	
-	static HashMap<Joystick,ButtonTracker[]> usedNumbers = new HashMap<Joystick,ButtonTracker[]>();
-	
+
+	static HashMap<Joystick, ButtonTracker[]> usedNumbers = new HashMap<Joystick, ButtonTracker[]>();
+
 	int mChannel;
 	Joystick mJoystick;
 	boolean mNow, mLast;
-	
+
 	Auto move;
 
 	public ButtonTracker(Joystick Joystick, int Channel) {
 		mChannel = Channel;
 		mJoystick = Joystick;
-		
+
 		if (!usedNumbers.containsKey(Joystick)) {
 			usedNumbers.put(Joystick, new ButtonTracker[17]);
 		}
-		
+
 		if (usedNumbers.get(Joystick)[Channel] != null) {
-			//SmartDashboard.putBoolean("ERROR", true);
+			// SmartDashboard.putBoolean("ERROR", true);
 			System.out.println("MORE THAN ONE BUTTON TRACKER PER BUTTON.");
 			DriverStation.reportError("MORE THAN ONE BUTTON TRACKER PER BUTTON!", false);
 		}
-		
+
 		usedNumbers.get(Joystick)[Channel] = this;
 	}
-	
+
 	public ButtonTracker(Joystick joystick, int channel, Auto move) {
 		this(joystick, channel);
-		
+
 		this.move = move;
 	}
 
@@ -58,7 +58,7 @@ public class ButtonTracker implements PollableSubsystem {
 	public boolean justPressedp() {
 		return (mNow && (!mLast));
 	}
-	
+
 	public boolean justUnPressedp() {
 		return (!mNow && mLast);
 	}
@@ -66,7 +66,7 @@ public class ButtonTracker implements PollableSubsystem {
 	public void update() {
 		mLast = mNow;
 		mNow = mJoystick.getRawButton(mChannel);
-		
+
 		if (this.move != null) {
 			if (justPressedp()) {
 				this.move.init();
@@ -77,7 +77,7 @@ public class ButtonTracker implements PollableSubsystem {
 			}
 		}
 	}
-	
+
 	public void init() {
 		;
 	}

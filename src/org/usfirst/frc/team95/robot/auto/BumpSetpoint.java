@@ -4,7 +4,7 @@ import org.usfirst.frc.team95.robot.RobotMap;
 
 public class BumpSetpoint extends Auto {
 	double amount;
-	
+
 	public BumpSetpoint(double a) {
 		amount = a;
 	}
@@ -26,7 +26,7 @@ public class BumpSetpoint extends Auto {
 
 	@Override
 	public boolean done() {
-		return true;
+		return RobotMap.arm1.getClosedLoopError() < 0.05;
 	}
 
 }

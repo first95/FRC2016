@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class Shoot extends Auto { // Assumes Cannon is Charged
 	Timer timer = new Timer();
 	boolean done = false;
-	
+
 	@Override
 	public void init() {
 		timer.reset();
@@ -19,16 +19,16 @@ public class Shoot extends Auto { // Assumes Cannon is Charged
 
 	@Override
 	public void update() {
-		if (timer.get() >= 1){
+		if (timer.get() >= 1) {
 			done = true;
 			RobotMap.shoot1L.setSetpoint(0);
 			RobotMap.shoot2L.setSetpoint(0);
 			RobotMap.shoot2R.setSetpoint(0);
-		}else {
+		} else {
 			RobotMap.shoot1L.setSetpoint(-1);
 			RobotMap.shoot2L.setSetpoint(-1);
 		}
-		
+
 	}
 
 	@Override

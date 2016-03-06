@@ -3,12 +3,12 @@ package org.usfirst.frc.team95.robot.auto;
 import org.usfirst.frc.team95.robot.RobotMap;
 
 public class ChargeAndShoot extends Auto {
-	
+
 	Auto move;
 
 	@Override
 	public void init() {
-		Auto[] x = {new Charge(), new Shoot()};
+		Auto[] x = { new Charge(), new Shoot() };
 		move = new SequentialMove(x);
 		move.init();
 	}
@@ -16,7 +16,7 @@ public class ChargeAndShoot extends Auto {
 	@Override
 	public void update() {
 		move.update();
-		
+
 	}
 
 	@Override
@@ -31,6 +31,5 @@ public class ChargeAndShoot extends Auto {
 	public boolean done() {
 		return move.done();
 	}
-	
 
 }

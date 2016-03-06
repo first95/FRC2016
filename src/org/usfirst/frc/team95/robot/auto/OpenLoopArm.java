@@ -22,21 +22,21 @@ public class OpenLoopArm extends Auto {
 		if (Math.abs(y) < Constants.deadBand) {
 			y = 0;
 		}
-		y *= ((-RobotMap.weaponStick.getThrottle()+1)*0.5)+0.05;
+		y *= ((-RobotMap.weaponStick.getThrottle() + 1) * 0.5) + 0.05;
 		RobotMap.arm1.set(y);
 	}
 
 	@Override
 	public void stop() {
-		
+
 		RobotMap.arm1.disableControl();
 		RobotMap.brakeAndVoltage(RobotMap.arm1);
-    	RobotMap.arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
-    	RobotMap.arm1.reverseSensor(true);
-    	RobotMap.arm1.setF(Constants.armF);
-    	RobotMap.arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
-    	RobotMap.arm1.changeControlMode(CANTalon.TalonControlMode.Position);
-    	RobotMap.arm1.set(RobotMap.arm1.getPosition());
+		RobotMap.arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
+		RobotMap.arm1.reverseSensor(true);
+		RobotMap.arm1.setF(Constants.armF);
+		RobotMap.arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
+		RobotMap.arm1.changeControlMode(CANTalon.TalonControlMode.Position);
+		RobotMap.arm1.set(RobotMap.arm1.getPosition());
 		RobotMap.arm1.enableControl();
 	}
 

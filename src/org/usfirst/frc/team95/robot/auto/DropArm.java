@@ -1,12 +1,12 @@
 package org.usfirst.frc.team95.robot.auto;
 
-public class BringArmDown extends Auto {
+public class DropArm extends Auto {
 	Auto move;
 
 	@Override
 	public void init() {
-		Auto[] bringArmDown = {new RaiseCannon(-Math.PI/4), new TimeOut(5, new Coast())};
-		move = new SequentialMove(bringArmDown);
+		Auto[] all = { new BumpSetpoint(0.5), };//new TimeOut(5, new Coast())};
+		move = new SequentialMove(all);
 		move.init();
 	}
 
@@ -24,6 +24,5 @@ public class BringArmDown extends Auto {
 	public boolean done() {
 		return move.done();
 	}
-	
 
 }

@@ -5,7 +5,7 @@ public class UnderLowBarAndShoot extends Auto {
 
 	@Override
 	public void init() {
-		Auto[] moves = {new UnderLowBar(), new AlignAndShoot()};
+		Auto[] moves = { new DropArm(), new AlignAndShoot() };
 		seq = new SequentialMove(moves);
 		seq.init();
 	}
@@ -24,6 +24,5 @@ public class UnderLowBarAndShoot extends Auto {
 	public boolean done() {
 		return seq.done();
 	}
-	
 
 }

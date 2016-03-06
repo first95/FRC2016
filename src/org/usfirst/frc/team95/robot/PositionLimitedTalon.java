@@ -4,15 +4,15 @@ import edu.wpi.first.wpilibj.CANTalon;
 
 public class PositionLimitedTalon extends CANTalon implements PollableSubsystem {
 	double forward, reverse;
-	
+
 	public void setForwardLimit(double forward) {
 		this.forward = forward;
 	}
-	
+
 	public void setReverseLimit(double reverse) {
 		this.reverse = reverse;
 	}
-	
+
 	public PositionLimitedTalon(int device) {
 		super(device);
 	}
@@ -29,16 +29,14 @@ public class PositionLimitedTalon extends CANTalon implements PollableSubsystem 
 
 	@Override
 	public void update() {
-		if (this.getPosition()+Constants.encoderOffset > this.forward && 
-				!RobotMap.limitOveride.Pressedp()) {
-			//this.set(this.getSetpoint()-0.1);
+		if (this.getPosition() + Constants.encoderOffset > this.forward && !RobotMap.limitOveride.Pressedp()) {
+			// this.set(this.getSetpoint()-0.1);
 		}
-		if (this.getPosition()+Constants.encoderOffset < this.reverse && 
-				!RobotMap.limitOveride.Pressedp()) {
-			//this.set(this.getSetpoint()+0.1);
+		if (this.getPosition() + Constants.encoderOffset < this.reverse && !RobotMap.limitOveride.Pressedp()) {
+			// this.set(this.getSetpoint()+0.1);
 		}
 	}
-	
+
 	@Override
 	public void set(double pos) {
 		pos += Constants.encoderOffset;

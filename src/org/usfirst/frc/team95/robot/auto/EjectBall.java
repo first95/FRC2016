@@ -4,10 +4,11 @@ import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team95.robot.RobotMap;
 
-public class EjectBall extends Auto{
-	
+public class EjectBall extends Auto {
+
 	Timer timer = new Timer();
 	boolean done = false;
+
 	@Override
 	public void init() {
 		timer.reset();
@@ -18,12 +19,12 @@ public class EjectBall extends Auto{
 	public void update() {
 		if (timer.get() >= .75) {
 			done = true;
-		}else {
+		} else {
 			RobotMap.shoot1L.setSetpoint(-.5);
 			RobotMap.shoot2L.setSetpoint(-.5);
 			RobotMap.shoot2R.setSetpoint(-.5);
 		}
-		
+
 	}
 
 	@Override

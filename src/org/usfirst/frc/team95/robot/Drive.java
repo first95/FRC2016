@@ -5,28 +5,29 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 public class Drive {
 	SpeedController left, right;
-	
-	//drives stuff
+
+	// drives stuff
 	public Drive(SpeedController left, SpeedController right) {
 		this.left = left;
 		this.right = right;
 	}
-	
-	//pure tank controlls (not) and switch to RPM
+
+	// pure tank controlls (not) and switch to RPM
 	public void tankDrive(double leftsp, double rightsp) {
 		left.set(-leftsp);// * Constants.timeserRPM);
 		right.set(rightsp);// * Constants.timeserRPM);
 	}
-	
-	//arcade style drive
+
+	// arcade style drive
 	public void arcadeDrive(double forward, double turn) {
-		tankDrive(forward-turn, forward+turn);
+		tankDrive(forward - turn, forward + turn);
 	}
-	
-	//gets the joystick values for stuff and adds throttle sensitivity (redundant negatives on y are nessacary for some reason
+
+	// gets the joystick values for stuff and adds throttle sensitivity
+	// (redundant negatives on y are nessacary for some reason
 	public void arcadeDrive(Joystick stick) {
-		double y = stick.getY()*(((stick.getThrottle()*-1)+1)/-2);
-		double x = stick.getX()*(((stick.getThrottle()*-1)+1)/2);
+		double y = stick.getY() * (((stick.getThrottle() * -1) + 1) / -2);
+		double x = stick.getX() * (((stick.getThrottle() * -1) + 1) / 2);
 		if (Math.abs(y) <= Constants.deadBand) {
 			y = 0;
 		}
@@ -34,6 +35,6 @@ public class Drive {
 			x = 0;
 		}
 		x *= Math.abs(x);
-		arcadeDrive(y,x);
+		arcadeDrive(y, x);
 	}
 }

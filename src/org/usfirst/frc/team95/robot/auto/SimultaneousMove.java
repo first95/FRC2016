@@ -2,7 +2,7 @@ package org.usfirst.frc.team95.robot.auto;
 
 public class SimultaneousMove extends Auto {
 	Auto[] table;
-	
+
 	public SimultaneousMove(Auto[] moves) {
 		table = moves;
 	}
@@ -26,9 +26,9 @@ public class SimultaneousMove extends Auto {
 		for (Auto move : table) {
 			move.stop();
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean done() {
 		boolean acc = true;

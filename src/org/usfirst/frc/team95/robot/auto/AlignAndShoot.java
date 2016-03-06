@@ -3,10 +3,10 @@ package org.usfirst.frc.team95.robot.auto;
 public class AlignAndShoot extends Auto {
 
 	Auto move;
-	
+
 	@Override
 	public void init() {
-		Auto[] x = {new Align(), new Shoot()};
+		Auto[] x = { new Align(), new Shoot() };
 		move = new SequentialMove(x);
 		move.init();
 	}

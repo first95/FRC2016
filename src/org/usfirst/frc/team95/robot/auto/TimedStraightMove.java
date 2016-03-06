@@ -11,14 +11,15 @@ public class TimedStraightMove extends Auto {
 	Timer timer = new Timer();
 	double forward, time;
 	boolean done = false;
-	
+
 	boolean manualHeading = false;
 	double headingToPreserve, ySpeed, yawError, zCorrection, timerSens, yawToSpeed, errorAcc;
-	//Timer timer = new Timer();
+	// Timer timer = new Timer();
 	Drive drive;
-	
+
 	public TimedStraightMove(double forward, double time) {
-		this.forward = forward; this.time = time;
+		this.forward = forward;
+		this.time = time;
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class TimedStraightMove extends Auto {
 			RobotMap.driveLock = this;
 			RobotMap.drive.arcadeDrive(forward, 0);
 		}
-		
+
 		if (!manualHeading) {
 			headingToPreserve = RobotMap.am.getYaw();
 		}
@@ -47,25 +48,23 @@ public class TimedStraightMove extends Auto {
 			RobotMap.driveLock = this;
 			yawError = headingToPreserve - RobotMap.am.getYaw();
 			if (yawError > Math.PI) {
-				yawError -= 2*Math.PI;
+				yawError -= 2 * Math.PI;
 			} else if (yawError < -Math.PI) {
-				yawError += 2*Math.PI;
+				yawError += 2 * Math.PI;
 			}
 			errorAcc += yawError;
 			zCorrection = yawError / Math.PI;
-			double a = zCorrection*Constants.headingPreservationP;
+			double a = zCorrection * Constants.headingPreservationP;
 			SmartDashboard.putNumber("P Term: ", a);
 			yawToSpeed = a;
-			yawToSpeed += RobotMap.am.getYawRate()*Constants.headingPreservationD;
-			yawToSpeed += errorAcc*Constants.headingPreservationI;
+			yawToSpeed += RobotMap.am.getYawRate() * Constants.headingPreservationD;
+			yawToSpeed += errorAcc * Constants.headingPreservationI;
 			if (yawToSpeed > Constants.autonomousRotateSpeed) {
 				yawToSpeed = Constants.autonomousRotateSpeed;
 			} else if (yawToSpeed < -Constants.autonomousRotateSpeed) {
 				yawToSpeed = -Constants.autonomousRotateSpeed;
 			}
-			RobotMap.drive.arcadeDrive(
-					forward, 
-					yawToSpeed);
+			RobotMap.drive.arcadeDrive(forward, yawToSpeed);
 		}
 	}
 

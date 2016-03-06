@@ -9,8 +9,7 @@ public class RotateBy extends Auto {
 	double angle, distance, time;
 	Timer timer = new Timer();
 	boolean done = false;
-	
-	
+
 	public RotateBy(double angle) {
 		this.angle = angle; // Note to self: the problem is with units
 		distance = angle * Constants.robotWidth;
@@ -18,8 +17,7 @@ public class RotateBy extends Auto {
 		time /= (Constants.timeserRPM * Constants.autonomousRotateSpeed);
 		time *= 60;
 		System.out.println(time);
-		
-		
+
 		// move * RPM
 	}
 
@@ -29,15 +27,15 @@ public class RotateBy extends Auto {
 		timer.start();
 		if (RobotMap.driveLock == this || RobotMap.driveLock == null) {
 			RobotMap.driveLock = this;
-			RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed*-sign(distance), 0);
+			RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed * -sign(distance), 0);
 		}
 	}
 
 	@Override
 	public void update() {
-		System.out.println("Time: "+time);
-		System.out.println("Angle: "+angle);
-		System.out.println("Distance: "+distance);
+		System.out.println("Time: " + time);
+		System.out.println("Angle: " + angle);
+		System.out.println("Distance: " + distance);
 		if ((RobotMap.driveLock == this || RobotMap.driveLock == null) && !done) {
 			RobotMap.driveLock = this;
 			if (timer.get() > time) {
@@ -45,25 +43,25 @@ public class RotateBy extends Auto {
 				RobotMap.driveLock = null;
 				RobotMap.drive.tankDrive(0, 0);
 			} else {
-				RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed*-sign(distance), 0);
+				RobotMap.drive.tankDrive(Constants.autonomousRotateSpeed * -sign(distance), 0);
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void stop() {
 		if (RobotMap.driveLock == null || RobotMap.driveLock == this) {
-			RobotMap.drive.tankDrive(0,0);
+			RobotMap.drive.tankDrive(0, 0);
 		}
-		
+
 	}
 
 	@Override
 	public boolean done() {
 		return done;
 	}
-	
+
 	double sign(double a) {
 		return a < 0 ? -1 : 1;
 	}

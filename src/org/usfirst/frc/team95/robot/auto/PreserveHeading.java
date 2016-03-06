@@ -8,26 +8,23 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class PreserveHeading extends HybridAutoDrive
-{
+public class PreserveHeading extends HybridAutoDrive {
 	boolean manualHeading = false;
 	double headingToPreserve, ySpeed, yawError, zCorrection, timerSens, yawToSpeed, errorAcc;
 	Timer timer = new Timer();
 	Drive drive;
-	
-	public PreserveHeading()
-	{
+
+	public PreserveHeading() {
 		;
 	}
-	
+
 	public PreserveHeading(double heading) {
 		headingToPreserve = heading;
 		manualHeading = true;
 	}
 
 	@Override
-	public void init()
-	{
+	public void init() {
 		if (RobotMap.driveLock == null) {
 			RobotMap.driveLock = this;
 		}
@@ -38,44 +35,44 @@ public class PreserveHeading extends HybridAutoDrive
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
 		if ((RobotMap.driveLock == null || RobotMap.driveLock == this)) {
 			RobotMap.driveLock = this;
 			yawError = headingToPreserve - RobotMap.am.getYaw();
 			if (yawError > Math.PI) {
-				yawError -= 2*Math.PI;
+				yawError -= 2 * Math.PI;
 			} else if (yawError < -Math.PI) {
-				yawError += 2*Math.PI;
+				yawError += 2 * Math.PI;
 			}
 			errorAcc += yawError;
 			zCorrection = yawError / Math.PI;
-			double a = zCorrection*Constants.headingPreservationP;
+			double a = zCorrection * Constants.headingPreservationP;
 			SmartDashboard.putNumber("P Term: ", a);
 			yawToSpeed = a;
-			yawToSpeed += RobotMap.am.getYawRate()*Constants.headingPreservationD;
-			yawToSpeed += errorAcc*Constants.headingPreservationI;
+			yawToSpeed += RobotMap.am.getYawRate() * Constants.headingPreservationD;
+			yawToSpeed += errorAcc * Constants.headingPreservationI;
 			if (yawToSpeed > Constants.autonomousRotateSpeed) {
 				yawToSpeed = Constants.autonomousRotateSpeed;
 			} else if (yawToSpeed < -Constants.autonomousRotateSpeed) {
 				yawToSpeed = -Constants.autonomousRotateSpeed;
 			}
 			RobotMap.drive.arcadeDrive(
-					RobotMap.driveStick.getY()*(((RobotMap.driveStick.getThrottle()*-1)+1)/-2), 
-					yawToSpeed);
+					RobotMap.driveStick.getY() * (((RobotMap.driveStick.getThrottle() * -1) + 1) / -2), yawToSpeed);
 		}
-		
-		//SmartDashboard.putNumber("headingToPreserve Yaw = ", headingToPreserve);
-		//SmartDashboard.putNumber("weapon throttle",((RobotMap.weaponStick.getThrottle()*-1)+1));
-		//SmartDashboard.putNumber("yaw error", yawError);
-		//SmartDashboard.putNumber("yaw to speed", yawToSpeed);
-		//SmartDashboard.putNumber("z Correction", zCorrection);
-		//SmartDashboard.putNumber("driver throttle",(((RobotMap.driveStick.getThrottle()*-1)+1))/2);
+
+		// SmartDashboard.putNumber("headingToPreserve Yaw = ",
+		// headingToPreserve);
+		// SmartDashboard.putNumber("weapon
+		// throttle",((RobotMap.weaponStick.getThrottle()*-1)+1));
+		// SmartDashboard.putNumber("yaw error", yawError);
+		// SmartDashboard.putNumber("yaw to speed", yawToSpeed);
+		// SmartDashboard.putNumber("z Correction", zCorrection);
+		// SmartDashboard.putNumber("driver
+		// throttle",(((RobotMap.driveStick.getThrottle()*-1)+1))/2);
 	}
 
 	@Override
-	public void stop()
-	{
+	public void stop() {
 		if (RobotMap.driveLock == this) {
 			RobotMap.driveLock = null;
 		}
@@ -83,17 +80,15 @@ public class PreserveHeading extends HybridAutoDrive
 	}
 
 	@Override
-	public boolean done()
-	{
+	public boolean done() {
 		return Math.abs(yawError) < Constants.headingPreservationClosenessTolerance;
 	}
 
 	@Override
-	public void drive(Joystick driveStick)
-	{
+	public void drive(Joystick driveStick) {
 		;
 	}
-	
+
 	double diminish(double a, double b) {
 		b = Math.abs(b);
 		if (Math.abs(a) < b) {
