@@ -16,9 +16,9 @@ public class Align extends Auto {
 
 	@Override
 	public void init() {
-		horizontalRotation = VisionHandler.getInstance().getAimX();
+		horizontalRotation = -VisionHandler.getInstance().getAimX();
 
-		verticalRotation = VisionHandler.getInstance().getAimY();
+		verticalRotation = -VisionHandler.getInstance().getAimY();
 
 		double heading = RobotMap.am.getYaw() + horizontalRotation;
 		if (heading > Math.PI) {

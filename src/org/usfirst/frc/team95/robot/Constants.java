@@ -44,13 +44,13 @@ public class Constants {
 	static final public double parallelTolerance = 10;
 
 	// Vision Tracking Line Closeness (pixels)
-	static final public double lineDistanceTolerance = 50;
+	static final public double lineDistanceTolerance = 10;
 
 	// Vision - Camera specific conversions
 	static final public double horizontalWidth = 640; // (Pixels)
 	static final public double verticalHeight = 480; // (Pixels)
-	static final public double horizontalPixelsToDegrees = 53 / horizontalWidth;
-	static final public double verticalPixelsToDegrees = 40 / verticalHeight;
+	static final public double horizontalPixelsToDegrees = (53 / horizontalWidth) / 1.3;
+	static final public double verticalPixelsToDegrees = (40 / verticalHeight) / 1.3;
 
 	static public double headingPreservationP = 4.2;
 	static public double headingPreservationI = 0.0000003;

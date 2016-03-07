@@ -5,7 +5,7 @@ public class DropArm extends Auto {
 
 	@Override
 	public void init() {
-		Auto[] all = { new BumpSetpoint(0.5), };//new TimeOut(5, new Coast())};
+		Auto[] all = { new BumpSetpoint(-0.25), new TimeOut(5, new Coast())};
 		move = new SequentialMove(all);
 		move.init();
 	}

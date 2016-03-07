@@ -10,6 +10,7 @@ import org.usfirst.frc.team95.robot.auto.Nothing;
 import org.usfirst.frc.team95.robot.auto.OverRoughTerrain;
 import org.usfirst.frc.team95.robot.auto.RotateBy;
 import org.usfirst.frc.team95.robot.auto.TimedMove;
+import org.usfirst.frc.team95.robot.auto.TimedStraightMove;
 import org.usfirst.frc.team95.robot.auto.DropArm;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -41,7 +42,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		RobotMap.init();
-		// VisionHandler.getInstance().init();
+		VisionHandler.getInstance().init();
 
 		// cameraServer = CameraServer.getInstance();
 		// cameraServer.startAutomaticCapture("/dev/video0");
@@ -118,7 +119,8 @@ public class Robot extends IterativeRobot {
 
 		RobotMap.arm1.setSetpoint(RobotMap.arm1.getPosition());
 
-		move = new ConfigMove(m);
+		//move = new ConfigMove(m);
+		move = new TimedStraightMove(0.3, 10);
 		move.init();
 	}
 
@@ -179,9 +181,9 @@ public class Robot extends IterativeRobot {
 		// RobotMap.left1.getSpeed());
 		// SmartDashboard.putNumber("right encoder",(RobotMap.right1.getSpeed()
 		// * (60/25.6)));
-		// SmartDashboard.putNumber("Target X", VisionHandler.getInstance().x);
+		SmartDashboard.putNumber("Target X", VisionHandler.getInstance().getAimX());
 		// System.out.println(VisionHandler.getInstance().x);
-		// SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().y);
+		SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().getAimY());
 		SmartDashboard.putNumber("Current Heading", RobotMap.am.getYaw());
 		SmartDashboard.putNumber("Heading To Preserve", headingToPreserve);
 		// SmartDashboard.putNumber("headingToPreserve Yaw = ",
@@ -212,6 +214,8 @@ public class Robot extends IterativeRobot {
 		}
 
 		RobotMap.armLock = null;
+		
+		RobotMap.driveLock = null;
 
 		RobotMap.arm1.setSetpoint(RobotMap.arm1.getPosition());
 	}
@@ -233,6 +237,9 @@ public class Robot extends IterativeRobot {
 		if (RobotMap.driveLock == null) {
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
+		
+		//RobotMap.shoot2L.set(RobotMap.weaponStick.getThrottle());
+		//RobotMap.shoot2R.set(RobotMap.weaponStick.getThrottle());
 
 		/*
 		 * if (RobotMap.armGroundedBack.justPressedp()) {

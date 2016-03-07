@@ -39,10 +39,10 @@ public class RobotMap {
 		right3 = new CANTalon(6);
 
 		// arm shoulder motors
-		arm1 = new CANTalon(7);
+		arm1 = new CANTalon(8);
 		// arm1.setForwardLimit(Constants.armGroundedFront);
 		// arm1.setReverseLimit(Constants.armGroundedBack);
-		arm2 = new CANTalon(8);
+		arm2 = new CANTalon(7);
 		// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
 		shoot1L = new CANTalon(9);
 		shoot1R = new CANTalon(10);
@@ -85,7 +85,7 @@ public class RobotMap {
 		// arm1.setAllowableClosedLoopErr(0.005);
 		brakeAndVoltage(arm2);
 		arm2.changeControlMode(CANTalon.TalonControlMode.Follower);
-		arm2.set(7);
+		arm2.set(8);
 		arm2.enableControl();
 		arm2.reverseOutput(true);
 		// can't invert a follower
@@ -145,7 +145,7 @@ public class RobotMap {
 		decF = new ButtonTracker(driveStick, 14);
 		preserveHeadingAutoMove = new PreserveHeading();
 		preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
-		fireL = new ButtonTracker(weaponStick, 11, new ChargeAndShoot());
+		fireL = new ButtonTracker(weaponStick, 11, new EjectBall());
 		// fireR = new ButtonTracker(weaponStick, 5, new ChargeAndShoot());
 		pickUp = new ButtonTracker(weaponStick, 12, new PickUp());
 		// eject = new ButtonTracker(weaponStick, 5, new EjectBall());
@@ -161,12 +161,12 @@ public class RobotMap {
 		limitOveride = new ButtonTracker(weaponStick, 8);
 
 		coast = new ButtonTracker(weaponStick, 1, new Coast());
-		upSmall = new ButtonTracker(weaponStick, 5, new BumpSetpoint(-0.0075));
-		downSmall = new ButtonTracker(weaponStick, 10, new BumpSetpoint(0.0075));
-		up = new ButtonTracker(weaponStick, 6, new BumpSetpoint(-0.015));
-		down = new ButtonTracker(weaponStick, 9, new BumpSetpoint(0.015));
-		upBig = new ButtonTracker(weaponStick, 7, new BumpSetpoint(-0.15));
-		downBig = new ButtonTracker(weaponStick, 8, new BumpSetpoint(0.15));
+		upSmall = new ButtonTracker(weaponStick, 5, new BumpSetpoint(0.0075));
+		downSmall = new ButtonTracker(weaponStick, 10, new BumpSetpoint(-0.0075));
+		up = new ButtonTracker(weaponStick, 6, new BumpSetpoint(0.015));
+		down = new ButtonTracker(weaponStick, 9, new BumpSetpoint(-0.015));
+		upBig = new ButtonTracker(weaponStick, 7, new BumpSetpoint(0.15));
+		downBig = new ButtonTracker(weaponStick, 8, new BumpSetpoint(-0.15));
 
 		drive = new Drive(left1, right1);
 	}

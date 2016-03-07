@@ -18,11 +18,12 @@ public class EjectBall extends Auto {
 	@Override
 	public void update() {
 		if (timer.get() >= .75) {
+			stop();
 			done = true;
 		} else {
-			RobotMap.shoot1L.setSetpoint(-.5);
-			RobotMap.shoot2L.setSetpoint(-.5);
-			RobotMap.shoot2R.setSetpoint(-.5);
+			RobotMap.shoot1L.set(-1);
+			RobotMap.shoot2L.set(-1);
+			RobotMap.shoot2R.set(-1);
 		}
 
 	}
