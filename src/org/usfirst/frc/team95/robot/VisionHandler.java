@@ -212,7 +212,7 @@ public class VisionHandler {
 					Line r = lines.get(c);
 					if (lineDistance(p, q) < p.length / 5 && lineDistance(q, r) < q.length / 5 && !horizontalP(p)
 							&& horizontalP(q) && !horizontalP(r)) {
-						targets.add(new Triple<Line>(lines.get(a), lines.get(b), lines.get(c)));
+						targets.add(new Triple<Line>(p, q, r));
 					}
 				}
 			}
@@ -224,7 +224,7 @@ public class VisionHandler {
 			this.x = (target.a.x1 + target.a.x2 + target.c.x1 + target.c.x2) / 4;
 			// Note: When the bot aims at the bottom of the goal, this is the
 			// culprit:
-			this.y = (target.a.x1 + target.b.x1) / 2;
+			this.y = (target.a.y1 + target.c.y1) / 2;
 			System.out.println(this.x + " - " + this.y);
 			SmartDashboard.putBoolean("Ready to Autoaim", true);
 		} else {
