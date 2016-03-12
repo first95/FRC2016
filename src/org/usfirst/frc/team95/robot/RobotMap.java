@@ -67,8 +67,8 @@ public class RobotMap {
 
 		brakeAndVoltage(arm1);
 		// arm1.setVoltageRampRate(rampRate);
-		arm1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		arm1.configEncoderCodesPerRev(2048/16);
+		arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
+		//arm1.configEncoderCodesPerRev(2048/16);
 		arm1.reverseSensor(true);
 		arm1.setPosition(Constants.armPowerOnPlace);
 		arm1.set(arm1.getPosition());
