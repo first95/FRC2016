@@ -71,8 +71,10 @@ public class Robot extends IterativeRobot {
 		c = new SendableChooser();
 		a.addDefault("None", new Nothing());
 		//a.addObject("Go Under Low Bar", new UnderLowBar());
+		a.addObject("Cross Rock Wall", new TimedStraightMove(0.9, 4));
 		a.addObject("Cross other Obstacle", new OverRoughTerrain());
 		a.addObject("Go Forward", new TimedMove(0.3, 0.3, 5));
+		a.addObject("Go Backward", new TimedMove(-0.3, -0.3, 5));
 		a.addObject("Turn 45 Right", new RotateBy(Math.PI / 4));
 		a.addObject("Turn 45 Left", new RotateBy(-Math.PI / 4));
 		a.addObject("Autoaim & Shoot", new AlignAndShoot());
@@ -80,8 +82,10 @@ public class Robot extends IterativeRobot {
 
 		b.addDefault("None", new Nothing());
 		//b.addObject("Go Under Low Bar", new UnderLowBar());
+		b.addObject("Cross Rock Wall", new TimedStraightMove(0.9, 7));
 		b.addObject("Cross other Obstacle", new OverRoughTerrain());
 		b.addObject("Go Forward", new TimedMove(0.5, 0.5, 5));
+		b.addObject("Go Backward", new TimedMove(-0.3, -0.3, 5));
 		b.addObject("Turn 45 Right", new RotateBy(Math.PI / 4));
 		b.addObject("Turn 45 Left", new RotateBy(-Math.PI / 4));
 		b.addObject("Autoaim & Shoot", new AlignAndShoot());
@@ -89,8 +93,10 @@ public class Robot extends IterativeRobot {
 
 		c.addDefault("None", new Nothing());
 		//c.addObject("Go Under Low Bar", new UnderLowBar());
+		c.addObject("Cross Rock Wall", new TimedStraightMove(0.9, 4));
 		c.addObject("Cross other Obstacle", new OverRoughTerrain());
 		c.addObject("Go Forward", new TimedMove(0.5, 0.5, 5));
+		c.addObject("Go Backward", new TimedMove(-0.3, -0.3, 5));
 		c.addObject("Turn 45 Right", new RotateBy(Math.PI / 4));
 		c.addObject("Turn 45 Left", new RotateBy(-Math.PI / 4));
 		c.addObject("Autoaim & Shoot", new AlignAndShoot());
@@ -196,6 +202,10 @@ public class Robot extends IterativeRobot {
 		// RobotMap.right1.getSetpoint());
 		// SmartDashboard.putNumber("Right Speed", RobotMap.right1.getSpeed());
 
+		
+		SmartDashboard.putNumber("HP P", Constants.headingPreservationP);
+		SmartDashboard.putNumber("HP I", Constants.headingPreservationI);
+		SmartDashboard.putNumber("HP D", Constants.headingPreservationD);
 	}
 
 	/**
@@ -283,24 +293,24 @@ public class Robot extends IterativeRobot {
 		double d = Math.pow(10, Constants.magnitude);
 		boolean changed = false;
 		if (RobotMap.decP.justPressedp()) {
-			Constants.armP = Constants.armP - (.1 * d);
+			Constants.headingPreservationP = Constants.headingPreservationP - (.1 * d);
 			changed = true;
 		} else if (RobotMap.incP.justPressedp()) {
-			Constants.armP = Constants.armP + (.1 * d);
+			Constants.headingPreservationP = Constants.headingPreservationP + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.decI.justPressedp()) {
-			Constants.armI = Constants.armI - (.0000001 * d);
+			Constants.headingPreservationI = Constants.headingPreservationI - (.0000001 * d);
 			changed = true;
 		} else if (RobotMap.incI.justPressedp()) {
-			Constants.armI = Constants.armI + (.0000001 * d);
+			Constants.headingPreservationI = Constants.headingPreservationI + (.0000001 * d);
 			changed = true;
 		}
 		if (RobotMap.decD.justPressedp()) {
-			Constants.armD = Constants.armD - (.1 * d);
+			Constants.headingPreservationD = Constants.headingPreservationD - (.1 * d);
 			changed = true;
 		} else if (RobotMap.incD.justPressedp()) {
-			Constants.armD = Constants.armD + (.1 * d);
+			Constants.headingPreservationD = Constants.headingPreservationD + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.incF.justPressedp()) {
@@ -311,7 +321,8 @@ public class Robot extends IterativeRobot {
 			changed = true;
 		}
 		if (changed) {
-			RobotMap.arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
+			RobotMap.arm1.setPID(Constants.headingPreservationP, Constants.headingPreservationI, 
+					Constants.headingPreservationD);
 			//RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
 			RobotMap.arm1.setF(Constants.armF);
 			//RobotMap.right1.setF(Constants.F);

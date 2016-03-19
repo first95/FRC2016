@@ -52,7 +52,7 @@ public class Constants {
 	static final public double horizontalPixelsToDegrees = (53 / horizontalWidth) / 1.3;
 	static final public double verticalPixelsToDegrees = (40 / verticalHeight) / 1.3;
 
-	static public double headingPreservationP = 4.2;
+	static public double headingPreservationP = 2.3;
 	static public double headingPreservationI = 0.0000003;
 	static public double headingPreservationD = 0.05;
 	static final public double headingPreservationClosenessTolerance = 0;
@@ -66,7 +66,7 @@ public class Constants {
 
 	// Camera offsets
 	public final static double cameraHorizontalOffset = 0;
-	static final public double cameraVerticalOffset = -0.2;
+	static final public double cameraVerticalOffset = 0.02;
 	static final public double rangeAdjustment = 0;
 
 	static final public double setPointChangeLimit = 0.15;

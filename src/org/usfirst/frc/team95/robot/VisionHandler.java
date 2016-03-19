@@ -232,11 +232,11 @@ public class VisionHandler {
 		}
 
 		double tX = Constants.horizontalWidth / 2 - x;
-		tX *= -Constants.horizontalPixelsToDegrees / 180 * Math.PI;
+		tX *= Constants.horizontalPixelsToDegrees / 180 * Math.PI;
 		tX += Constants.cameraHorizontalOffset;
 
 		double tY = Constants.verticalHeight / 2 - y;
-		tY *= -Constants.verticalPixelsToDegrees / 180 * Math.PI;
+		tY *= Constants.verticalPixelsToDegrees / 180 * Math.PI;
 		tY += Constants.cameraVerticalOffset;
 
 		distance = 1 / Math.tan(tY)
