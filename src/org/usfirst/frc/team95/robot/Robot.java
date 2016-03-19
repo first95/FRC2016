@@ -168,7 +168,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("F", Constants.F);
 
 		SmartDashboard.putNumber("Arm P", RobotMap.arm1.getP());
-		SmartDashboard.putNumber("Arm I", RobotMap.arm1.getI());
+		SmartDashboard.putNumber("10^6 * Arm I", RobotMap.arm1.getI() * (1e6));
 		SmartDashboard.putNumber("Arm D", RobotMap.arm1.getD());
 		SmartDashboard.putNumber("armEncoder", RobotMap.arm1.getPosition());
 		SmartDashboard.putNumber("arm Position with Offset", RobotMap.arm1.getPosition() + Constants.encoderOffset);
@@ -233,7 +233,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		// RobotMap.testDrive();
-		// PIDTuner();
+		PIDTuner();
 		if (RobotMap.driveLock == null) {
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
@@ -283,38 +283,38 @@ public class Robot extends IterativeRobot {
 		double d = Math.pow(10, Constants.magnitude);
 		boolean changed = false;
 		if (RobotMap.decP.justPressedp()) {
-			Constants.headingPreservationP = Constants.headingPreservationP - (.1 * d);
+			Constants.armP = Constants.armP - (.1 * d);
 			changed = true;
 		} else if (RobotMap.incP.justPressedp()) {
-			Constants.headingPreservationP = Constants.headingPreservationP + (.1 * d);
+			Constants.armP = Constants.armP + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.decI.justPressedp()) {
-			Constants.headingPreservationI = Constants.headingPreservationI - (.0000001 * d);
+			Constants.armI = Constants.armI - (.0000001 * d);
 			changed = true;
 		} else if (RobotMap.incI.justPressedp()) {
-			Constants.headingPreservationI = Constants.headingPreservationI + (.0000001 * d);
+			Constants.armI = Constants.armI + (.0000001 * d);
 			changed = true;
 		}
 		if (RobotMap.decD.justPressedp()) {
-			Constants.headingPreservationD = Constants.headingPreservationD - (.1 * d);
+			Constants.armD = Constants.armD - (.1 * d);
 			changed = true;
 		} else if (RobotMap.incD.justPressedp()) {
-			Constants.headingPreservationD = Constants.headingPreservationD + (.1 * d);
+			Constants.armD = Constants.armD + (.1 * d);
 			changed = true;
 		}
 		if (RobotMap.incF.justPressedp()) {
-			Constants.F = Constants.F + (.1 * d);
+			Constants.armF = Constants.armF + (.1 * d);
 			changed = true;
 		} else if (RobotMap.decF.justPressedp()) {
-			Constants.F = Constants.F - (.1 * d);
+			Constants.armF = Constants.armF - (.1 * d);
 			changed = true;
 		}
 		if (changed) {
-			RobotMap.left1.setPID(Constants.P, Constants.I, Constants.D);
-			RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
-			RobotMap.left1.setF(Constants.F);
-			RobotMap.right1.setF(Constants.F);
+			RobotMap.arm1.setPID(Constants.armP, Constants.armI, Constants.armD);
+			//RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
+			RobotMap.arm1.setF(Constants.armF);
+			//RobotMap.right1.setF(Constants.F);
 		}
 
 	}

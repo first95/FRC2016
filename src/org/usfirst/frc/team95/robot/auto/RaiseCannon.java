@@ -4,6 +4,8 @@ import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.RobotMap;
 import org.usfirst.frc.team95.robot.VisionHandler;
 
+import edu.wpi.first.wpilibj.CANTalon;
+
 public class RaiseCannon extends Auto {
 
 	double angle;
@@ -16,7 +18,9 @@ public class RaiseCannon extends Auto {
 	public void init() {
 		RobotMap.armLock = this;
 		double range = VisionHandler.getInstance().getRange();
-		RobotMap.arm1.set(RobotMap.arm1.getSetpoint() + angle + (Constants.rangeAdjustment * range));
+		if (RobotMap.arm1.getControlMode() == CANTalon.TalonControlMode.Position) {
+			RobotMap.arm1.set(RobotMap.arm1.getSetpoint() + angle + (Constants.rangeAdjustment * range));
+		}
 
 	}
 

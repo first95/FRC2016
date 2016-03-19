@@ -2,15 +2,14 @@ package org.usfirst.frc.team95.robot.auto;
 
 import org.usfirst.frc.team95.robot.RobotMap;
 
-public class Coast extends Auto {
-	double p, i, d;
+import edu.wpi.first.wpilibj.CANTalon;
+
+public class SetOpenLoopMode extends Auto {
 
 	@Override
 	public void init() {
-		p = RobotMap.arm1.getP();
-		i = RobotMap.arm1.getI();
-		d = RobotMap.arm1.getD();
-		RobotMap.arm1.setPID(0, 0, 0);
+		RobotMap.arm1.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		RobotMap.arm1.enableControl();
 	}
 
 	@Override
@@ -20,13 +19,13 @@ public class Coast extends Auto {
 
 	@Override
 	public void stop() {
-		RobotMap.arm1.setSetpoint(RobotMap.arm1.getPosition());
-		RobotMap.arm1.setPID(p, i, d);
+		;
 	}
 
 	@Override
 	public boolean done() {
 		return true;
 	}
+	
 
 }

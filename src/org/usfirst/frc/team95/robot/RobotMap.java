@@ -67,8 +67,8 @@ public class RobotMap {
 
 		brakeAndVoltage(arm1);
 		// arm1.setVoltageRampRate(rampRate);
-		arm1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
-		//arm1.configEncoderCodesPerRev(2048/16);
+		arm1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		arm1.configEncoderCodesPerRev(1024/8);
 		arm1.reverseSensor(true);
 		arm1.setPosition(Constants.armPowerOnPlace);
 		arm1.set(arm1.getPosition());
@@ -159,7 +159,7 @@ public class RobotMap {
 		armGroundedFront = new ButtonTracker(weaponStick, 15);
 		zero = new ButtonTracker(weaponStick, 14);
 
-		limitOveride = new ButtonTracker(weaponStick, 8);
+		//limitOveride = new ButtonTracker(weaponStick, 8);
 
 		coast = new ButtonTracker(weaponStick, 1, new Coast());
 		upSmall = new ButtonTracker(weaponStick, 5, new BumpSetpoint(0.0075));

@@ -29,7 +29,7 @@ public class Constants {
 	// static public double P = 4, I = 50 * 1e-6, D = 200, F = 1.39; //left
 	// during PID Tuning
 	static public double P = 6, I = 400 * 1e-6, D = 500, F = 1.69; // right
-	static public double armP = 0.6, armI = (5.7 * 1e-6), armD = 0, armF = 0;
+	static public double armP = 0.91, armI = (5.7 * 1e-6), armD = 0, armF = 0;
 
 	// arm when level 0.027 .03
 

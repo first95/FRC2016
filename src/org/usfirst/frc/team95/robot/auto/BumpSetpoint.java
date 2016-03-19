@@ -2,6 +2,8 @@ package org.usfirst.frc.team95.robot.auto;
 
 import org.usfirst.frc.team95.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.CANTalon;
+
 public class BumpSetpoint extends Auto {
 	double amount;
 
@@ -11,7 +13,9 @@ public class BumpSetpoint extends Auto {
 
 	@Override
 	public void init() {
-		RobotMap.arm1.setSetpoint(RobotMap.arm1.getSetpoint() + amount);
+		if (RobotMap.arm1.getControlMode() == CANTalon.TalonControlMode.Position) {
+			RobotMap.arm1.setSetpoint(RobotMap.arm1.getSetpoint() + amount);
+		}
 	}
 
 	@Override
