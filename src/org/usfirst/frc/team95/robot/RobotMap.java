@@ -163,12 +163,12 @@ public class RobotMap {
 		//limitOveride = new ButtonTracker(weaponStick, 8);
 
 		coast = new ButtonTracker(weaponStick, 1, new Coast());
-		upSmall = new ButtonTracker(weaponStick, 5, new BumpSetpoint(0.015));
-		downSmall = new ButtonTracker(weaponStick, 10, new BumpSetpoint(-0.015));
-		up = new ButtonTracker(weaponStick, 6, new BumpSetpoint(0.15));
-		down = new ButtonTracker(weaponStick, 9, new BumpSetpoint(-0.15));
-		upBig = new ButtonTracker(weaponStick, 7, new ContinuousBumpSetpoint(0.15 * 1.5));
-		downBig = new ButtonTracker(weaponStick, 8, new ContinuousBumpSetpoint(-0.15 * 1.5));
+		upSmall = new ButtonTracker(weaponStick, 5, new BumpSetpoint(0.05));
+		downSmall = new ButtonTracker(weaponStick, 10, new BumpSetpoint(-0.05));
+		up = new ButtonTracker(weaponStick, 6, new BumpSetpoint(0.1));
+		down = new ButtonTracker(weaponStick, 9, new BumpSetpoint(-0.1));
+		upBig = new ButtonTracker(weaponStick, 7, new BumpSetpoint(0.30));
+		downBig = new ButtonTracker(weaponStick, 8, new BumpSetpoint(-0.30));
 
 		drive = new Drive(left1, right1);
 	}

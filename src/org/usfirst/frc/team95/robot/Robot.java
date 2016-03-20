@@ -13,6 +13,7 @@ import org.usfirst.frc.team95.robot.auto.TimedMove;
 import org.usfirst.frc.team95.robot.auto.TimedStraightMove;
 import org.usfirst.frc.team95.robot.auto.DropArm;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -246,6 +247,10 @@ public class Robot extends IterativeRobot {
 		PIDTuner();
 		if (RobotMap.driveLock == null) {
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
+		}
+		
+		if (RobotMap.arm1.getControlMode() != CANTalon.TalonControlMode.Position) {
+			RobotMap.arm1.set(RobotMap.weaponStick.getY()*0.1);
 		}
 		
 		//RobotMap.shoot2L.set(RobotMap.weaponStick.getThrottle());
