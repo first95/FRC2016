@@ -232,7 +232,7 @@ public class VisionHandler {
 		}
 
 		double tX = Constants.horizontalWidth / 2 - x;
-		tX *= Constants.horizontalPixelsToDegrees / 180 * Math.PI;
+		tX *= -Constants.horizontalPixelsToDegrees / 180 * Math.PI;
 		tX += Constants.cameraHorizontalOffset;
 
 		double tY = Constants.verticalHeight / 2 - y;

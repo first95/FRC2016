@@ -37,6 +37,7 @@ public class PreserveHeading extends HybridAutoDrive {
 	@Override
 	public void update() {
 		if ((RobotMap.driveLock == null || RobotMap.driveLock == this)) {
+			SmartDashboard.putNumber("Heading To Preserve", headingToPreserve);
 			RobotMap.driveLock = this;
 			yawError = headingToPreserve - RobotMap.am.getYaw();
 			if (yawError > Math.PI) {

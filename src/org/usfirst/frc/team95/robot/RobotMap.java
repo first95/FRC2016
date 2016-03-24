@@ -147,7 +147,7 @@ public class RobotMap {
 		decF = new ButtonTracker(driveStick, 14);
 		preserveHeadingAutoMove = new PreserveHeading();
 		preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
-		fireL = new ButtonTracker(weaponStick, 11, new EjectBall());
+		fireL = new ButtonTracker(weaponStick, 11, new ChargeAndShoot());
 		// fireR = new ButtonTracker(weaponStick, 5, new ChargeAndShoot());
 		pickUp = new ButtonTracker(weaponStick, 12, new PickUp());
 		// eject = new ButtonTracker(weaponStick, 5, new EjectBall());

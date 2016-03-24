@@ -29,7 +29,7 @@ public class Constants {
 	// static public double P = 4, I = 50 * 1e-6, D = 200, F = 1.39; //left
 	// during PID Tuning
 	static public double P = 6, I = 400 * 1e-6, D = 500, F = 1.69; // right
-	static public double armP = 0.91, armI = (5.7 * 1e-6), armD = 0, armF = 0;
+	static public double armP = 2.51, armI = (9.06 * 1e-6), armD = 0, armF = 0;
 
 	// arm when level 0.027 .03
 
@@ -52,9 +52,9 @@ public class Constants {
 	static final public double horizontalPixelsToDegrees = (53 / horizontalWidth) / 1.3;
 	static final public double verticalPixelsToDegrees = (40 / verticalHeight) / 1.3;
 
-	static public double headingPreservationP = 2.3;
-	static public double headingPreservationI = 0.0000003;
-	static public double headingPreservationD = 0.05;
+	static public double headingPreservationP = 4.1;
+	static public double headingPreservationI = 6e-6;
+	static public double headingPreservationD = 0.45;
 	static final public double headingPreservationClosenessTolerance = 0;
 	// Autonomous
 	static final public double autonomousRotateSpeed = 0.30;

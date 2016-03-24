@@ -21,7 +21,7 @@ public class Charge extends Auto {
 	@Override
 	public void update() {
 
-		if (timer.get() >= 1.25) {
+		if (timer.get() >= 2.5) {
 			done = true;
 		}
 

@@ -192,7 +192,7 @@ public class Robot extends IterativeRobot {
 		// System.out.println(VisionHandler.getInstance().x);
 		SmartDashboard.putNumber("Target Y", VisionHandler.getInstance().getAimY());
 		SmartDashboard.putNumber("Current Heading", RobotMap.am.getYaw());
-		SmartDashboard.putNumber("Heading To Preserve", headingToPreserve);
+		//SmartDashboard.putNumber("Heading To Preserve", headingToPreserve);
 		// SmartDashboard.putNumber("headingToPreserve Yaw = ",
 		// headingToPreserve);
 		SmartDashboard.putNumber("weapon throttle", ((RobotMap.weaponStick.getThrottle() * -1) + 1));
@@ -205,7 +205,7 @@ public class Robot extends IterativeRobot {
 
 		
 		SmartDashboard.putNumber("HP P", Constants.headingPreservationP);
-		SmartDashboard.putNumber("HP I", Constants.headingPreservationI);
+		SmartDashboard.putNumber("HP I * e-6", Constants.headingPreservationI * 1e6);
 		SmartDashboard.putNumber("HP D", Constants.headingPreservationD);
 	}
 
@@ -325,9 +325,9 @@ public class Robot extends IterativeRobot {
 			Constants.armF = Constants.armF - (.1 * d);
 			changed = true;
 		}
-		if (changed) {
-			RobotMap.arm1.setPID(Constants.headingPreservationP, Constants.headingPreservationI, 
-					Constants.headingPreservationD);
+		if (changed && false) {
+			RobotMap.arm1.setPID(Constants.armP, Constants.armI, 
+					Constants.armD);
 			//RobotMap.right1.setPID(Constants.P, Constants.I, Constants.D);
 			RobotMap.arm1.setF(Constants.armF);
 			//RobotMap.right1.setF(Constants.F);
