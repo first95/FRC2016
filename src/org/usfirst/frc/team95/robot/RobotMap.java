@@ -23,7 +23,7 @@ public class RobotMap {
 	public static Drive drive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF,
 			preserveHeadingButtonTracker, fireL, fireR, pickUp, align, relign, armGroundedFront, armGroundedBack,
-			limitOveride, eject, zero, coast, up, down, upSmall, downSmall, upBig, downBig;
+			limitOveride, eject, zero, coast, up, down, upSmall, downSmall, upBig, downBig, activateStickControl;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -169,7 +169,7 @@ public class RobotMap {
 		down = new ButtonTracker(weaponStick, 9, new BumpSetpoint(-0.1));
 		upBig = new ButtonTracker(weaponStick, 7, new BumpSetpoint(0.30));
 		downBig = new ButtonTracker(weaponStick, 8, new BumpSetpoint(-0.30));
-
+		activateStickControl = new ButtonTracker(weaponStick, 2);
 		drive = new Drive(left1, right1);
 	}
 

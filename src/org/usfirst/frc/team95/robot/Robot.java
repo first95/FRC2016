@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.usfirst.frc.team95.robot.auto.AlignAndShoot;
 import org.usfirst.frc.team95.robot.auto.Auto;
+import org.usfirst.frc.team95.robot.auto.BumpSetpoint;
 import org.usfirst.frc.team95.robot.auto.ConfigMove;
 import org.usfirst.frc.team95.robot.auto.Nothing;
 import org.usfirst.frc.team95.robot.auto.OverRoughTerrain;
@@ -244,13 +245,17 @@ public class Robot extends IterativeRobot {
 		}
 
 		// RobotMap.testDrive();
-		PIDTuner();
+		//PIDTuner();
 		if (RobotMap.driveLock == null) {
 			RobotMap.drive.arcadeDrive(RobotMap.driveStick);
 		}
 		
-		if (RobotMap.arm1.getControlMode() != CANTalon.TalonControlMode.Position) {
-			RobotMap.arm1.set(RobotMap.weaponStick.getY()*0.1);
+		//if (RobotMap.arm1.getControlMode() != CANTalon.TalonControlMode.Position) {
+		//	RobotMap.arm1.set(RobotMap.weaponStick.getY()*0.1);
+		//}
+		
+		if (RobotMap.activateStickControl.Pressedp()) {
+			new BumpSetpoint(RobotMap.weaponStick.getY() * ((-RobotMap.weaponStick.getThrottle() + 1) / 2000));
 		}
 		
 		//RobotMap.shoot2L.set(RobotMap.weaponStick.getThrottle());
