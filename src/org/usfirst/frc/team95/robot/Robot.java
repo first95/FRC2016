@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
 		c = new SendableChooser();
 		a.addDefault("None", new Nothing());
 		//a.addObject("Go Under Low Bar", new UnderLowBar());
-		a.addObject("Cross Rock Wall", new TimedStraightMove(0.9, 4));
+		a.addObject("Cross Rock Wall", new TimedStraightMove(1, 4));
 		a.addObject("Cross other Obstacle", new OverRoughTerrain());
 		a.addObject("Go Forward", new TimedMove(0.3, 0.3, 5));
 		a.addObject("Go Backward", new TimedMove(-0.3, -0.3, 5));
@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot {
 
 		b.addDefault("None", new Nothing());
 		//b.addObject("Go Under Low Bar", new UnderLowBar());
-		b.addObject("Cross Rock Wall", new TimedStraightMove(0.9, 7));
+		b.addObject("Cross Rock Wall", new TimedStraightMove(1, 7));
 		b.addObject("Cross other Obstacle", new OverRoughTerrain());
 		b.addObject("Go Forward", new TimedMove(0.5, 0.5, 5));
 		b.addObject("Go Backward", new TimedMove(-0.3, -0.3, 5));
@@ -95,7 +95,7 @@ public class Robot extends IterativeRobot {
 
 		c.addDefault("None", new Nothing());
 		//c.addObject("Go Under Low Bar", new UnderLowBar());
-		c.addObject("Cross Rock Wall", new TimedStraightMove(0.9, 4));
+		c.addObject("Cross Rock Wall", new TimedStraightMove(1, 4));
 		c.addObject("Cross other Obstacle", new OverRoughTerrain());
 		c.addObject("Go Forward", new TimedMove(0.5, 0.5, 5));
 		c.addObject("Go Backward", new TimedMove(-0.3, -0.3, 5));
@@ -127,8 +127,8 @@ public class Robot extends IterativeRobot {
 
 		RobotMap.arm1.setSetpoint(RobotMap.arm1.getPosition());
 
-		//move = new ConfigMove(m);
-		move = new TimedStraightMove(0.3, 10);
+		move = new ConfigMove(m);
+		//move = new TimedStraightMove(0.3, 10);
 		move.init();
 	}
 
