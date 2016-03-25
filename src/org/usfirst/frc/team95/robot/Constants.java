@@ -66,7 +66,7 @@ public class Constants {
 
 	// Camera offsets
 	public final static double cameraHorizontalOffset = 0;
-	static final public double cameraVerticalOffset = 0.02;
+	static final public double cameraVerticalOffset = -0.18;
 	static final public double rangeAdjustment = 0;
 
 	static final public double setPointChangeLimit = 0.15;

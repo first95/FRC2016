@@ -5,7 +5,7 @@ public class OverRoughTerrain extends Auto {
 
 	@Override
 	public void init() {
-		Auto[] moves = { new TimedStraightMove(0.75, 3.5) };
+		Auto[] moves = { new TimedStraightMove(0.6, 3.5) };
 		simul = new SimultaneousMove(moves);
 		simul.init();
 	}
