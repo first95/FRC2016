@@ -255,7 +255,10 @@ public class Robot extends IterativeRobot {
 		//}
 		
 		if (RobotMap.activateStickControl.Pressedp()) {
-			new BumpSetpoint(RobotMap.weaponStick.getY() * ((-RobotMap.weaponStick.getThrottle() + 1) / 2000));
+			Auto x = new BumpSetpoint(RobotMap.weaponStick.getY() * ((-RobotMap.weaponStick.getThrottle() + 1) / 2) * 0.001);
+			x.init();
+			x.update();
+			x.stop();
 		}
 		
 		//RobotMap.shoot2L.set(RobotMap.weaponStick.getThrottle());
