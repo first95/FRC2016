@@ -5,8 +5,8 @@ import org.usfirst.frc.team95.robot.auto.BumpSetpoint;
 import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
 import org.usfirst.frc.team95.robot.auto.Coast;
 import org.usfirst.frc.team95.robot.auto.ContinuousBumpSetpoint;
-import org.usfirst.frc.team95.robot.auto.DeployAnteniIn;
-import org.usfirst.frc.team95.robot.auto.DeployAnteniOut;
+import org.usfirst.frc.team95.robot.auto.DeployBallBlockerBackward;
+import org.usfirst.frc.team95.robot.auto.DeployBallBlockerForward;
 import org.usfirst.frc.team95.robot.auto.EjectBall;
 import org.usfirst.frc.team95.robot.auto.OpenLoopArm;
 import org.usfirst.frc.team95.robot.auto.PickUp;
@@ -20,13 +20,13 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	public static CANTalon left1, left2, left3, right1, right2, right3, arm2, shoot1L, shoot1R, shoot2L, shoot2R, light;
+	public static CANTalon left1, left2, left3, right1, right2, right3, arm2, ballBlockerL, ballBlockerR, shootL, shootR, light;
 	public static CANTalon arm1;
 	public static Joystick driveStick, weaponStick;
 	public static Drive drive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF,
 			preserveHeadingButtonTracker, fireL, fireR, pickUp, align, relign, armGroundedFront, armGroundedBack,
-			limitOveride, eject, zero, coast, up, down, upSmall, downSmall, upBig, downBig, activateStickControl, anteniOut, anteniIn;
+			limitOveride, eject, zero, coast, up, down, upSmall, downSmall, upBig, downBig, activateStickControl, ballBlockerForward, ballBlockerBackward;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -47,11 +47,14 @@ public class RobotMap {
 		// arm1.setForwardLimit(Constants.armGroundedFront);
 		// arm1.setReverseLimit(Constants.armGroundedBack);
 		arm2 = new CANTalon(7);
-		// Shooter motors, shoot 1 is stage 1 and shoot 2 is for stage 2
-		shoot1L = new CANTalon(9);
-		shoot1R = new CANTalon(10);
-		shoot2L = new CANTalon(11);
-		shoot2R = new CANTalon(12);
+		// Ball Blocker Motors, 
+		// CANTalon (9) is not being used
+		ballBlockerL = new CANTalon(9);
+		ballBlockerR = new CANTalon(10);
+		// Shooter motors, shootL is left and shootR is right 
+		// ** We no longer have 2 stages **
+		shootL = new CANTalon(11);
+		shootR = new CANTalon(12);
 
 		// ring light for vision
 		// light = new CANTalon(5);
@@ -95,23 +98,28 @@ public class RobotMap {
 		arm2.reverseOutput(true);
 		// can't invert a follower
 
-		// Do we need this? Copied the arm stuff but changed the Constants
-		brakeAndVoltage(shoot1L);
-		shoot1L.changeControlMode(TalonControlMode.PercentVbus);
-		shoot1L.enableControl();
-		shoot1L.set(0);
+		// ** R is no longer a follower of L **
+		// ** This motor is not being used **
+		brakeAndVoltage(ballBlockerL);
+		ballBlockerL.changeControlMode(TalonControlMode.PercentVbus);
+		ballBlockerL.enableControl();
+		ballBlockerL.set(0);
 
-		brakeAndVoltage(shoot1R);
-		shoot1R.changeControlMode(CANTalon.TalonControlMode.Follower);
-		shoot1R.set(9);
-		shoot1R.reverseOutput(true);
-		shoot1R.enableControl();
+		// ** R is no longer a follower of L **
+		brakeAndVoltage(ballBlockerR);
+		ballBlockerR.changeControlMode(TalonControlMode.PercentVbus);
+		ballBlockerR.set(0);
+		//antennaDeploy1R.changeControlMode(CANTalon.TalonControlMode.Follower);
+		//antennaDeploy1R.set(9);
+		//antennaDeploy1R.reverseOutput(true);
+		ballBlockerR.enableControl();
+		
 
-		brakeAndVoltage(shoot2L);
-		shoot2L.enableControl();
+		brakeAndVoltage(shootL);
+		shootL.enableControl();
 
-		brakeAndVoltage(shoot2R);
-		shoot2R.enableControl();
+		brakeAndVoltage(shootR);
+		shootR.enableControl();
 
 		left1.setF(Constants.F);
 		left1.setPID(Constants.P, Constants.I, Constants.D);
@@ -150,10 +158,9 @@ public class RobotMap {
 		decF = new ButtonTracker(driveStick, 14);
 		preserveHeadingAutoMove = new PreserveHeading();
 		preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
-		// Added -- No longer charge and shoot, only shoot
+		
+		// ** No longer charge and shoot, only shoot **
 		fireL = new ButtonTracker(weaponStick, 11, new Shoot());
-		//
-		//fireL = new ButtonTracker(weaponStick, 11, new ChargeAndShoot());
 		// fireR = new ButtonTracker(weaponStick, 5, new ChargeAndShoot());
 		pickUp = new ButtonTracker(weaponStick, 12, new PickUp());
 		// eject = new ButtonTracker(weaponStick, 5, new EjectBall());
@@ -167,8 +174,8 @@ public class RobotMap {
 		// zero = new ButtonTracker(weaponStick, 14);
 		
 		// When selected button is pressed run the Auto move indicated
-		anteniOut = new ButtonTracker(weaponStick, 14, new DeployAnteniOut());
-		anteniIn = new ButtonTracker(weaponStick, 13, new DeployAnteniIn());
+		ballBlockerForward = new ButtonTracker(weaponStick, 16, new DeployBallBlockerForward());
+		ballBlockerBackward = new ButtonTracker(weaponStick, 15, new DeployBallBlockerBackward());
 
 		//limitOveride = new ButtonTracker(weaponStick, 8);
 

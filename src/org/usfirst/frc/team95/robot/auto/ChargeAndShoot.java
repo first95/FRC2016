@@ -4,6 +4,8 @@ import org.usfirst.frc.team95.robot.RobotMap;
 
 public class ChargeAndShoot extends Auto {
 
+	// *** No Longer In Use ***
+	
 	Auto move;
 
 	@Override
@@ -22,9 +24,8 @@ public class ChargeAndShoot extends Auto {
 	@Override
 	public void stop() {
 		move.stop();
-		RobotMap.shoot1L.setSetpoint(0);
-		RobotMap.shoot2L.setSetpoint(0);
-		RobotMap.shoot2R.setSetpoint(0);
+		RobotMap.shootL.setSetpoint(0);
+		RobotMap.shootR.setSetpoint(0);
 	}
 
 	@Override

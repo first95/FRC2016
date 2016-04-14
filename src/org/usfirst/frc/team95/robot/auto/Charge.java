@@ -6,14 +6,16 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Charge extends Auto {
 
+	// *** No Longer Being Used
+	
 	boolean done = false;
 	Timer timer = new Timer();
 
 	@Override
 	public void init() {
 		// The trinary operator is for backspin.
-		RobotMap.shoot2L.setSetpoint((RobotMap.arm1.getPosition() < Math.PI / 2) ? -0.8 : -1);
-		RobotMap.shoot2R.setSetpoint((RobotMap.arm1.getPosition() >= Math.PI / 2) ? -0.8 : -1);
+		RobotMap.shootL.setSetpoint((RobotMap.arm1.getPosition() < Math.PI / 2) ? -0.8 : -1);
+		RobotMap.shootR.setSetpoint((RobotMap.arm1.getPosition() >= Math.PI / 2) ? -0.8 : -1);
 		timer.reset();
 		timer.start();
 	}

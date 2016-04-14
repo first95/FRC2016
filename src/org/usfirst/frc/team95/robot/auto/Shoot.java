@@ -14,11 +14,9 @@ public class Shoot extends Auto { // Assumes Cannon is Charged
 	public void init() {
 		timer.reset();
 		timer.start();
-		// Got rid of shooter 1L and 1R now directed to power Anteni
-		//RobotMap.shoot1L.set(-1);
-		//Added -- 2L and 2R now fire
-		RobotMap.shoot2L.set(-1);
-		RobotMap.shoot2R.set(-1);
+		
+		RobotMap.shootL.set(-1);
+		RobotMap.shootR.set(-1);
 		//
 	}
 
@@ -26,24 +24,19 @@ public class Shoot extends Auto { // Assumes Cannon is Charged
 	public void update() {
 		if (timer.get() >= 1) {
 			done = true;
-			//RobotMap.shoot1L.setSetpoint(0);
-			RobotMap.shoot2L.setSetpoint(0);
-			RobotMap.shoot2R.setSetpoint(0);
+			RobotMap.shootL.setSetpoint(0);
+			RobotMap.shootR.setSetpoint(0);
 		} else {
-			//RobotMap.shoot1L.setSetpoint(-1);
-			// Added
-			RobotMap.shoot2R.setSetpoint(-1);
-			//
-			RobotMap.shoot2L.setSetpoint(-1);
+			RobotMap.shootR.setSetpoint(-1);
+			RobotMap.shootL.setSetpoint(-1);
 		}
 
 	}
 
 	@Override
 	public void stop() {
-		//RobotMap.shoot1L.setSetpoint(0);
-		RobotMap.shoot2L.setSetpoint(0);
-		RobotMap.shoot2R.setSetpoint(0);
+		RobotMap.shootL.setSetpoint(0);
+		RobotMap.shootR.setSetpoint(0);
 	}
 
 	@Override

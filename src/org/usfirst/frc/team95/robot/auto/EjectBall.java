@@ -21,18 +21,16 @@ public class EjectBall extends Auto {
 			stop();
 			done = true;
 		} else {
-			RobotMap.shoot1L.set(-1);
-			RobotMap.shoot2L.set(-1);
-			RobotMap.shoot2R.set(-1);
+			RobotMap.shootL.set(-1);
+			RobotMap.shootR.set(-1);
 		}
 
 	}
 
 	@Override
 	public void stop() {
-		RobotMap.shoot1L.setSetpoint(0);
-		RobotMap.shoot2L.setSetpoint(0);
-		RobotMap.shoot2R.setSetpoint(0);
+		RobotMap.shootL.setSetpoint(0);
+		RobotMap.shootR.setSetpoint(0);
 	}
 
 	@Override
