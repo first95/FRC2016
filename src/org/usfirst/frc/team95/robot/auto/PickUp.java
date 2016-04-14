@@ -10,7 +10,9 @@ public class PickUp extends Auto {
 
 	@Override
 	public void init() {
-		RobotMap.shoot1L.setSetpoint(.6);
+		// Being used in Anteni Deployment
+		//RobotMap.shoot1L.setSetpoint(.6);
+		
 		RobotMap.shoot2L.setSetpoint(0.6);
 		RobotMap.shoot2R.setSetpoint(0.6);
 		timer.reset();
@@ -26,7 +28,9 @@ public class PickUp extends Auto {
 
 	@Override
 	public void stop() {
-		RobotMap.shoot1L.setSetpoint(0);
+		// Used in Anteni Deployment
+		//RobotMap.shoot1L.setSetpoint(0);
+		
 		RobotMap.shoot2L.setSetpoint(0);
 		RobotMap.shoot2R.setSetpoint(0);
 		done = true;

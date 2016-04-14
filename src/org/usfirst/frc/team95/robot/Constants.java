@@ -1,7 +1,7 @@
 package org.usfirst.frc.team95.robot;
 
 public class Constants {
-
+	
 	// The distance from one wheel to the other.
 	static final public double robotWidth = 25;
 	static final public double wheelDiameter = 6;
@@ -71,4 +71,5 @@ public class Constants {
 
 	static final public double setPointChangeLimit = 0.15;
 	public static final double GRIPDeadTime = 2;
+	
 }

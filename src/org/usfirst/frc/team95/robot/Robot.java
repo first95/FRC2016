@@ -7,6 +7,7 @@ import org.usfirst.frc.team95.robot.auto.AlignAndShoot;
 import org.usfirst.frc.team95.robot.auto.Auto;
 import org.usfirst.frc.team95.robot.auto.BumpSetpoint;
 import org.usfirst.frc.team95.robot.auto.ConfigMove;
+import org.usfirst.frc.team95.robot.auto.DeployAnteniOut;
 import org.usfirst.frc.team95.robot.auto.Nothing;
 import org.usfirst.frc.team95.robot.auto.OverRoughTerrain;
 import org.usfirst.frc.team95.robot.auto.RotateBy;
@@ -208,7 +209,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("HP P", Constants.headingPreservationP);
 		SmartDashboard.putNumber("HP I * e-6", Constants.headingPreservationI * 1e6);
 		SmartDashboard.putNumber("HP D", Constants.headingPreservationD);
-	}
+		
+		// Display 1 if extended and 0 if not extended
+		SmartDashboard.putNumber("Anteni Out?: 1 = y , 0 = n  ::   ", DeployAnteniOut.out);
+	} 
 
 	/**
 	 * This function is called periodically during operator control

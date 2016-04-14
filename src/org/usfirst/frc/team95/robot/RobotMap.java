@@ -5,10 +5,13 @@ import org.usfirst.frc.team95.robot.auto.BumpSetpoint;
 import org.usfirst.frc.team95.robot.auto.ChargeAndShoot;
 import org.usfirst.frc.team95.robot.auto.Coast;
 import org.usfirst.frc.team95.robot.auto.ContinuousBumpSetpoint;
+import org.usfirst.frc.team95.robot.auto.DeployAnteniIn;
+import org.usfirst.frc.team95.robot.auto.DeployAnteniOut;
 import org.usfirst.frc.team95.robot.auto.EjectBall;
 import org.usfirst.frc.team95.robot.auto.OpenLoopArm;
 import org.usfirst.frc.team95.robot.auto.PickUp;
 import org.usfirst.frc.team95.robot.auto.PreserveHeading;
+import org.usfirst.frc.team95.robot.auto.Shoot;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
@@ -23,7 +26,7 @@ public class RobotMap {
 	public static Drive drive;
 	public static ButtonTracker incP, decP, incI, decI, incD, decD, magInc, magDec, incF, decF,
 			preserveHeadingButtonTracker, fireL, fireR, pickUp, align, relign, armGroundedFront, armGroundedBack,
-			limitOveride, eject, zero, coast, up, down, upSmall, downSmall, upBig, downBig, activateStickControl;
+			limitOveride, eject, zero, coast, up, down, upSmall, downSmall, upBig, downBig, activateStickControl, anteniOut, anteniIn;
 	public static PreserveHeading preserveHeadingAutoMove;
 	public static ArduPilotAttitudeMonitor am = null;
 	public static Object driveLock = null;
@@ -147,7 +150,10 @@ public class RobotMap {
 		decF = new ButtonTracker(driveStick, 14);
 		preserveHeadingAutoMove = new PreserveHeading();
 		preserveHeadingButtonTracker = new ButtonTracker(driveStick, 2, preserveHeadingAutoMove);
-		fireL = new ButtonTracker(weaponStick, 11, new ChargeAndShoot());
+		// Added -- No longer charge and shoot, only shoot
+		fireL = new ButtonTracker(weaponStick, 11, new Shoot());
+		//
+		//fireL = new ButtonTracker(weaponStick, 11, new ChargeAndShoot());
 		// fireR = new ButtonTracker(weaponStick, 5, new ChargeAndShoot());
 		pickUp = new ButtonTracker(weaponStick, 12, new PickUp());
 		// eject = new ButtonTracker(weaponStick, 5, new EjectBall());
@@ -158,7 +164,11 @@ public class RobotMap {
 
 		armGroundedBack = new ButtonTracker(weaponStick, 16);
 		armGroundedFront = new ButtonTracker(weaponStick, 15);
-		zero = new ButtonTracker(weaponStick, 14);
+		// zero = new ButtonTracker(weaponStick, 14);
+		
+		// When selected button is pressed run the Auto move indicated
+		anteniOut = new ButtonTracker(weaponStick, 14, new DeployAnteniOut());
+		anteniIn = new ButtonTracker(weaponStick, 13, new DeployAnteniIn());
 
 		//limitOveride = new ButtonTracker(weaponStick, 8);
 
