@@ -9,8 +9,8 @@ public class DeployAnteniOut extends Auto{
 	Timer timer = new Timer();
 	boolean done = false;
 	// Used to set in Anteni and out
-	public static int out = 0;
-
+	public static String out = "no";
+	
 	@Override
 	public void init()
 	{
@@ -27,7 +27,7 @@ public class DeployAnteniOut extends Auto{
 			done = true;
 			RobotMap.shoot1L.setSetpoint(0);
 			RobotMap.shoot1R.setSetpoint(0);
-			this.out = 1;
+			this.out = "yes";
 		} else {
 			RobotMap.shoot1L.setSetpoint(1);
 			RobotMap.shoot1R.setSetpoint(-1);
@@ -38,7 +38,7 @@ public class DeployAnteniOut extends Auto{
 	@Override
 	public void stop()
 	{
-		this.out = 1;
+		this.out = "yes";
 		RobotMap.shoot1L.setSetpoint(0);
 		RobotMap.shoot1R.setSetpoint(0);
 		

@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
 	double headingToPreserve;
 	CameraServer cameraServer;
 	ArrayList<PollableSubsystem> updates = new ArrayList<PollableSubsystem>();
@@ -211,7 +212,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("HP D", Constants.headingPreservationD);
 		
 		// Display 1 if extended and 0 if not extended
-		SmartDashboard.putNumber("Anteni Out?: 1 = y , 0 = n  ::   ", DeployAnteniOut.out);
+		SmartDashboard.putString("Anteni Out?:", DeployAnteniOut.out);
 	} 
 
 	/**
